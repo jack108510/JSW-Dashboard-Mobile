@@ -467,28 +467,17 @@
         }
         
         function showView(viewId) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-            // Bug 1 Fix: Add null check for quick-action button clicks
-            const navItem = event?.target?.closest('.nav-item');
-            if (navItem) {
-                navItem.classList.add('active');
-            } else {
-                // Bug 2 Fix: Update nav active state for quick-action buttons
-                const correspondingNav = document.querySelector(`.nav-item[onclick*="${viewId}"]`);
-                if (correspondingNav) {
-                    correspondingNav.classList.add('active');
-                }
-            }
-            if (viewId === 'dashboard') renderChart();
-            
-            // Bug 3 Fix: Focus after animation completes (400ms fadeIn)
-            if (viewId === 'activity') {
-                setTimeout(() => {
-                    document.getElementById('activityText')?.focus();
-                }, 450);
-            }
+            document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
+            document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+            var targetView = document.getElementById(viewId);
+            if (targetView) { targetView.classList.add('active'); }
+            var navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(function(nav) {
+                var onclick = nav.getAttribute('onclick') || '';
+                if (onclick.indexOf(viewId) > -1) { nav.classList.add('active'); }
+            });
+            if (viewId === 'dashboard' && typeof renderChart === 'function') { setTimeout(function() { renderChart(); }, 100); }
+            if (viewId === 'activity') { setTimeout(function() { var input = document.getElementById('activityText'); if (input) input.focus(); }, 500); }
         }
         
         function formatTime(timestamp) {
