@@ -351,6 +351,7 @@ const projectsData = {
           "name": "Inventory Tool",
           "description": "Clinic inventory management with real-time tracking",
           "status": "Live",
+          "emoji": "📦",
           "features": ["Stock monitoring", "Order management", "Low stock alerts"],
           "url": "https://jack108510.github.io/inventoryintaketool/"
         },
@@ -359,6 +360,7 @@ const projectsData = {
           "name": "Price Management",
           "description": "Pricing optimization dashboard",
           "status": "Live",
+          "emoji": "💵",
           "features": ["Price optimization", "Revenue analysis"],
           "url": "https://jack108510.github.io/jsw-clinic-iq/"
         },
@@ -367,104 +369,71 @@ const projectsData = {
           "name": "Payroll App",
           "description": "HR & Payroll management",
           "status": "Live",
+          "emoji": "💰",
           "features": ["Full HR suite", "Payroll processing"],
           "url": "https://jack108510.github.io/jsw-payroll-pro/"
-        }
-      ]
-    },
-    {
-      "id": "client-hub",
-      "name": "Client Hub",
-      "emoji": "🐾",
-      "color": "#8b5cf6",
-      "projects": [
+        },
         {
-          "id": "client-hub-app",
-          "name": "Client Hub App",
+          "id": "client-hub",
+          "name": "Client Hub",
           "description": "Unified client communication for veterinary clinics",
           "status": "Live",
-          "features": ["Multi-channel inbox", "Client management", "Message history"],
+          "emoji": "🐾",
+          "features": ["Multi-channel inbox", "Client management"],
           "url": "https://jack108510.github.io/jsw-client-hub/"
         }
       ]
     },
     {
-      "id": "payroll-pro",
-      "name": "Payroll Pro",
-      "emoji": "💰",
+      "id": "wilde-automations",
+      "name": "Wilde Automations",
+      "emoji": "⚡",
       "color": "#10b981",
       "projects": [
         {
-          "id": "payroll-system",
-          "name": "Payroll System",
-          "description": "Employee management, scheduling & payroll system",
-          "status": "Live",
-          "features": ["Employee profiles", "Time tracking", "Payroll processing"],
-          "url": "https://jack108510.github.io/jsw-payroll-pro/"
-        }
-      ]
-    },
-    {
-      "id": "college-recruiting",
-      "name": "College Recruiting",
-      "emoji": "🎓",
-      "color": "#ec4899",
-      "projects": [
-        {
-          "id": "recruiting-system",
-          "name": "Recruiting System",
-          "description": "University recruitment and candidate tracking system",
-          "status": "Dev",
-          "features": ["Candidate tracking", "Interview scheduling", "Application management"],
-          "url": null
-        }
-      ]
-    },
-    {
-      "id": "ai-receptionist",
-      "name": "AI Receptionist",
-      "emoji": "🤖",
-      "color": "#06b6d4",
-      "projects": [
-        {
-          "id": "ai-receptionist-app",
+          "id": "ai-receptionist",
           "name": "AI Receptionist",
-          "description": "AI-powered virtual receptionist for clinics",
-          "status": "Dev",
-          "features": ["Voice AI", "Appointment booking", "Smart routing"],
-          "url": null
-        }
-      ]
-    },
-    {
-      "id": "ebay-finder",
-      "name": "eBay Finder",
-      "emoji": "🛒",
-      "color": "#3b82f6",
-      "projects": [
-        {
-          "id": "ebay-finder-tool",
-          "name": "eBay Finder",
-          "description": "Automated eBay listing and search tool",
-          "status": "Planning",
-          "features": ["Listing automation", "Price tracking", "Inventory sync"],
-          "url": null
-        }
-      ]
-    },
-    {
-      "id": "n8n-automation",
-      "name": "N8N Automation",
-      "emoji": "⚙️",
-      "color": "#84cc16",
-      "projects": [
-        {
-          "id": "n8n-workflows",
-          "name": "N8N Workflows",
-          "description": "Workflow automation using N8N",
+          "description": "24/7 AI-powered phone answering and appointment booking",
           "status": "Live",
-          "features": ["API integrations", "Data sync", "Task automation"],
+          "emoji": "🤖",
+          "features": ["Call handling", "Appointment booking", "Lead capture"],
+          "url": "https://jack108510.github.io/jsw-ai-receptionist/"
+        },
+        {
+          "id": "n8n-automation",
+          "name": "n8n Automation",
+          "description": "Custom workflow automation services for businesses",
+          "status": "Live",
+          "emoji": "🔄",
+          "features": ["Workflow automation", "App integrations", "Data sync"],
           "url": "https://jack108510.github.io/jsw-n8n-automation/"
+        },
+        {
+          "id": "college-recruiting",
+          "name": "College Recruiting",
+          "description": "Connect athletes with college coaches",
+          "status": "Live",
+          "emoji": "🏈",
+          "features": ["Athlete profiles", "Coach database", "Recruiting tools"],
+          "url": "https://jack108510.github.io/jsw-college-recruiting/"
+        },
+        {
+          "id": "ebay-finder",
+          "name": "eBay Finder",
+          "description": "Product research and profit calculator for resellers",
+          "status": "Live",
+          "emoji": "📦",
+          "features": ["Product search", "Profit calculation", "Price tracking"],
+          "url": "https://jack108510.github.io/jsw-ebay-finder/"
+        },
+        {
+          "id": "policy-pro",
+          "name": "Policy Pro",
+          "description": "Policy management with AI-powered creation",
+          "status": "Live",
+          "emoji": "📋",
+          "features": ["Policy creation", "AI assistant", "Compliance tracking"],
+          "url": "https://jack108510.github.io/clinic-policy-manager/"
         }
       ]
     }
@@ -483,12 +452,7 @@ const statusClasses = {
 // Company CSS class mapping
 const companyClasses = {
   'clinic-iq': 'pClinic',
-  'client-hub': 'pClient',
-  'payroll-pro': 'pPay',
-  'college-recruiting': 'pRecruiting',
-  'ai-receptionist': 'pAI',
-  'ebay-finder': 'pEbay',
-  'n8n-automation': 'pAutomation'
+  'wilde-automations': 'pInv'
 };
 
 function renderDashboard() {
