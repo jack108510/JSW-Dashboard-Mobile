@@ -293,14 +293,21 @@
                     </div>
                     <button class="project-link" onclick="addCompany()">Add Company</button>
                 </div>
+                
+                <div class="settings-card">
+                    <h3>Data Management</h3>
+                    <button class="project-link" style="background: var(--danger);" onclick="resetData()">Reset to Defaults</button>
+                </div>
             </div>
             
         </div>
     </div>
     
     <script>
-        // Data
-        const data = {
+        const STORAGE_KEY = 'wilde-automations-data';
+        
+        // Default data
+        const defaultData = {
             companies: [
                 {
                     id: 'clinic-iq',
@@ -322,13 +329,32 @@
                     projects: [
                         { id: 'ai-recep', name: 'AI Receptionist', desc: '24/7 AI phone answering', status: 'Live', url: 'https://jack108510.github.io/jsw-ai-receptionist/' },
                         { id: 'n8n', name: 'n8n Automation', desc: 'Workflow automation services', status: 'Live', url: 'https://jack108510.github.io/jsw-n8n-automation/' },
-                        { id: 'recruiting', name: 'College Recruiting', desc: 'Athletes & coaches platform', status: 'Live', url: 'https://jack108510.github.io/jsw-college-recruiting/' },
-                        { id: 'ebay', name: 'eBay Finder', desc: 'Product research tool', status: 'Live', url: 'https://jack108510.github.io/jsw-ebay-finder/' },
                         { id: 'policy', name: 'Policy Pro', desc: 'Policy management', status: 'Live', url: 'https://jack108510.github.io/clinic-policy-manager/' }
                     ]
                 }
             ]
         };
+        
+        // Load data from localStorage or use defaults
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    return JSON.parse(saved);
+                } catch (e) {
+                    console.error('Failed to parse saved data:', e);
+                }
+            }
+            return JSON.parse(JSON.stringify(defaultData));
+        }
+        
+        // Save data to localStorage
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+        
+        // Current data
+        let data = loadData();
         
         const activity = [
             { name: 'Golias', role: 'Chief of Staff', icon: '🛡️', color: '#10b981', task: 'Managing operations and coordinating team' },
@@ -454,6 +480,7 @@
                     status: status,
                     url: url
                 });
+                saveData();
                 render();
                 // Clear form
                 document.getElementById('newProjectName').value = '';
@@ -479,8 +506,18 @@
                 color: color,
                 projects: []
             });
+            saveData();
             render();
             document.getElementById('newCompanyName').value = '';
+        }
+        
+        // Reset to defaults
+        function resetData() {
+            if (confirm('Are you sure you want to reset all data to defaults? This will remove any custom companies or projects.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                data = JSON.parse(JSON.stringify(defaultData));
+                render();
+            }
         }
         
         // Init
