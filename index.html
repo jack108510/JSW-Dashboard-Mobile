@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinic IQ - Executive Dashboard</title>
+    <title>Wilde Automations - Executive Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -63,17 +63,31 @@
         .pInv::before{background:linear-gradient(90deg,#10b981,#059669)}
         .pPri::before{background:linear-gradient(90deg,#8b5cf6,#7c3aed)}
         .pPay::before{background:linear-gradient(90deg,#f59e0b,#d97706)}
+        .pClinic::before{background:linear-gradient(90deg,#0ea5e9,#0284c7)}
+        .pClient::before{background:linear-gradient(90deg,#8b5cf6,#7c3aed)}
+        .pRecruiting::before{background:linear-gradient(90deg,#ec4899,#db2777)}
+        .pAI::before{background:linear-gradient(90deg,#06b6d4,#0891b2)}
+        .pEbay::before{background:linear-gradient(90deg,#3b82f6,#1d4ed8)}
+        .pAutomation::before{background:linear-gradient(90deg,#84cc16,#65a30d)}
         .pHead{padding:24px;display:flex;align-items:flex-start;gap:18px;border-bottom:1px solid var(--b);background:linear-gradient(180deg,var(--de),transparent)}
         .pIcon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0}
         .pInv .pIcon{background:rgba(16,185,129,.15);color:#6ee7b7}
         .pPri .pIcon{background:rgba(139,92,246,.15);color:#c4b5fd}
         .pPay .pIcon{background:rgba(245,158,11,.15);color:#fcd34d}
+        .pClinic .pIcon{background:rgba(14,165,233,.15);color:#7dd3fc}
+        .pClient .pIcon{background:rgba(139,92,246,.15);color:#c4b5fd}
+        .pRecruiting .pIcon{background:rgba(236,72,153,.15);color:#f9a8d4}
+        .pAI .pIcon{background:rgba(6,182,212,.15);color:#67e8f9}
+        .pEbay .pIcon{background:rgba(59,130,246,.15);color:#93c5fd}
+        .pAutomation .pIcon{background:rgba(132,204,22,.15);color:#bef264}
         .pInfo{flex:1}
         .pInfo h3{font-size:1.2rem;margin-bottom:6px;font-weight:600}
         .pInfo p{font-size:.85rem;color:var(--tm);line-height:1.5}
         .pStat{padding:6px 14px;border-radius:20px;font-size:.7rem;font-weight:700;text-transform:uppercase}
         .sLive{background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(16,185,129,.3)}
         .sComing{background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.3)}
+        .sDev{background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.3)}
+        .sPlanning{background:rgba(139,92,246,.15);color:#c4b5fd;border:1px solid rgba(139,92,246,.3)}
         .pBody{padding:20px 24px}
         .pFeat{list-style:none;margin-bottom:20px}
         .pFeat li{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:.85rem;color:var(--tm)}
@@ -110,77 +124,85 @@
 </head>
 <body>
 <nav class="sidebar">
-    <div class="logo"><div class="logo-icon">🏥</div><div><h1>Clinic IQ</h1><span class="logo-sub">Dashboard</span></div></div>
-    <div class="parent"><div class="parent-l">Parent Company</div><div class="parent-n"><i class="fas fa-building"></i> Clinic IQ</div></div>
+    <div class="logo"><div class="logo-icon">⚡</div><div><h1>Wilde Automations</h1><span class="logo-sub">Corporate Dashboard</span></div></div>
+    <div class="parent"><div class="parent-l">Parent Company</div><div class="parent-n"><i class="fas fa-building"></i> Wilde Automations</div></div>
     <div class="org-s"><div class="org-t">Main</div><div class="nav active" data-v="overview"><i class="fas fa-th-large"></i><span>Overview</span></div></div>
-    <div class="org-s"><div class="org-t">Products & Services</div><div class="nav" data-v="products"><i class="fas fa-boxes"></i><span>All Products</span></div><div class="nav" data-v="inventory"><div class="badge" style="background:rgba(16,185,129,.2);color:#6ee7b7">📦</div><span>Inventory</span></div><div class="nav" data-v="pricing"><div class="badge" style="background:rgba(139,92,246,.2);color:#c4b5fd">💲</div><span>Pricing</span></div><div class="nav" data-v="payroll"><div class="badge" style="background:rgba(245,158,11,.2);color:#fcd34d">💰</div><span>Payroll</span></div></div>
-    <div class="org-s"><div class="org-t">Setup & Onboarding</div><div class="nav" data-v="setup-inventory"><i class="fas fa-clipboard-list"></i><span>Inventory Setup</span></div><div class="nav" data-v="setup-pricing"><i class="fas fa-tags"></i><span>Pricing Setup</span></div><div class="nav" data-v="setup-payroll"><i class="fas fa-users-cog"></i><span>Payroll Setup</span></div></div>
-    <div class="org-s"><div class="org-t">Reports</div><div class="nav" data-v="team"><i class="fas fa-users"></i><span>Team</span></div></div>
+    <div class="org-s"><div class="org-t">Companies</div><div class="nav" data-v="clinic-iq"><div class="badge" style="background:rgba(14,165,233,.2);color:#7dd3fc">🏥</div><span>Clinic IQ</span></div><div class="nav" data-v="client-hub"><div class="badge" style="background:rgba(139,92,246,.2);color:#c4b5fd">🐾</div><span>Client Hub</span></div><div class="nav" data-v="payroll"><div class="badge" style="background:rgba(16,185,129,.2);color:#6ee7b7">💰</div><span>Payroll Pro</span></div><div class="nav" data-v="inventory"><div class="badge" style="background:rgba(245,158,11,.2);color:#fcd34d">📦</div><span>Inventory Tool</span></div></div>
+    <div class="org-s"><div class="org-t">Projects</div><div class="nav" data-v="recruiting"><div class="badge" style="background:rgba(236,72,153,.2);color:#f9a8d4">🎓</div><span>College Recruiting</span></div><div class="nav" data-v="ai-receptionist"><div class="badge" style="background:rgba(6,182,212,.2);color:#67e8f9">🤖</div><span>AI Receptionist</span></div><div class="nav" data-v="ebay"><div class="badge" style="background:rgba(59,130,246,.2);color:#93c5fd">🛒</div><span>eBay Finder</span></div><div class="nav" data-v="automation"><div class="badge" style="background:rgba(132,204,22,.2);color:#bef264">⚙️</div><span>N8N Automation</span></div></div>
 </nav>
 <main class="main">
     <div id="overview" class="view active">
-        <div class="header"><div><h1>🏥 Clinic IQ</h1><div class="header-s">Healthcare Technology Solutions</div></div><div class="status"><span class="dot"></span>All Systems Active</div></div>
-        <div class="qa"><button class="btn btnPri" onclick="showToast('Welcome to Clinic IQ!')"><i class="fas fa-rocket"></i> Get Started</button><button class="btn" onclick="navigateTo('products')"><i class="fas fa-boxes"></i> View Products</button></div>
-        <div class="stats"><div class="stat statTot"><div class="statIcon"><i class="fas fa-boxes"></i></div><div class="statVal">3</div><div class="statLab">Products</div></div><div class="stat statAct"><div class="statIcon"><i class="fas fa-rocket"></i></div><div class="statVal">2</div><div class="statLab">Live Apps</div></div><div class="stat statPen"><div class="statIcon"><i class="fas fa-code"></i></div><div class="statVal">1</div><div class="statLab">In Development</div></div><div class="stat statCom"><div class="statIcon"><i class="fas fa-check"></i></div><div class="statVal">2</div><div class="statLab">Completed</div></div></div>
-        <h2 class="secTitle"><i class="fas fa-boxes"></i> Products & Services</h2>
+        <div class="header"><div><h1>⚡ Wilde Automations</h1><div class="header-s">Technology Portfolio & Solutions</div></div><div class="status"><span class="dot"></span>All Systems Active</div></div>
+        <div class="qa"><button class="btn btnPri" onclick="showToast('Welcome to Wilde Automations!')"><i class="fas fa-rocket"></i> Get Started</button><button class="btn" onclick="navigateTo('clinic-iq')"><i class="fas fa-building"></i> View Companies</button></div>
+        <div class="stats"><div class="stat statTot"><div class="statIcon"><i class="fas fa-building"></i></div><div class="statVal">8</div><div class="statLab">Companies & Projects</div></div><div class="stat statAct"><div class="statIcon"><i class="fas fa-rocket"></i></div><div class="statVal">5</div><div class="statLab">Live Apps</div></div><div class="stat statPen"><div class="statIcon"><i class="fas fa-code"></i></div><div class="statVal">2</div><div class="statLab">In Development</div></div><div class="stat statCom"><div class="statIcon"><i class="fas fa-check"></i></div><div class="statVal">1</div><div class="statLab">Planning</div></div></div>
+        <h2 class="secTitle"><i class="fas fa-building"></i> Companies & Projects</h2>
         <div class="pGrid">
-            <div class="pCard pInv">
+            <div class="pCard pClinic">
+                <div class="pHead"><div class="pIcon">🏥</div><div class="pInfo"><h3>Clinic IQ</h3><p>Healthcare technology solutions for medical clinics</p></div><span class="pStat sLive">Live</span></div>
+                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Inventory management</li><li><i class="fas fa-check"></i> Price management</li><li><i class="fas fa-check"></i> Payroll processing</li></ul><div class="pActs"><a href="https://jack108510.github.io/jsw-clinic-iq/" target="_blank" class="pBtn pBtnPri"><i class="fas fa-external-link-alt"></i> Price Mgmt</a><button class="pBtn pBtnSec" onclick="navigateTo('clinic-iq')"><i class="fas fa-info-circle"></i> Details</button></div></div>
+            </div>
+            <div class="pCard pClient">
+                <div class="pHead"><div class="pIcon">🐾</div><div class="pInfo"><h3>Client Hub</h3><p>Unified client communication for veterinary clinics</p></div><span class="pStat sLive">Live</span></div>
+                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Multi-channel inbox</li><li><i class="fas fa-check"></i> Client management</li><li><i class="fas fa-check"></i> Message history</li></ul><div class="pActs"><a href="https://jack108510.github.io/jsw-client-hub/" target="_blank" class="pBtn pBtnPri"><i class="fas fa-external-link-alt"></i> Open App</a><button class="pBtn pBtnSec" onclick="navigateTo('client-hub')"><i class="fas fa-info-circle"></i> Details</button></div></div>
+            </div>
+            <div class="pCard pPayroll">
+                <div class="pHead"><div class="pIcon">💰</div><div class="pInfo"><h3>Payroll Pro</h3><p>Employee management, scheduling & payroll system</p></div><span class="pStat sLive">Live</span></div>
+                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Employee profiles</li><li><i class="fas fa-check"></i> Time tracking</li><li><i class="fas fa-check"></i> Payroll processing</li></ul><div class="pActs"><a href="https://jack108510.github.io/jsw-payroll-pro/" target="_blank" class="pBtn pBtnPri"><i class="fas fa-external-link-alt"></i> Open App</a><button class="pBtn pBtnSec" onclick="navigateTo('payroll')"><i class="fas fa-info-circle"></i> Details</button></div></div>
+            </div>
+            <div class="pCard pInventory">
                 <div class="pHead"><div class="pIcon">📦</div><div class="pInfo"><h3>Inventory Tool</h3><p>Clinic inventory management with real-time tracking</p></div><span class="pStat sLive">Live</span></div>
-                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Stock level monitoring</li><li><i class="fas fa-check"></i> Order management</li><li><i class="fas fa-check"></i> Low stock alerts</li><li><i class="fas fa-check"></i> Barcode scanning</li></ul><div class="pActs"><a href="https://jack108510.github.io/inventoryintaketool/" target="_blank" class="pBtn pBtnPri"><i class="fas fa-external-link-alt"></i> Open App</a><button class="pBtn pBtnSec" onclick="navigateTo('setup-inventory')"><i class="fas fa-cog"></i> Setup</button></div></div>
+                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Stock monitoring</li><li><i class="fas fa-check"></i> Order management</li><li><i class="fas fa-check"></i> Low stock alerts</li></ul><div class="pActs"><a href="https://jack108510.github.io/inventoryintaketool/" target="_blank" class="pBtn pBtnPri"><i class="fas fa-external-link-alt"></i> Open App</a><button class="pBtn pBtnSec" onclick="navigateTo('inventory')"><i class="fas fa-info-circle"></i> Details</button></div></div>
             </div>
-            <div class="pCard pPri">
-                <div class="pHead"><div class="pIcon">💲</div><div class="pInfo"><h3>Price Management</h3><p>Pricing optimization and management dashboard</p></div><span class="pStat sComing">Coming Soon</span></div>
-                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-clock w"></i> Price optimization</li><li><i class="fas fa-clock w"></i> Cost analysis</li><li><i class="fas fa-clock w"></i> Market positioning</li><li><i class="fas fa-clock w"></i> Dynamic pricing</li></ul><div class="pActs"><button class="pBtn pBtnSec" onclick="navigateTo('setup-pricing')"><i class="fas fa-cog"></i> Setup Guide</button></div></div>
+            <div class="pCard pRecruiting">
+                <div class="pHead"><div class="pIcon">🎓</div><div class="pInfo"><h3>College Recruiting</h3><p>University recruitment and candidate tracking system</p></div><span class="pStat sDev">In Dev</span></div>
+                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-clock"></i> Candidate tracking</li><li><i class="fas fa-clock"></i> Interview scheduling</li><li><i class="fas fa-clock"></i> Application management</li></ul><div class="pActs"><button class="pBtn pBtnSec" disabled><i class="fas fa-cog"></i> In Development</button></div></div>
             </div>
-            <div class="pCard pPay">
-                <div class="pHead"><div class="pIcon">💰</div><div class="pInfo"><h3>Payroll App</h3><p>HR & Payroll system for clinic staff management</p></div><span class="pStat sLive">Live</span></div>
-                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Employee management</li><li><i class="fas fa-check"></i> Payroll processing</li><li><i class="fas fa-check"></i> Timesheet tracking</li><li><i class="fas fa-check"></i> Scheduling</li></ul><div class="pActs"><a href="https://jack108510.github.io/jsw-payroll-pro/" target="_blank" class="pBtn pBtnPri"><i class="fas fa-external-link-alt"></i> Open App</a><button class="pBtn pBtnSec" onclick="navigateTo('setup-payroll')"><i class="fas fa-cog"></i> Setup</button></div></div>
+            <div class="pCard pAI">
+                <div class="pHead"><div class="pIcon">🤖</div><div class="pInfo"><h3>AI Receptionist</h3><p>AI-powered virtual receptionist for clinics</p></div><span class="pStat sDev">In Dev</span></div>
+                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-clock"></i> Voice AI</li><li><i class="fas fa-clock"></i> Appointment booking</li><li><i class="fas fa-clock"></i> Smart routing</li></ul><div class="pActs"><button class="pBtn pBtnSec" disabled><i class="fas fa-cog"></i> In Development</button></div></div>
+            </div>
+            <div class="pCard pEbay">
+                <div class="pHead"><div class="pIcon">🛒</div><div class="pInfo"><h3>eBay Finder</h3><p>Automated eBay listing and search tool</p></div><span class="pStat sPlanning">Planning</span></div>
+                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-clock"></i> Listing automation</li><li><i class="fas fa-clock"></i> Price tracking</li><li><i class="fas fa-clock"></i> Inventory sync</li></ul><div class="pActs"><button class="pBtn pBtnSec" disabled><i class="fas fa-lightbulb"></i> Planning</button></div></div>
+            </div>
+            <div class="pCard pAutomation">
+                <div class="pHead"><div class="pIcon">⚙️</div><div class="pInfo"><h3>N8N Automation</h3><p>Workflow automation using N8N</p></div><span class="pStat sLive">Live</span></div>
+                <div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> API integrations</li><li><i class="fas fa-check"></i> Data sync</li><li><i class="fas fa-check"></i> Task automation</li></ul><div class="pActs"><a href="https://jack108510.github.io/jsw-n8n-automation/" target="_blank" class="pBtn pBtnPri"><i class="fas fa-external-link-alt"></i> Open App</a><button class="pBtn pBtnSec" onclick="navigateTo('automation')"><i class="fas fa-info-circle"></i> Details</button></div></div>
             </div>
         </div>
     </div>
-    <div id="products" class="view">
-        <div class="header"><div><h1>📦 Products & Services</h1><div class="header-s">All Clinic IQ applications and tools</div></div></div>
+    <div id="clinic-iq" class="view">
+        <div class="header"><div><h1>🏥 Clinic IQ</h1><div class="header-s">Healthcare Technology Solutions</div></div><a href="https://jack108510.github.io/jsw-clinic-iq/" target="_blank" class="btn btnPri"><i class="fas fa-external-link-alt"></i> Open Price Management</a></div>
+        <div class="stats"><div class="stat statTot"><div class="statIcon"><i class="fas fa-boxes"></i></div><div class="statVal">3</div><div class="statLab">Products</div></div><div class="stat statAct"><div class="statIcon"><i class="fas fa-rocket"></i></div><div class="statVal">2</div><div class="statLab">Live Apps</div></div><div class="stat statPen"><div class="statIcon"><i class="fas fa-code"></i></div><div class="statVal">1</div><div class="statLab">In Development</div></div></div>
+        <h2 class="secTitle"><i class="fas fa-boxes"></i> Products</h2>
         <div class="pGrid">
-            <div class="pCard pInv"><div class="pHead"><div class="pIcon">📦</div><div class="pInfo"><h3>Inventory Tool</h3><p>Clinic inventory management system</p></div><span class="pStat sLive">Live</span></div><div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Real-time tracking</li><li><i class="fas fa-check"></i> Low stock alerts</li></ul><div class="pActs"><a href="https://jack108510.github.io/inventoryintaketool/" target="_blank" class="pBtn pBtnPri">Launch</a></div></div></div>
-            <div class="pCard pPri"><div class="pHead"><div class="pIcon">💲</div><div class="pInfo"><h3>Price Management</h3><p>Pricing optimization dashboard</p></div><span class="pStat sComing">Coming Soon</span></div><div class="pBody"><ul class="pFeat"><li><i class="fas fa-clock w"></i> In development</li></ul><div class="pActs"><button class="pBtn pBtnSec" disabled>Coming Soon</button></div></div></div>
-            <div class="pCard pPay"><div class="pHead"><div class="pIcon">💰</div><div class="pInfo"><h3>Payroll App</h3><p>HR & Payroll management</p></div><span class="pStat sLive">Live</span></div><div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Full HR suite</li><li><i class="fas fa-check"></i> Payroll processing</li></ul><div class="pActs"><a href="https://jack108510.github.io/jsw-payroll-pro/" target="_blank" class="pBtn pBtnPri">Launch</a></div></div></div>
+            <div class="pCard pInventory"><div class="pHead"><div class="pIcon">📦</div><div class="pInfo"><h3>Inventory Tool</h3><p>Clinic inventory management system</p></div><span class="pStat sLive">Live</span></div><div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Real-time tracking</li><li><i class="fas fa-check"></i> Low stock alerts</li></ul><div class="pActs"><a href="https://jack108510.github.io/inventoryintaketool/" target="_blank" class="pBtn pBtnPri">Launch</a></div></div></div>
+            <div class="pCard pClinic"><div class="pHead"><div class="pIcon">💲</div><div class="pInfo"><h3>Price Management</h3><p>Pricing optimization dashboard</p></div><span class="pStat sLive">Live</span></div><div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Price optimization</li><li><i class="fas fa-check"></i> Revenue analysis</li></ul><div class="pActs"><a href="https://jack108510.github.io/jsw-clinic-iq/" target="_blank" class="pBtn pBtnPri">Launch</a></div></div></div>
+            <div class="pCard pPayroll"><div class="pHead"><div class="pIcon">💰</div><div class="pInfo"><h3>Payroll App</h3><p>HR & Payroll management</p></div><span class="pStat sLive">Live</span></div><div class="pBody"><ul class="pFeat"><li><i class="fas fa-check"></i> Full HR suite</li><li><i class="fas fa-check"></i> Payroll processing</li></ul><div class="pActs"><a href="https://jack108510.github.io/jsw-payroll-pro/" target="_blank" class="pBtn pBtnPri">Launch</a></div></div></div>
         </div>
     </div>
-    <div id="inventory" class="view">
-        <div class="header"><div><h1>📦 Inventory Tool</h1><div class="header-s">Clinic inventory management with real-time tracking</div></div><a href="https://jack108510.github.io/inventoryintaketool/" target="_blank" class="btn btnPri"><i class="fas fa-external-link-alt"></i> Open App</a></div>
-        <div class="stats"><div class="stat statTot"><div class="statIcon"><i class="fas fa-boxes"></i></div><div class="statVal">1</div><div class="statLab">Version</div></div><div class="stat statAct"><div class="statIcon"><i class="fas fa-check"></i></div><div class="statVal">Live</div><div class="statLab">Status</div></div><div class="stat statPen"><div class="statIcon"><i class="fas fa-user"></i></div><div class="statVal">-</div><div class="statLab">Users</div></div><div class="stat statCom"><div class="statIcon"><i class="fas fa-calendar"></i></div><div class="statVal">-</div><div class="statLab">Updated</div></div></div>
+    <div id="client-hub" class="view">
+        <div class="header"><div><h1>🐾 Client Hub</h1><div class="header-s">Unified client communication for veterinary clinics</div></div><a href="https://jack108510.github.io/jsw-client-hub/" target="_blank" class="btn btnPri"><i class="fas fa-external-link-alt"></i> Open App</a></div>
+        <div class="stats"><div class="stat statTot"><div class="statIcon"><i class="fas fa-users"></i></div><div class="statVal">1</div><div class="statLab">Version</div></div><div class="stat statAct"><div class="statIcon"><i class="fas fa-check"></i></div><div class="statVal">Live</div><div class="statLab">Status</div></div></div>
     </div>
-    <div id="pricing" class="view">
-        <div class="header"><div><h1>💲 Price Management</h1><div class="header-s">Pricing optimization and management dashboard - Coming Soon</div></div><span class="pStat sComing">In Development</span></div>
+    <div id="recruiting" class="view">
+        <div class="header"><div><h1>🎓 College Recruiting</h1><div class="header-s">University recruitment and candidate tracking system</div></div><span class="pStat sDev">In Development</span></div>
         <div class="stats"><div class="stat statTot"><div class="statIcon"><i class="fas fa-boxes"></i></div><div class="statVal">1</div><div class="statLab">Version</div></div><div class="stat statPen"><div class="statIcon"><i class="fas fa-code"></i></div><div class="statVal">Dev</div><div class="statLab">Status</div></div></div>
     </div>
-    <div id="payroll" class="view">
-        <div class="header"><div><h1>💰 Payroll App</h1><div class="header-s">HR & Payroll system for clinic staff management</div></div><a href="https://jack108510.github.io/jsw-payroll-pro/" target="_blank" class="btn btnPri"><i class="fas fa-external-link-alt"></i> Open App</a></div>
+    <div id="ai-receptionist" class="view">
+        <div class="header"><div><h1>🤖 AI Receptionist</h1><div class="header-s">AI-powered virtual receptionist for clinics</div></div><span class="pStat sDev">In Development</span></div>
+        <div class="stats"><div class="stat statTot"><div class="statIcon"><i class="fas fa-boxes"></i></div><div class="statVal">1</div><div class="statLab">Version</div></div><div class="stat statPen"><div class="statIcon"><i class="fas fa-code"></i></div><div class="statVal">Dev</div><div class="statLab">Status</div></div></div>
+    </div>
+    <div id="ebay" class="view">
+        <div class="header"><div><h1>🛒 eBay Finder</h1><div class="header-s">Automated eBay listing and search tool</div></div><span class="pStat sPlanning">Planning</span></div>
+        <div class="stats"><div class="stat statTot"><div class="statIcon"><i class="fas fa-boxes"></i></div><div class="statVal">1</div><div class="statLab">Version</div></div><div class="stat statCom"><div class="statIcon"><i class="fas fa-lightbulb"></i></div><div class="statVal">Planning</div><div class="statLab">Status</div></div></div>
+    </div>
+    <div id="automation" class="view">
+        <div class="header"><div><h1>⚙️ N8N Automation</h1><div class="header-s">Workflow automation using N8N</div></div><a href="https://jack108510.github.io/jsw-n8n-automation/" target="_blank" class="btn btnPri"><i class="fas fa-external-link-alt"></i> Open App</a></div>
         <div class="stats"><div class="stat statTot"><div class="statIcon"><i class="fas fa-boxes"></i></div><div class="statVal">1</div><div class="statLab">Version</div></div><div class="stat statAct"><div class="statIcon"><i class="fas fa-check"></i></div><div class="statVal">Live</div><div class="statLab">Status</div></div></div>
     </div>
-    <div id="setup-inventory" class="view">
-        <div class="header"><div><h1>⚙️ Inventory Setup</h1><div class="header-s">Getting started with the Inventory Tool</div></div></div>
-        <div class="onGrid">
-            <div class="onCard"><div class="onStep"><div class="stNum">1</div><div class="stCon"><h4>Access the App</h4><p>Open the Inventory Tool using the link in the Products section</p></div></div><div class="onStep"><div class="stNum">2</div><div class="stCon"><h4>Configure Items</h4><p>Add your clinic inventory items, categories, and suppliers</p></div></div><div class="onStep"><div class="stNum">3</div><div class="stCon"><h4>Set Alerts</h4><p>Configure low stock thresholds and notification preferences</p></div></div><div class="onStep"><div class="stNum">4</div><div class="stCon"><h4>Start Tracking</h4><p>Begin managing your clinic inventory in real-time</p></div></div></div>
-            <div class="onCard"><h3 style="margin-bottom:16px">Features</h3><ul class="pFeat"><li><i class="fas fa-check"></i> Stock level monitoring</li><li><i class="fas fa-check"></i> Order management</li><li><i class="fas fa-check"></i> Low stock alerts</li><li><i class="fas fa-check"></i> Barcode scanning</li><li><i class="fas fa-check"></i> Supplier management</li></ul><a href="https://jack108510.github.io/inventoryintaketool/" target="_blank" class="pBtn pBtnPri" style="margin-top:20px;display:inline-flex"><i class="fas fa-rocket"></i> Launch App</a></div>
-        </div>
-    </div>
-    <div id="setup-pricing" class="view">
-        <div class="header"><div><h1>⚙️ Pricing Setup</h1><div class="header-s">Price Management Dashboard - Coming Soon</div></div><span class="pStat sComing">In Development</span></div>
-        <div class="onGrid">
-            <div class="onCard"><div class="onStep"><div class="stNum">1</div><div class="stCon"><h4>Coming Soon</h4><p>Price Management is currently in development</p></div></div><div class="onStep"><div class="stNum">2</div><div class="stCon"><h4>Features Planned</h4><p>Price optimization, cost analysis, market positioning</p></div></div></div>
-            <div class="onCard"><h3 style="margin-bottom:16px">Planned Features</h3><ul class="pFeat"><li><i class="fas fa-clock w"></i> Price optimization</li><li><i class="fas fa-clock w"></i> Cost analysis</li><li><i class="fas fa-clock w"></i> Market positioning</li><li><i class="fas fa-clock w"></i> Dynamic pricing</li><li><i class="fas fa-clock w"></i> Competitive analysis</li></ul></div>
-        </div>
-    </div>
-    <div id="setup-payroll" class="view">
-        <div class="header"><div><h1>⚙️ Payroll Setup</h1><div class="header-s">Getting started with the Payroll App</div></div></div>
-        <div class="onGrid">
-            <div class="onCard"><div class="onStep"><div class="stNum">1</div><div class="stCon"><h4>Access the App</h4><p>Open the Payroll App using the link in the Products section</p></div></div><div class="onStep"><div class="stNum">2</div><div class="stCon"><h4>Add Employees</h4><p>Import or manually add employee information</p></div></div><div class="onStep"><div class="stNum">3</div><div class="stCon"><h4>Configure Payroll</h4><p>Set up pay schedules, deductions, and benefits</p></div></div><div class="onStep"><div class="stNum">4</div><div class="stCon"><h4>Process Payroll</h4><p>Run payroll and generate reports</p></div></div></div>
-            <div class="onCard"><h3 style="margin-bottom:16px">Features</h3><ul class="pFeat"><li><i class="fas fa-check"></i> Employee management</li><li><i class="fas fa-check"></i> Payroll processing</li><li><i class="fas fa-check"></i> Timesheet tracking</li><li><i class="fas fa-check"></i> Scheduling</li><li><i class="fas fa-check"></i> Tax calculations</li></ul><a href="https://jack108510.github.io/jsw-payroll-pro/" target="_blank" class="pBtn pBtnPri" style="margin-top:20px;display:inline-flex"><i class="fas fa-rocket"></i> Launch App</a></div>
-        </div>
-    </div>
     <div id="team" class="view">
-        <div class="header"><div><h1>👥 Team</h1><div class="header-s">Clinic IQ Development Team</div></div></div>
+        <div class="header"><div><h1>👥 Team</h1><div class="header-s">Wilde Automations Development Team</div></div></div>
         <div class="team">
             <div class="teamCard"><div class="teamAv" style="background:var(--gp)">🛡️</div><div class="teamN">Golias</div><div class="teamR">CEO / Assistant</div></div>
             <div class="teamCard"><div class="teamAv" style="background:linear-gradient(135deg,#10b981,#059669)">💻</div><div class="teamN">Effy</div><div class="teamR">Director of Development</div></div>
