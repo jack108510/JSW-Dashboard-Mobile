@@ -158,7 +158,14 @@
 <nav class="sidebar">
     <div class="logo"><div class="logo-icon">⚡</div><div><h1>Wilde Automations</h1><span class="logo-sub">Corporate Dashboard</span></div></div>
     <div class="parent"><div class="parent-l">Parent Company</div><div class="parent-n"><i class="fas fa-building"></i> Wilde Automations</div></div>
-    <div class="org-s"><div class="org-t">Main</div><div class="nav active" data-v="overview"><i class="fas fa-th-large"></i><span>Overview</span></div><div class="nav" data-v="add-project"><i class="fas fa-plus-circle"></i><span>Add Project</span></div><div class="nav" data-v="config"><i class="fas fa-cog"></i><span>Config</span></div></div>
+    <div class="org-s"><div class="org-t">Main</div>
+        <div class="nav active" data-v="overview"><i class="fas fa-th-large"></i><span>Overview</span></div>
+        <div class="nav" data-v="org-chart"><i class="fas fa-sitemap"></i><span>Org Chart</span></div>
+        <div class="nav" data-v="live-activity"><i class="fas fa-heartbeat"></i><span>Live Activity</span></div>
+        <div class="nav" data-v="manage-projects"><i class="fas fa-tasks"></i><span>Manage Projects</span></div>
+        <div class="nav" data-v="add-project"><i class="fas fa-plus-circle"></i><span>Add Project</span></div>
+        <div class="nav" data-v="config"><i class="fas fa-cog"></i><span>Config</span></div>
+    </div>
     <div class="org-s"><div class="org-t">Companies</div>
         <div id="companyNav"></div>
     </div>
@@ -265,6 +272,99 @@
             <div class="json-output" id="rawJson" style="max-height:400px"></div>
         </div>
     </div>
+    <div id="org-chart" class="view">
+        <div class="header"><div><h1>🏛️ Corporate Chart</h1><div class="header-s">Wilde Automations Organization Structure</div></div></div>
+        
+        <!-- President -->
+        <div class="org-level" style="text-align:center; margin-bottom:40px;">
+            <div class="org-card" style="display:inline-flex; align-items:center; gap:16px; background:linear-gradient(135deg,var(--p),#0284c7); padding:20px 32px; border-radius:16px; box-shadow:0 8px 30px rgba(14,165,233,0.3);">
+                <div style="width:60px; height:60px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.8rem;">👑</div>
+                <div style="text-align:left;">
+                    <div style="font-weight:700; font-size:1.2rem; color:white;">Jack Lee</div>
+                    <div style="font-size:0.9rem; color:rgba(255,255,255,0.8);">President</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Connector Line -->
+        <div style="display:flex; justify-content:center; margin-bottom:40px;">
+            <div style="width:2px; height:30px; background:linear-gradient(180deg,var(--p),var(--s));"></div>
+        </div>
+        
+        <!-- Chief of Staff -->
+        <div class="org-level" style="text-align:center; margin-bottom:40px;">
+            <div class="org-card" style="display:inline-flex; align-items:center; gap:16px; background:linear-gradient(135deg,#10b981,#059669); padding:20px 32px; border-radius:16px; box-shadow:0 8px 30px rgba(16,185,129,0.3);">
+                <div style="width:60px; height:60px; background:rgba(255,255,255,0.2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.8rem;">🛡️</div>
+                <div style="text-align:left;">
+                    <div style="font-weight:700; font-size:1.2rem; color:white;">Golias</div>
+                    <div style="font-size:0.9rem; color:rgba(255,255,255,0.8);">Chief of Staff</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Connector Line -->
+        <div style="display:flex; justify-content:center; margin-bottom:40px;">
+            <div style="width:2px; height:30px; background:linear-gradient(180deg,#10b981,#8b5cf6);"></div>
+        </div>
+        
+        <!-- Directors -->
+        <div class="org-level" style="display:flex; justify-content:center; gap:24px; flex-wrap:wrap; margin-bottom:40px;">
+            <div class="org-card" style="background:var(--ds); border:1px solid var(--b); padding:20px; border-radius:12px; min-width:180px; text-align:center;">
+                <div style="width:48px; height:48px; background:linear-gradient(135deg,#10b981,#059669); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin:0 auto 12px;">💻</div>
+                <div style="font-weight:600; color:var(--t);">Effy</div>
+                <div style="font-size:0.8rem; color:var(--tm);">Director of Development</div>
+            </div>
+            <div class="org-card" style="background:var(--ds); border:1px solid var(--b); padding:20px; border-radius:12px; min-width:180px; text-align:center;">
+                <div style="width:48px; height:48px; background:linear-gradient(135deg,#ec4899,#db2777); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin:0 auto 12px;">🎬</div>
+                <div style="font-weight:600; color:var(--t);">Gretel</div>
+                <div style="font-size:0.8rem; color:var(--tm);">Content Director</div>
+            </div>
+            <div class="org-card" style="background:var(--ds); border:1px solid var(--b); padding:20px; border-radius:12px; min-width:180px; text-align:center;">
+                <div style="width:48px; height:48px; background:linear-gradient(135deg,#f59e0b,#d97706); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin:0 auto 12px;">🔍</div>
+                <div style="font-weight:600; color:var(--t);">Stan</div>
+                <div style="font-size:0.8rem; color:var(--tm);">Research Director</div>
+            </div>
+            <div class="org-card" style="background:var(--ds); border:1px solid var(--b); padding:20px; border-radius:12px; min-width:180px; text-align:center;">
+                <div style="width:48px; height:48px; background:linear-gradient(135deg,#8b5cf6,#7c3aed); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin:0 auto 12px;">✅</div>
+                <div style="font-weight:600; color:var(--t);">JR</div>
+                <div style="font-size:0.8rem; color:var(--tm);">Quality Assurance</div>
+            </div>
+        </div>
+        
+        <!-- Legend -->
+        <div style="background:var(--ds); border:1px solid var(--b); border-radius:12px; padding:20px; max-width:400px; margin:40px auto;">
+            <h3 style="margin-bottom:16px; font-size:1rem;"><i class="fas fa-info-circle" style="color:var(--p)"></i> About This Chart</h3>
+            <p style="color:var(--tm); font-size:0.9rem; line-height:1.6;">
+                <strong>Jack Lee</strong> - President, founder of Wilde Automations<br>
+                <strong>Golias</strong> - Chief of Staff, manages operations and AI agents<br>
+                <strong>Effy</strong> - Director of Development, builds all web applications<br>
+                <strong>Gretel</strong> - Content Director, handles design and content<br>
+                <strong>Stan</strong> - Research Director, finds opportunities<br>
+                <strong>JR</strong> - Quality Assurance, tests everything before delivery
+            </p>
+        </div>
+    </div>
+    
+    <div id="live-activity" class="view">
+        <div class="header"><div><h1>💓 Live Activity</h1><div class="header-s">What the team is working on right now</div></div><div style="display:flex;gap:12px;align-items:center"><div class="status" id="activityStatus"><span class="dot"></span>Live</div></div></div>
+        
+        <div id="activityFeed" style="display:flex; flex-direction:column; gap:16px;">
+            <!-- Activity cards will be dynamically generated -->
+        </div>
+        
+        <div style="text-align:center; padding:40px; color:var(--tm);">
+            <i class="fas fa-sync fa-spin" style="font-size:2rem; margin-bottom:16px;"></i>
+            <p>Activity updates every 30 seconds</p>
+        </div>
+    </div>
+    
+    <div id="manage-projects" class="view">
+        <div class="header"><div><h1>📋 Manage Projects</h1><div class="header-s">Edit and manage all projects</div></div><button class="btn btnPri" onclick="openModal()"><i class="fas fa-plus"></i> Add Project</button></div>
+        
+        <div id="manageProjectsGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(350px,1fr)); gap:20px;">
+        </div>
+    </div>
+    
     <div id="team" class="view">
         <div class="header"><div><h1>👥 Team</h1><div class="header-s">Wilde Automations Development Team</div></div></div>
         <div class="team">
@@ -733,10 +833,121 @@ function uploadConfig(input) {
     };
     reader.readAsText(file);
   }
+  }
+}
+
+// Live Activity Data - Update this to change what agents are working on
+const liveActivityData = [
+  {
+    agent: 'Golias',
+    role: 'Chief of Staff',
+    icon: '🛡️',
+    color: '#10b981',
+    status: 'active',
+    currentTask: 'Managing operations and coordinating team',
+    lastUpdate: 'Just now'
+  },
+  {
+    agent: 'Effy',
+    role: 'Director of Development',
+    icon: '💻',
+    color: '#0ea5e9',
+    status: 'active',
+    currentTask: 'Building and improving web applications',
+    lastUpdate: 'Just now'
+  },
+  {
+    agent: 'Gretel',
+    role: 'Content Director',
+    icon: '🎨',
+    color: '#ec4899',
+    status: 'active',
+    currentTask: 'Designing and creating content',
+    lastUpdate: 'Just now'
+  },
+  {
+    agent: 'Stan',
+    role: 'Research Director',
+    icon: '🔍',
+    color: '#f59e0b',
+    status: 'active',
+    currentTask: 'Researching opportunities and gathering insights',
+    lastUpdate: 'Just now'
+  },
+  {
+    agent: 'JR',
+    role: 'Quality Assurance',
+    icon: '✅',
+    color: '#8b5cf6',
+    status: 'active',
+    currentTask: 'Testing and ensuring quality',
+    lastUpdate: 'Just now'
+  }
+];
+
+function renderLiveActivity() {
+  const feed = document.getElementById('activityFeed');
+  if (!feed) return;
+  
+  feed.innerHTML = liveActivityData.map(member => `
+    <div style="background:var(--ds); border:1px solid var(--b); border-radius:16px; padding:24px; display:flex; align-items:center; gap:20px; animation:pulse 2s infinite;">
+      <div style="width:64px; height:64px; background:linear-gradient(135deg,${member.color},${member.color}99); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:2rem; flex-shrink:0;">${member.icon}</div>
+      <div style="flex:1;">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+          <span style="font-weight:700; font-size:1.1rem; color:var(--t);">${member.agent}</span>
+          <span style="background:rgba(16,185,129,0.2); color:#6ee7b7; padding:2px 10px; border-radius:12px; font-size:0.75rem; font-weight:600;">● ACTIVE</span>
+        </div>
+        <div style="color:var(--tm); font-size:0.9rem;">${member.role}</div>
+        <div style="color:var(--p); font-size:0.95rem; margin-top:8px; font-weight:500;">${member.currentTask}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="color:var(--s); font-size:0.85rem;">${member.lastUpdate}</div>
+      </div>
+    </div>
+  `).join('');
+  
+  // Auto-refresh animation
+  setTimeout(() => {
+    liveActivityData.forEach((member, i) => {
+      member.lastUpdate = 'Just now';
+    });
+    renderLiveActivity();
+  }, 30000);
+}
+
+function renderManageProjects() {
+  const grid = document.getElementById('manageProjectsGrid');
+  if (!grid) return;
+  
+  let html = '';
+  currentData.companies.forEach(company => {
+    company.projects.forEach(project => {
+      const statusClass = statusClasses[project.status] || 'sPlanning';
+      html += `
+        <div style="background:var(--ds); border:1px solid var(--b); border-radius:16px; padding:20px;">
+          <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:12px;">
+            <div>
+              <div style="font-size:0.75rem; color:${company.color}; text-transform:uppercase; font-weight:600;">${company.name}</div>
+              <div style="font-weight:600; font-size:1.1rem; color:var(--t);">${project.name}</div>
+            </div>
+            <span class="pStat ${statusClass}">${project.status}</span>
+          </div>
+          <p style="color:var(--tm); font-size:0.85rem; margin-bottom:16px;">${project.description}</p>
+          <div style="display:flex; gap:8px;">
+            ${project.url ? `<a href="${project.url}" target="_blank" class="pBtn pBtnPri" style="flex:1; justify-content:center;">Open</a>` : ''}
+            <button class="pBtn pBtnSec" style="flex:1; justify-content:center;" onclick="alert('Edit coming soon!')">Edit</button>
+          </div>
+        </div>
+      `;
+    });
+  });
+  grid.innerHTML = html;
 }
 
 // Initialize
 renderDashboard();
+renderLiveActivity();
+renderManageProjects();
 </script>
 </body>
 </html>
