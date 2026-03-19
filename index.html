@@ -109,13 +109,18 @@
         .whiteboard:focus { outline: none; border-color: var(--primary-light); }
         
         /* Team Page */
-        .org-chart { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 32px; }
-        .org-row { display: flex; justify-content: center; gap: 32px; margin-bottom: 32px; }
-        .org-row:last-child { margin-bottom: 0; }
+        .org-chart { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 24px; }
+        .org-title { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--gray-500); margin-bottom: 16px; text-align: center; }
+        .org-level { margin-bottom: 24px; }
+        .org-level:last-child { margin-bottom: 0; }
+        .org-level-label { font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        .org-level-label::after { content: ''; flex: 1; height: 1px; background: var(--gray-200); }
+        .org-level-label::before { content: ''; flex: 1; height: 1px; background: var(--gray-200); }
+        .org-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
         .org-person { text-align: center; }
-        .org-avatar { width: 56px; height: 56px; background: var(--primary-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: 600; margin: 0 auto 8px; }
-        .org-name { font-weight: 600; font-size: 12px; }
-        .org-role { font-size: 10px; color: var(--gray-500); }
+        .org-avatar { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; font-weight: 600; margin: 0 auto 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .org-name { font-weight: 600; font-size: 13px; }
+        .org-role { font-size: 11px; color: var(--gray-500); background: var(--gray-100); padding: 2px 8px; border-radius: 12px; display: inline-block; margin-top: 4px; }
         
         @media (max-width: 768px) {
             .company-grid { grid-template-columns: repeat(2, 1fr); }
@@ -239,17 +244,25 @@
         <div id="team" class="view">
             <h1 class="page-title">Team</h1>
             <div class="org-chart">
-                <div class="org-row"><div class="org-person"><div class="org-avatar">👤</div><div class="org-name">Jack</div><div class="org-role">Owner</div></div></div>
-                <div class="org-row"><div class="org-person"><div class="org-avatar">🤖</div><div class="org-name">Golias</div><div class="org-role">Operations</div></div></div>
-                <div class="org-row">
-                    <div class="org-person"><div class="org-avatar" style="background:#10B981">E</div><div class="org-name">Effy</div><div class="org-role">Engineer</div></div>
-                    <div class="org-person"><div class="org-avatar" style="background:#6366F1">J</div><div class="org-name">JR</div><div class="org-role">QA</div></div>
-                    <div class="org-person"><div class="org-avatar" style="background:#F59E0B">W</div><div class="org-name">Wilson</div><div class="org-role">Lead</div></div>
-                    <div class="org-person"><div class="org-avatar" style="background:#EC4899">G</div><div class="org-name">Gretel</div><div class="org-role">Writer</div></div>
-                    <div class="org-person"><div class="org-avatar" style="background:#8B5CF6">S</div><div class="org-name">Stan</div><div class="org-role">Research</div></div>
-                    <div class="org-person"><div class="org-avatar" style="background:#3B82F6">B</div><div class="org-name">Bongo</div><div class="org-role">Content</div></div>
-                    <div class="org-person"><div class="org-avatar" style="background:#14B8A6">F</div><div class="org-name">Frankie</div><div class="org-role">Sec</div></div>
-                    <div class="org-person"><div class="org-avatar" style="background:#F97316">J</div><div class="org-name">Joon</div><div class="org-role">Social</div></div>
+                <div class="org-level">
+                    <div class="org-level-label">Leadership</div>
+                    <div class="org-row">
+                        <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#374151,#111827);">👤</div><div class="org-name">Jack</div><div class="org-role">Owner</div></div>
+                        <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#059669,#047857);">🤖</div><div class="org-name">Golias</div><div class="org-role">Operations</div></div>
+                    </div>
+                </div>
+                <div class="org-level">
+                    <div class="org-level-label">Team</div>
+                    <div class="org-row">
+                        <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#10B981,#059669)">E</div><div class="org-name">Effy</div><div class="org-role">Engineer</div></div>
+                        <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#6366F1,#4F46E5)">J</div><div class="org-name">JR</div><div class="org-role">QA</div></div>
+                        <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">W</div><div class="org-name">Wilson</div><div class="org-role">Lead</div></div>
+                        <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#EC4899,#DB2777)">G</div><div class="org-name">Gretel</div><div class="org-role">Writer</div></div>
+                        <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#8B5CF6,#7C3AED)">S</div><div class="org-name">Stan</div><div class="org-role">Research</div></div>
+                        <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#3B82F6,#2563EB)">B</div><div class="org-name">Bongo</div><div class="org-role">Content</div></div>
+                        <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#14B8A6,#0D9488)">F</div><div class="org-name">Frankie</div><div class="org-role">Sec</div></div>
+                        <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#F97316,#EA580C)">J</div><div class="org-name">Joon</div><div class="org-role">Social</div></div>
+                    </div>
                 </div>
             </div>
         </div>
