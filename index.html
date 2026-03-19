@@ -207,10 +207,6 @@
                     <div class="detail-stat-value" id="statActive">0</div>
                     <div class="detail-stat-label">Active Tasks</div>
                 </div>
-                <div class="detail-stat">
-                    <div class="detail-stat-value" id="statTeam">0</div>
-                    <div class="detail-stat-label">Team Members</div>
-                </div>
             </div>
             <div class="detail-grid">
                 <div class="detail-card">
@@ -220,10 +216,6 @@
                         <button class="task-add-btn" onclick="addCompanyTask()">Add</button>
                     </div>
                     <ul class="task-list" id="companyTaskList"></ul>
-                </div>
-                <div class="detail-card">
-                    <div class="detail-card-title">Team</div>
-                    <div class="team-grid" id="companyTeam"></div>
                 </div>
             </div>
             <!-- Notes/Ideas -->
@@ -445,10 +437,8 @@
             const tasks = allTasks.filter(t => t.company === currentCompany && t.status === 'pending');
             const list = document.getElementById('companyTaskList');
             const active = document.getElementById('statActive');
-            const team = document.getElementById('statTeam');
             
             active.textContent = tasks.length;
-            team.textContent = companyInfo[currentCompany].team.length;
             
             if (tasks.length === 0) {
                 list.innerHTML = '<li style="color:#9CA3AF;text-align:center;padding:20px;">No tasks</li>';
@@ -567,13 +557,6 @@
             const info = companyInfo[company];
             document.getElementById('detailIcon').textContent = info.icon;
             document.getElementById('detailName').textContent = info.name;
-            document.getElementById('companyTeam').innerHTML = info.team.map(t => `
-                <div class="team-member">
-                    <div class="team-avatar">${t.n[0]}</div>
-                    <div class="team-member-name">${t.n}</div>
-                    <div class="team-member-role">${t.r}</div>
-                </div>
-            `).join('');
             
             // Load whiteboard and notes
             document.getElementById('whiteboard').value = localStorage.getItem('jsw-whiteboard-' + company) || '';
