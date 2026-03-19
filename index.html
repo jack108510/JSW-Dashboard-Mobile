@@ -347,14 +347,27 @@
             tasks.push(text);
             saveTasks(key, tasks);
             input.value = '';
+            
+            // If added from company, auto-add to queue
+            if (key === 'company') {
+                const queue = getTasks('queue');
+                queue.push('[Company] ' + text);
+                saveTasks('queue', queue);
+                renderTasks('queue');
+                key = 'queue';
+            }
+            
             renderTasks(key);
             
-            // Send to Discord
+            // Auto-post to Discord if it's #1 in queue
             if (key === 'queue') {
+                const queue = getTasks('queue');
+                const taskNum = queue.indexOf(text) + 1;
+                const prefix = taskNum === 1 ? '🎯 ' : '📋 ';
                 fetch(WEBHOOK, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({task: '📋 NEW TASK: ' + text})
+                    body: JSON.stringify({task: prefix + (taskNum === 1 ? 'UP NEXT: ' : '') + text + ' (#' + taskNum + ')'})
                 }).catch(() => {});
             }
         }
@@ -364,7 +377,7 @@
             if (!queue.length) return;
             
             const done = getTasks('done');
-            done.unshift(queue[0]); // Add to top of completed
+            done.unshift(queue[0]);
             queue.shift();
             saveTasks('queue', queue);
             saveTasks('done', done);
@@ -373,13 +386,19 @@
             renderTasks('done');
             updateCurrentTask();
             
-            // Notify Discord
+            // Auto-post next task to Discord
             const nextTask = queue[0];
             if (nextTask) {
                 fetch(WEBHOOK, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({task: '✅ Completed! Now working on: ' + nextTask})
+                    body: JSON.stringify({task: '🎯 UP NEXT: ' + nextTask + ' (#1)'})
+                }).catch(() => {});
+            } else {
+                fetch(WEBHOOK, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({task: '✅ Queue empty!'})
                 }).catch(() => {});
             }
         }
