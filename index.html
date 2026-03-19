@@ -3,49 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSW Task Queue</title>
+    <title>JSW Enterprises - Mission Control</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-            background: #ffffff; 
+            background: #004B2B; 
             color: #1a1a1a; 
             min-height: 100vh;
         }
-        .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; }
-        h1 { color: #004B2B; margin-bottom: 30px; font-size: 28px; }
-        .input-group { display: flex; gap: 10px; margin-bottom: 30px; }
-        input { 
+        
+        /* Header */
+        .header {
+            background: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, #D4AF37, #B8962E);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+        }
+        .logo h1 { color: #004B2B; font-size: 22px; }
+        .logo span { color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .status { 
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 16px; background: #f0fdf4; 
+            border: 1px solid #004B2B; border-radius: 20px;
+        }
+        .status-dot { 
+            width: 8px; height: 8px; background: #22c55e; 
+            border-radius: 50%; animation: pulse 2s infinite;
+        }
+        
+        /* Main */
+        .main { padding: 30px 40px; max-width: 1400px; margin: 0 auto; }
+        
+        /* Stats */
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .stat-card {
+            background: white; border-radius: 12px; padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .stat-card .value { font-size: 32px; font-weight: 700; color: #004B2B; }
+        .stat-card .label { color: #666; font-size: 14px; margin-top: 4px; }
+        
+        /* Columns */
+        .columns { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        
+        /* Task Column */
+        .task-col { background: white; border-radius: 16px; padding: 24px; }
+        .task-col h2 { color: #004B2B; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        
+        .input-group { display: flex; gap: 10px; margin-bottom: 24px; }
+        input[type="text"] { 
             flex: 1; padding: 14px 18px; border: 2px solid #e0e0e0; 
             border-radius: 8px; font-size: 16px; outline: none;
         }
-        input:focus { border-color: #004B2B; }
-        button { 
+        input[type="text"]:focus { border-color: #004B2B; }
+        .add-btn { 
             padding: 14px 28px; background: #004B2B; color: white; 
             border: none; border-radius: 8px; font-size: 16px; cursor: pointer;
         }
-        button:hover { background: #006b3d; }
+        .add-btn:hover { background: #006b3d; }
+        
         ul { list-style: none; }
         li { 
             display: flex; align-items: center; justify-content: space-between;
-            padding: 16px; border-bottom: 1px solid #eee; 
+            padding: 14px 0; border-bottom: 1px solid #eee; 
         }
-        li.completed { text-decoration: line-through; color: #999; }
-        .delete { 
-            background: #ff4444; padding: 8px 14px; font-size: 14px;
+        li.completed span { text-decoration: line-through; color: #999; }
+        .task-text { cursor: pointer; flex: 1; }
+        .task-actions { display: flex; gap: 8px; }
+        .check-btn {
+            width: 24px; height: 24px; border: 2px solid #004B2B; 
+            border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;
         }
-        .delete:hover { background: #cc3333; }
+        .check-btn.checked { background: #004B2B; color: white; }
+        .delete-btn { 
+            background: #ff4444; color: white; border: none;
+            padding: 6px 12px; border-radius: 6px; cursor: pointer;
+        }
+        
+        /* Companies */
+        .company-col { display: flex; flex-direction: column; gap: 20px; }
+        .company-card {
+            background: white; border-radius: 16px; padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .company-card:hover { transform: translateY(-2px); }
+        .company-card h3 { color: #004B2B; margin-bottom: 4px; }
+        .company-card p { color: #666; font-size: 14px; }
+        .company-status {
+            display: inline-block; padding: 4px 10px; 
+            background: #f0fdf4; color: #004B2B; 
+            border-radius: 12px; font-size: 12px; margin-top: 10px;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @media (max-width: 900px) {
+            .columns { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .header, .main { padding: 20px; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📋 JSW Task Queue</h1>
-        <div class="input-group">
-            <input type="text" id="taskInput" placeholder="Add a task..." onkeypress="handleKeypress(event)">
-            <button onclick="addTask()">Add Task</button>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🏢</div>
+            <div>
+                <h1>JSW Enterprises</h1>
+                <span>Mission Control</span>
+            </div>
         </div>
-        <ul id="taskList"></ul>
-    </div>
+        <div class="status">
+            <div class="status-dot"></div>
+            <span>All Systems Operational</span>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="value">4</div>
+                <div class="label">Active Companies</div>
+            </div>
+            <div class="stat-card">
+                <div class="value" id="taskCount">0</div>
+                <div class="label">Pending Tasks</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">7</div>
+                <div class="label">Team Members</div>
+            </div>
+            <div class="stat-card">
+                <div class="value">3</div>
+                <div class="label">Active Automations</div>
+            </div>
+        </div>
+
+        <div class="columns">
+            <div class="task-col">
+                <h2>📋 Task Queue</h2>
+                <div class="input-group">
+                    <input type="text" id="taskInput" placeholder="Add a new task..." onkeypress="handleKeypress(event)">
+                    <button class="add-btn" onclick="addTask()">Add Task</button>
+                </div>
+                <ul id="taskList"></ul>
+            </div>
+            
+            <div class="company-col">
+                <div class="company-card" onclick="alert('Opening Clinic IQ...')">
+                    <h3>🏥 Clinic IQ</h3>
+                    <p>Veterinary Practice Management</p>
+                    <span class="company-status">● Active</span>
+                </div>
+                <div class="company-card" onclick="alert('Opening Wilde Automations...')">
+                    <h3>⚙️ Wilde Automations</h3>
+                    <p>Business Automation Solutions</p>
+                    <span class="company-status">● Active</span>
+                </div>
+                <div class="company-card" onclick="alert('Opening Uncle Sam\'s Procurement...')">
+                    <h3>📄 Uncle Sam's Procurement</h3>
+                    <p>Government Contract Intelligence</p>
+                    <span class="company-status">● Active</span>
+                </div>
+                <div class="company-card" onclick="alert('Opening The Westwood Network...')">
+                    <h3>🌐 The Westwood Network</h3>
+                    <p>Network Infrastructure Services</p>
+                    <span class="company-status">● Active</span>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script>
         const WEBHOOK_URL = 'https://hiv-finished-yeah-national.trycloudflare.com/task';
@@ -60,11 +203,23 @@
         
         function renderTasks() {
             const tasks = getTasks();
+            document.getElementById('taskCount').textContent = tasks.filter(t => !t.completed).length;
+            
             const list = document.getElementById('taskList');
+            if (tasks.length === 0) {
+                list.innerHTML = '<li style="color: #999; justify-content: center;">No tasks yet. Add one above!</li>';
+                return;
+            }
+            
             list.innerHTML = tasks.map((t, i) => `
                 <li class="${t.completed ? 'completed' : ''}">
-                    <span onclick="toggleTask(${i})">${t.text}</span>
-                    <button class="delete" onclick="deleteTask(${i})">✕</button>
+                    <span class="task-text" onclick="toggleTask(${i})">${t.text}</span>
+                    <div class="task-actions">
+                        <div class="check-btn ${t.completed ? 'checked' : ''}" onclick="toggleTask(${i})">
+                            ${t.completed ? '✓' : ''}
+                        </div>
+                        <button class="delete-btn" onclick="deleteTask(${i})">✕</button>
+                    </div>
                 </li>
             `).join('');
         }
@@ -80,7 +235,6 @@
             input.value = '';
             renderTasks();
             
-            // Send to webhook
             fetch(WEBHOOK_URL, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
