@@ -4,263 +4,1037 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSW Enterprises - Mission Control</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-            background: #004B2B; 
-            color: #1a1a1a; 
-            min-height: 100vh;
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --bg-card-hover: #22222e;
+            --gold: #d4af37;
+            --gold-light: #f4cf57;
+            --gold-dark: #b8962e;
+            --gold-glow: rgba(212, 175, 55, 0.15);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: rgba(212, 175, 55, 0.1);
         }
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(ellipse at 20% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
         /* Header */
         .header {
-            background: white;
-            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 30px;
         }
-        .logo { display: flex; align-items: center; gap: 12px; }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .logo-icon {
-            width: 44px; height: 44px;
-            background: linear-gradient(135deg, #D4AF37, #B8962E);
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 20px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 20px var(--gold-glow);
         }
-        .logo h1 { color: #004B2B; font-size: 22px; }
-        .logo span { color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .status { 
-            display: flex; align-items: center; gap: 8px;
-            padding: 8px 16px; background: #f0fdf4; 
-            border: 1px solid #004B2B; border-radius: 20px;
+
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .status-dot { 
-            width: 8px; height: 8px; background: #22c55e; 
-            border-radius: 50%; animation: pulse 2s infinite;
+
+        .logo-text span {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        
-        /* Main */
-        .main { padding: 30px 40px; max-width: 1400px; margin: 0 auto; }
-        
-        /* Stats */
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
-        .stat-card {
-            background: white; border-radius: 12px; padding: 24px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border-radius: 30px;
+            border: 1px solid var(--border);
         }
-        .stat-card .value { font-size: 32px; font-weight: 700; color: #004B2B; }
-        .stat-card .label { color: #666; font-size: 14px; margin-top: 4px; }
-        
-        /* Columns */
-        .columns { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
-        
-        /* Task Column */
-        .task-col { background: white; border-radius: 16px; padding: 24px; }
-        .task-col h2 { color: #004B2B; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        
-        .input-group { display: flex; gap: 10px; margin-bottom: 24px; }
-        input[type="text"] { 
-            flex: 1; padding: 14px 18px; border: 2px solid #e0e0e0; 
-            border-radius: 8px; font-size: 16px; outline: none;
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
-        input[type="text"]:focus { border-color: #004B2B; }
-        .add-btn { 
-            padding: 14px 28px; background: #004B2B; color: white; 
-            border: none; border-radius: 8px; font-size: 16px; cursor: pointer;
-        }
-        .add-btn:hover { background: #006b3d; }
-        
-        ul { list-style: none; }
-        li { 
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 0; border-bottom: 1px solid #eee; 
-        }
-        li.completed span { text-decoration: line-through; color: #999; }
-        .task-text { cursor: pointer; flex: 1; }
-        .task-actions { display: flex; gap: 8px; }
-        .check-btn {
-            width: 24px; height: 24px; border: 2px solid #004B2B; 
-            border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-        }
-        .check-btn.checked { background: #004B2B; color: white; }
-        .delete-btn { 
-            background: #ff4444; color: white; border: none;
-            padding: 6px 12px; border-radius: 6px; cursor: pointer;
-        }
-        
-        /* Companies */
-        .company-col { display: flex; flex-direction: column; gap: 20px; }
-        .company-card {
-            background: white; border-radius: 16px; padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            cursor: pointer; transition: transform 0.2s;
-        }
-        .company-card:hover { transform: translateY(-2px); }
-        .company-card h3 { color: #004B2B; margin-bottom: 4px; }
-        .company-card p { color: #666; font-size: 14px; }
-        .company-status {
-            display: inline-block; padding: 4px 10px; 
-            background: #f0fdf4; color: #004B2B; 
-            border-radius: 12px; font-size: 12px; margin-top: 10px;
-        }
-        
+
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
-        
-        @media (max-width: 900px) {
-            .columns { grid-template-columns: 1fr; }
-            .stats { grid-template-columns: repeat(2, 1fr); }
-            .header, .main { padding: 20px; }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--gold-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--gold-glow);
+        }
+
+        .stat-card .icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gold-glow);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-card .label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .panel-title .icon {
+            font-size: 18px;
+        }
+
+        .panel-badge {
+            background: var(--gold-glow);
+            color: var(--gold);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .panel-body {
+            padding: 20px 24px;
+        }
+
+        /* Team Panel - Full Width */
+        .team-panel {
+            grid-column: span 3;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .team-member {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 14px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            border-color: var(--gold-dark);
+            background: var(--bg-card-hover);
+        }
+
+        .team-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--bg-primary);
+        }
+
+        .team-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .team-info span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .team-status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-indicator.online { background: var(--success); }
+        .status-indicator.away { background: var(--warning); }
+        .status-indicator.busy { background: var(--danger); }
+        .status-indicator.offline { background: var(--text-muted); }
+
+        /* Companies Panel */
+        .companies-panel {
+            grid-column: span 2;
+        }
+
+        .company-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 14px;
+            margin-bottom: 12px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .company-card:hover {
+            border-color: var(--gold-dark);
+        }
+
+        .company-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .company-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .company-icon.contractiq { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .company-icon.cliniciq { background: linear-gradient(135deg, #10b981, #059669); }
+        .company-icon.wilde { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); }
+        .company-icon.westwood { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+
+        .company-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .company-info span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .company-status {
+            margin-left: auto;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .company-status.active {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+
+        .company-status.new {
+            background: var(--gold-glow);
+            color: var(--gold);
+        }
+
+        /* Automations Panel */
+        .automations-panel {
+            grid-column: span 1;
+        }
+
+        .automation-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .automation-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .automation-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .automation-icon.news { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .automation-icon.sports { background: linear-gradient(135deg, #22c55e, #16a34a); }
+        .automation-icon.contracts { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+
+        .automation-info {
+            flex: 1;
+        }
+
+        .automation-info h5 {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .automation-info span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .automation-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .automation-status.running { background: var(--success); box-shadow: 0 0 10px var(--success); }
+        .automation-status.idle { background: var(--text-muted); }
+        .automation-status.error { background: var(--danger); }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--gold-dark);
+            transform: translateY(-1px);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-primary);
+            border: none;
+        }
+
+        .action-btn.primary:hover {
+            box-shadow: 0 4px 20px var(--gold-glow);
+        }
+
+        /* Activity Log */
+        .activity-panel {
+            grid-column: span 1;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.success { background: rgba(34, 197, 94, 0.15); }
+        .activity-icon.info { background: rgba(59, 130, 246, 0.15); }
+        .activity-icon.warning { background: rgba(245, 158, 11, 0.15); }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-content p {
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .activity-content span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Reports Panel */
+        .reports-panel {
+            grid-column: span 2;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .report-card {
+            padding: 16px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .report-card:hover {
+            border-color: var(--gold-dark);
+        }
+
+        .report-card .icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .report-card h5 {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .report-card span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .report-status {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .report-status.done {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+
+        .report-status.pending {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        /* CEO Section */
+        .ceo-panel {
+            grid-column: span 1;
+        }
+
+        .ceo-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .ceo-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 30px var(--gold-glow);
+        }
+
+        .ceo-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .ceo-card span {
+            font-size: 13px;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .ceo-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .ceo-stat {
+            text-align: center;
+        }
+
+        .ceo-stat .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .ceo-stat .label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .main-grid { grid-template-columns: repeat(2, 1fr); }
+            .team-panel { grid-column: span 2; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .companies-panel { grid-column: span 2; }
+            .reports-panel { grid-column: span 2; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .stats-bar { grid-template-columns: 1fr; }
+            .main-grid { grid-template-columns: 1fr; }
+            .team-panel, .companies-panel, .reports-panel, .automations-panel, .activity-panel, .ceo-panel {
+                grid-column: span 1;
+            }
+            .team-grid { grid-template-columns: 1fr; }
+            .reports-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            <div class="logo-icon">🏢</div>
-            <div>
-                <h1>JSW Enterprises</h1>
-                <span>Mission Control</span>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">⚡</div>
+                <div class="logo-text">
+                    <h1>JSW Enterprises</h1>
+                    <span>Mission Control</span>
+                </div>
             </div>
-        </div>
-        <div class="status">
-            <div class="status-dot"></div>
-            <span>All Systems Operational</span>
-        </div>
-    </header>
+            <div class="header-status">
+                <div class="status-dot"></div>
+                <span>All Systems Active</span>
+            </div>
+        </header>
 
-    <main class="main">
-        <div class="stats">
+        <!-- Stats Bar -->
+        <div class="stats-bar">
             <div class="stat-card">
-                <div class="value">4</div>
-                <div class="label">Active Companies</div>
-            </div>
-            <div class="stat-card">
-                <div class="value" id="taskCount">0</div>
-                <div class="label">Pending Tasks</div>
-            </div>
-            <div class="stat-card">
-                <div class="value">7</div>
+                <div class="icon">👥</div>
+                <div class="value">8</div>
                 <div class="label">Team Members</div>
             </div>
             <div class="stat-card">
+                <div class="icon">🏢</div>
+                <div class="value">4</div>
+                <div class="label">Companies</div>
+            </div>
+            <div class="stat-card">
+                <div class="icon">🤖</div>
                 <div class="value">3</div>
                 <div class="label">Active Automations</div>
             </div>
+            <div class="stat-card">
+                <div class="icon">📊</div>
+                <div class="value">24</div>
+                <div class="label">Reports This Month</div>
+            </div>
         </div>
 
-        <div class="columns">
-            <div class="task-col">
-                <h2>📋 Task Queue</h2>
-                <div class="input-group">
-                    <input type="text" id="taskInput" placeholder="Add a new task..." onkeypress="handleKeypress(event)">
-                    <button class="add-btn" onclick="addTask()">Add Task</button>
+        <!-- Main Grid -->
+        <div class="main-grid">
+            <!-- Team Panel -->
+            <div class="panel team-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="icon">👥</span>
+                        Team Panel
+                    </div>
+                    <div class="panel-badge">8 Members</div>
                 </div>
-                <ul id="taskList"></ul>
+                <div class="panel-body">
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">E</div>
+                            <div class="team-info">
+                                <h4>Effy</h4>
+                                <span>Software Engineer</span>
+                            </div>
+                            <div class="team-status">
+                                <span class="status-indicator online"></span>
+                                <span style="color: var(--success);">Online</span>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: linear-gradient(135deg, #22c55e, #16a34a);">J</div>
+                            <div class="team-info">
+                                <h4>JR</h4>
+                                <span>QA Engineer</span>
+                            </div>
+                            <div class="team-status">
+                                <span class="status-indicator online"></span>
+                                <span style="color: var(--success);">Online</span>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">S</div>
+                            <div class="team-info">
+                                <h4>Stan</h4>
+                                <span>Research Coordinator</span>
+                            </div>
+                            <div class="team-status">
+                                <span class="status-indicator away"></span>
+                                <span style="color: var(--warning);">Away</span>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: linear-gradient(135deg, #ec4899, #db2777);">G</div>
+                            <div class="team-info">
+                                <h4>Gretel</h4>
+                                <span>Copywriter</span>
+                            </div>
+                            <div class="team-status">
+                                <span class="status-indicator online"></span>
+                                <span style="color: var(--success);">Online</span>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: linear-gradient(135deg, #f59e0b, #d97706);">B</div>
+                            <div class="team-info">
+                                <h4>Bongo</h4>
+                                <span>Content Analyst</span>
+                            </div>
+                            <div class="team-status">
+                                <span class="status-indicator busy"></span>
+                                <span style="color: var(--warning);">In Meeting</span>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">W</div>
+                            <div class="team-info">
+                                <h4>Wilson</h4>
+                                <span>AI Automation Expert</span>
+                            </div>
+                            <div class="team-status">
+                                <span class="status-indicator online"></span>
+                                <span style="color: var(--success);">Online</span>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: linear-gradient(135deg, #a855f7, #9333ea);">F</div>
+                            <div class="team-info">
+                                <h4>Frankie</h4>
+                                <span>Secretary</span>
+                            </div>
+                            <div class="team-status">
+                                <span class="status-indicator online"></span>
+                                <span style="color: var(--success);">Online</span>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar" style="background: linear-gradient(135deg, #ef4444, #dc2626);">J</div>
+                            <div class="team-info">
+                                <h4>Joon</h4>
+                                <span>Social Media Manager</span>
+                            </div>
+                            <div class="team-status">
+                                <span class="status-indicator offline"></span>
+                                <span style="color: var(--text-muted);">Offline</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="company-col">
-                <div class="company-card" onclick="alert('Opening Clinic IQ...')">
-                    <h3>🏥 Clinic IQ</h3>
-                    <p>Veterinary Practice Management</p>
-                    <span class="company-status">● Active</span>
+
+            <!-- Companies Panel -->
+            <div class="panel companies-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="icon">🏢</span>
+                        Companies Panel
+                    </div>
+                    <div class="panel-badge">4 Companies</div>
                 </div>
-                <div class="company-card" onclick="alert('Opening Wilde Automations...')">
-                    <h3>⚙️ Wilde Automations</h3>
-                    <p>Business Automation Solutions</p>
-                    <span class="company-status">● Active</span>
+                <div class="panel-body">
+                    <div class="company-card">
+                        <div class="company-icon contractiq">📄</div>
+                        <div class="company-info">
+                            <h4>ContractIQ</h4>
+                            <span>Contract Analysis Software</span>
+                        </div>
+                        <div class="company-status new">NEW</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-icon cliniciq">🏥</div>
+                        <div class="company-info">
+                            <h4>Clinic IQ</h4>
+                            <span>Vet Clinic Software</span>
+                        </div>
+                        <div class="company-status active">Active</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-icon wilde">⚙️</div>
+                        <div class="company-info">
+                            <h4>Wilde Automations</h4>
+                            <span>Automation Services</span>
+                        </div>
+                        <div class="company-status active">Active</div>
+                    </div>
+                    <div class="company-card">
+                        <div class="company-icon westwood">🌐</div>
+                        <div class="company-info">
+                            <h4>The Westwood Network</h4>
+                            <span>Network Solutions</span>
+                        </div>
+                        <div class="company-status active">Active</div>
+                    </div>
                 </div>
-                <div class="company-card" onclick="alert('Opening Uncle Sam\'s Procurement...')">
-                    <h3>📄 Uncle Sam's Procurement</h3>
-                    <p>Government Contract Intelligence</p>
-                    <span class="company-status">● Active</span>
+            </div>
+
+            <!-- Automations Panel -->
+            <div class="panel automations-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="icon">🤖</span>
+                        Automations
+                    </div>
+                    <div class="panel-badge">n8n</div>
                 </div>
-                <div class="company-card" onclick="alert('Opening The Westwood Network...')">
-                    <h3>🌐 The Westwood Network</h3>
-                    <p>Network Infrastructure Services</p>
-                    <span class="company-status">● Active</span>
+                <div class="panel-body">
+                    <div class="automation-item">
+                        <div class="automation-icon news">📰</div>
+                        <div class="automation-info">
+                            <h5>AI News Report</h5>
+                            <span>Daily at 8:00 AM</span>
+                        </div>
+                        <div class="automation-status running"></div>
+                    </div>
+                    <div class="automation-item">
+                        <div class="automation-icon sports">🏆</div>
+                        <div class="automation-info">
+                            <h5>Sports Betting Report</h5>
+                            <span>Daily at 7:00 AM</span>
+                        </div>
+                        <div class="automation-status running"></div>
+                    </div>
+                    <div class="automation-item">
+                        <div class="automation-icon contracts">📋</div>
+                        <div class="automation-info">
+                            <h5>SAM.gov / ContractIQ</h5>
+                            <span>Daily at 9:00 AM</span>
+                        </div>
+                        <div class="automation-status idle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CEO Panel -->
+            <div class="panel ceo-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="icon">👑</span>
+                        Leadership
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="ceo-card">
+                        <div class="ceo-avatar">👑</div>
+                        <h3>Jack Wilde</h3>
+                        <span>CEO / Founder</span>
+                        <div class="ceo-stats">
+                            <div class="ceo-stat">
+                                <div class="value">4</div>
+                                <div class="label">Companies</div>
+                            </div>
+                            <div class="ceo-stat">
+                                <div class="value">8</div>
+                                <div class="label">Team</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Panel -->
+            <div class="panel reports-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="icon">📊</span>
+                        Reports Panel
+                    </div>
+                    <div class="panel-badge">Scheduled</div>
+                </div>
+                <div class="panel-body">
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <div class="icon">📰</div>
+                            <h5>AI News Report</h5>
+                            <span>8:00 AM Daily</span>
+                            <div class="report-status done">Done</div>
+                        </div>
+                        <div class="report-card">
+                            <div class="icon">🏆</div>
+                            <h5>Sports Betting</h5>
+                            <span>7:00 AM Daily</span>
+                            <div class="report-status done">Done</div>
+                        </div>
+                        <div class="report-card">
+                            <div class="icon">📄</div>
+                            <h5>ContractIQ</h5>
+                            <span>9:00 AM Daily</span>
+                            <div class="report-status pending">Pending</div>
+                        </div>
+                        <div class="report-card">
+                            <div class="icon">💰</div>
+                            <h5>Revenue Report</h5>
+                            <span>Weekly</span>
+                            <div class="report-status done">Done</div>
+                        </div>
+                        <div class="report-card">
+                            <div class="icon">📈</div>
+                            <h5>KPI Summary</h5>
+                            <span>Monthly</span>
+                            <div class="report-status pending">Pending</div>
+                        </div>
+                        <div class="report-card">
+                            <div class="icon">🎯</div>
+                            <h5>Team Performance</h5>
+                            <span>Bi-weekly</span>
+                            <div class="report-status done">Done</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="panel quick-actions-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="icon">⚡</span>
+                        Quick Actions
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="quick-actions">
+                        <button class="action-btn primary" onclick="triggerAction('Run AI News Report')">
+                            ▶️ Run AI News Now
+                        </button>
+                        <button class="action-btn" onclick="triggerAction('Run Sports Report')">
+                            🏆 Run Sports Report
+                        </button>
+                        <button class="action-btn" onclick="triggerAction('Sync Contracts')">
+                            📄 Sync Contracts
+                        </button>
+                        <button class="action-btn" onclick="triggerAction('Generate Report')">
+                            📊 Generate Report
+                        </button>
+                        <button class="action-btn" onclick="triggerAction('Team Check-in')">
+                            👥 Team Check-in
+                        </button>
+                        <button class="action-btn" onclick="triggerAction('Refresh All')">
+                            🔄 Refresh All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div class="panel activity-panel">
+                <div class="panel-header">
+                    <div class="panel-title">
+                        <span class="icon">📝</span>
+                        Activity Log
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="activity-item">
+                        <div class="activity-icon success">✓</div>
+                        <div class="activity-content">
+                            <p>AI News Report completed successfully</p>
+                            <span>Today at 8:00 AM</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon success">✓</div>
+                        <div class="activity-content">
+                            <p>Sports Betting Report generated</p>
+                            <span>Today at 7:05 AM</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon info">ℹ</div>
+                        <div class="activity-content">
+                            <p>Wilson pushed code to ContractIQ</p>
+                            <span>Yesterday at 4:32 PM</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon success">✓</div>
+                        <div class="activity-content">
+                            <p>Team Performance Report sent</p>
+                            <span>Yesterday at 2:00 PM</span>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon warning">!</div>
+                        <div class="activity-content">
+                            <p>Joon marked as Offline</p>
+                            <span>Yesterday at 12:15 PM</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <script>
-        const WEBHOOK_URL = 'https://hiv-finished-yeah-national.trycloudflare.com/task';
-        
-        function getTasks() {
-            return JSON.parse(localStorage.getItem('jsw-tasks') || '[]');
-        }
-        
-        function saveTasks(tasks) {
-            localStorage.setItem('jsw-tasks', JSON.stringify(tasks));
-        }
-        
-        function renderTasks() {
-            const tasks = getTasks();
-            document.getElementById('taskCount').textContent = tasks.filter(t => !t.completed).length;
+        function triggerAction(action) {
+            const activityLog = document.querySelector('.activity-panel .panel-body');
+            const newItem = document.createElement('div');
+            newItem.className = 'activity-item';
+            newItem.innerHTML = `
+                <div class="activity-icon info">⚡</div>
+                <div class="activity-content">
+                    <p>${action} triggered</p>
+                    <span>Just now</span>
+                </div>
+            `;
+            activityLog.insertBefore(newItem, activityLog.firstChild);
             
-            const list = document.getElementById('taskList');
-            if (tasks.length === 0) {
-                list.innerHTML = '<li style="color: #999; justify-content: center;">No tasks yet. Add one above!</li>';
-                return;
-            }
-            
-            list.innerHTML = tasks.map((t, i) => `
-                <li class="${t.completed ? 'completed' : ''}">
-                    <span class="task-text" onclick="toggleTask(${i})">${t.text}</span>
-                    <div class="task-actions">
-                        <div class="check-btn ${t.completed ? 'checked' : ''}" onclick="toggleTask(${i})">
-                            ${t.completed ? '✓' : ''}
-                        </div>
-                        <button class="delete-btn" onclick="deleteTask(${i})">✕</button>
-                    </div>
-                </li>
-            `).join('');
+            // Show notification
+            alert(`${action} has been triggered!`);
         }
-        
-        function addTask() {
-            const input = document.getElementById('taskInput');
-            const text = input.value.trim();
-            if (!text) return;
-            
-            const tasks = getTasks();
-            tasks.push({ text, completed: false });
-            saveTasks(tasks);
-            input.value = '';
-            renderTasks();
-            
-            fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({task: text})
-            }).catch(e => console.log('Webhook error:', e));
-        }
-        
-        function toggleTask(i) {
-            const tasks = getTasks();
-            tasks[i].completed = !tasks[i].completed;
-            saveTasks(tasks);
-            renderTasks();
-        }
-        
-        function deleteTask(i) {
-            const tasks = getTasks();
-            tasks.splice(i, 1);
-            saveTasks(tasks);
-            renderTasks();
-        }
-        
-        function handleKeypress(e) {
-            if (e.key === 'Enter') addTask();
-        }
-        
-        renderTasks();
+
+        // Auto-refresh status every 30 seconds
+        setInterval(() => {
+            console.log('Refreshing dashboard status...');
+        }, 30000);
     </script>
 </body>
 </html>
