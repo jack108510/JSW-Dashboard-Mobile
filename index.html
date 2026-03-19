@@ -158,7 +158,7 @@
                     <div class="current-task-text" id="currentTaskText">Loading...</div>
                     <div class="current-task-company" id="currentTaskCompany"></div>
                     <div class="current-task-actions">
-                        <button class="btn-complete" onclick="completeTask()">✓ Complete</button>
+                        <button class="btn-complete" onclick="promptAndComplete()">✓ Complete</button>
                         <button class="btn-skip" onclick="skipTask()">→ Skip</button>
                     </div>
                 </div>
@@ -168,6 +168,16 @@
             <div class="queue-list">
                 <div class="queue-list-header">Up Next</div>
                 <div id="queueItems"></div>
+            </div>
+            
+            <!-- Last Task Update -->
+            <div class="queue-section" style="margin-top:20px;">
+                <div class="queue-header">
+                    <span class="queue-title">💬 Last Task Update</span>
+                </div>
+                <div id="lastUpdate" style="color:var(--gray-500);font-size:14px;padding:12px;background:var(--gray-50);border-radius:8px;">
+                    No updates yet
+                </div>
             </div>
         </div>
 
@@ -408,6 +418,49 @@
             updateCurrentTask();
         }
         
+        function saveLastUpdate(text, company, status, note) {
+            const update = {
+                text,
+                company,
+                status,
+                note: note || '',
+                time: new Date().toLocaleString()
+            };
+            localStorage.setItem('jsw-last-update', JSON.stringify(update));
+            renderLastUpdate();
+        }
+        
+        function promptAndComplete() {
+            const all = getAllQueue();
+            if (all.length === 0) return;
+            
+            const note = prompt('What did you do to complete this task? (evidence/notes)');
+            completeTask(note || 'Task completed');
+        }
+        
+        function renderLastUpdate() {
+            const update = JSON.parse(localStorage.getItem('jsw-last-update') || 'null');
+            const container = document.getElementById('lastUpdate');
+            
+            if (!update) {
+                container.innerHTML = 'No updates yet';
+                return;
+            }
+            
+            const statusColor = update.status === 'completed' ? '#10B981' : '#EF4444';
+            const statusIcon = update.status === 'completed' ? '✅' : '⚠️';
+            
+            container.innerHTML = `
+                <div style="margin-bottom:8px;">
+                    <span style="color:${statusColor};font-weight:600;">${statusIcon} ${update.status.toUpperCase()}</span>
+                    <span style="color:var(--gray-500);font-size:12px;"> - ${update.time}</span>
+                </div>
+                <div style="font-weight:500;">"${update.text}"</div>
+                <div style="color:var(--gray-500);font-size:12px;margin-top:4px;">${companyInfo[update.company] ? companyInfo[update.company].icon + ' ' + companyInfo[update.company].name : update.company}</div>
+                ${update.note ? '<div style="margin-top:8px;padding:8px;background:white;border-radius:6px;border-left:3px solid var(--primary);font-size:13px;">📝 ' + update.note + '</div>' : ''}
+            `;
+        }
+        
         function updateCurrentTask() {
             const all = getAllQueue();
             const taskText = document.getElementById('currentTaskText');
@@ -477,12 +530,15 @@
             renderQueue();
         }
         
-        async function completeTask() {
+        async function completeTask(note = '') {
             const all = getAllQueue();
             if (all.length === 0) return;
             
             const current = all[0];
             await completeTaskById(current.id);
+            
+            // Save last update with evidence note
+            saveLastUpdate(current.text, current.company, 'completed', note);
             
             renderQueue();
             
@@ -672,6 +728,7 @@
         
         // Initialize
         fetchTasks().then(() => renderQueue());
+        renderLastUpdate();
         
         // Auto-refresh every 10 seconds
         setInterval(() => {
