@@ -15,7 +15,6 @@
             --surface-2: #F8FAFC;
             --surface-3: #F1F5F9;
             --border: #E2E8F0;
-            --border-light: #F1F5F9;
             --text: #0F172A;
             --text-secondary: #475569;
             --text-muted: #94A3B8;
@@ -44,12 +43,9 @@
             background: var(--primary);
             border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 12px; color: white;
-            font-weight: 700;
+            font-size: 12px; color: white; font-weight: 700;
         }
-        .logo h1 { 
-            color: var(--text); font-size: 14px; font-weight: 600; 
-        }
+        .logo h1 { color: var(--text); font-size: 14px; font-weight: 600; }
         
         .nav { display: flex; gap: 1px; background: var(--surface-3); padding: 3px; border-radius: 8px; }
         .nav-btn {
@@ -65,16 +61,17 @@
         }
         
         .main { padding-top: 72px; padding-bottom: 20px; }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
         .view { display: none; }
         .view.active { display: block; }
         
         .page-title { 
-            color: var(--text); font-size: 18px; margin-bottom: 16px; 
+            color: var(--text); font-size: 20px; margin-bottom: 16px; 
             font-weight: 600;
         }
         
+        /* Overview - 3 columns */
         .task-columns { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; }
         
         .task-column {
@@ -87,7 +84,7 @@
         .column-header {
             display: flex; align-items: center; justify-content: space-between;
             padding-bottom: 10px; margin-bottom: 10px;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--surface-3);
         }
         .column-header h2 { color: var(--text); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         .column-count {
@@ -122,7 +119,7 @@
         .task-list { list-style: none; }
         .task-item {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 8px 0; border-bottom: 1px solid var(--border-light);
+            padding: 8px 0; border-bottom: 1px solid var(--surface-3);
             font-size: 13px;
         }
         .task-item:last-child { border-bottom: none; }
@@ -146,11 +143,12 @@
         }
         .delete-btn:hover { color: #EF4444; }
         
+        /* Company Grid */
         .company-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
         .company-card {
             background: var(--surface); border: 1px solid var(--border);
             border-radius: 10px; display: flex; flex-direction: column; align-items: center; 
-            justify-content: center; cursor: pointer; padding: 20px 10px;
+            justify-content: center; cursor: pointer; padding: 24px 10px;
             transition: 0.2s;
         }
         .company-card:hover { 
@@ -158,34 +156,74 @@
             box-shadow: var(--shadow-md);
             transform: translateY(-2px);
         }
-        .company-card .icon { font-size: 24px; margin-bottom: 6px; }
-        .company-card .name { color: var(--text); font-weight: 600; font-size: 11px; }
+        .company-card .icon { font-size: 28px; margin-bottom: 8px; }
+        .company-card .name { color: var(--text); font-weight: 600; font-size: 12px; }
         
-        .modal-overlay {
-            position: fixed; inset: 0; 
-            background: rgba(15, 23, 42, 0.4); 
-            z-index: 200;
-            display: none; align-items: center; justify-content: center;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal {
-            background: var(--surface); 
-            border-radius: 12px; width: 90%; max-width: 400px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        .modal-header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 14px 16px; border-bottom: 1px solid var(--border);
-        }
-        .modal-header h2 { color: var(--text); font-size: 15px; font-weight: 600; }
-        .close-btn {
-            background: var(--surface-2); border: none;
-            width: 24px; height: 24px;
-            border-radius: 5px; font-size: 14px; cursor: pointer; color: var(--text-secondary);
-        }
-        .close-btn:hover { background: var(--border); }
-        .modal-body { padding: 16px; }
+        /* Company Detail - Full Dashboard */
+        .company-detail { display: none; }
+        .company-detail.active { display: block; }
         
+        .company-detail-header {
+            display: flex; align-items: center; gap: 16px;
+            margin-bottom: 20px;
+        }
+        .back-btn {
+            padding: 8px 14px; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 7px; cursor: pointer; font-size: 13px; color: var(--text-secondary);
+            transition: 0.15s;
+        }
+        .back-btn:hover { border-color: var(--primary); color: var(--primary); }
+        
+        .company-detail-title {
+            display: flex; align-items: center; gap: 12px;
+        }
+        .company-detail-icon {
+            width: 40px; height: 40px; background: var(--primary); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 20px;
+        }
+        .company-detail-title h1 { font-size: 20px; font-weight: 600; }
+        
+        .company-detail-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+        }
+        
+        .detail-section {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 10px; padding: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+        .detail-section h3 {
+            font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+            color: var(--text-secondary); margin-bottom: 12px;
+            font-weight: 600;
+        }
+        
+        /* Team Grid */
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .team-card {
+            background: var(--surface-2); border: 1px solid var(--border);
+            border-radius: 8px; padding: 12px; text-align: center;
+            transition: 0.15s;
+        }
+        .team-card:hover { background: var(--surface-3); }
+        .team-avatar {
+            width: 40px; height: 40px; background: var(--primary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 16px; color: white; font-weight: 600; margin: 0 auto 8px;
+        }
+        .team-name { font-weight: 600; font-size: 12px; }
+        .team-role { font-size: 10px; color: var(--text-muted); }
+        
+        /* Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+        .stat-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 8px; padding: 14px; text-align: center;
+        }
+        .stat-value { font-size: 24px; font-weight: 700; color: var(--primary); }
+        .stat-label { font-size: 11px; color: var(--text-muted); }
+        
+        /* Org Chart */
         .org-chart { 
             background: var(--surface); border-radius: 10px; padding: 24px; 
             box-shadow: var(--shadow-sm); border: 1px solid var(--border);
@@ -222,6 +260,7 @@
 
     <main class="main">
         <div class="container">
+            <!-- Overview View -->
             <div id="overview" class="view active">
                 <h1 class="page-title">Task Queue</h1>
                 <div class="task-columns">
@@ -261,6 +300,7 @@
                 </div>
             </div>
 
+            <!-- Companies View -->
             <div id="companies" class="view">
                 <h1 class="page-title">Companies</h1>
                 <div class="company-grid">
@@ -283,6 +323,48 @@
                 </div>
             </div>
 
+            <!-- Company Detail Dashboard -->
+            <div id="company-detail" class="company-detail">
+                <div class="company-detail-header">
+                    <button class="back-btn" onclick="closeCompany()">← Back</button>
+                    <div class="company-detail-title">
+                        <div class="company-detail-icon" id="detailIcon">🏥</div>
+                        <h1 id="detailTitle">Company Name</h1>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTasks">0</div>
+                        <div class="stat-label">Active Tasks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTeam">0</div>
+                        <div class="stat-label">Team Members</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statDone">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                </div>
+                
+                <div class="company-detail-grid">
+                    <div class="detail-section">
+                        <h3>Tasks</h3>
+                        <div class="task-input-row">
+                            <input type="text" class="task-input" id="taskInput-company" placeholder="Add task..." onkeypress="handleKeypress(event, 'company')">
+                            <button class="add-btn" onclick="addTask('company')">Add</button>
+                        </div>
+                        <ul class="task-list" id="taskList-company"></ul>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Team</h3>
+                        <div class="team-grid" id="detailTeam"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team View -->
             <div id="team" class="view">
                 <h1 class="page-title">Team</h1>
                 <div class="org-chart">
@@ -290,7 +372,7 @@
                         <div class="org-person"><div class="org-avatar">👤</div><div class="org-name">Jack</div><div class="org-role">Owner</div></div>
                     </div>
                     <div class="org-level">
-                        <div class="org-person"><div class="org-avatar">🤖</div><div class="org-name">Golias</div><div class="org-role">Ops</div></div>
+                        <div class="org-person"><div class="org-avatar">🤖</div><div class="org-name">Golias</div><div class="org-role">Operations</div></div>
                     </div>
                     <div class="org-level">
                         <div class="org-person"><div class="org-avatar" style="background:#10B981">E</div><div class="org-name">Effy</div><div class="org-role">Engineer</div></div>
@@ -307,30 +389,29 @@
         </div>
     </main>
 
-    <div class="modal-overlay" id="companyModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 id="modalTitle">Company</h2>
-                <button class="close-btn" onclick="closeModal()">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="task-column">
-                    <div class="column-header"><h2>Tasks</h2></div>
-                    <div class="task-input-row">
-                        <input type="text" class="task-input" id="taskInput-company" placeholder="Add task..." onkeypress="handleKeypress(event, 'company')">
-                        <button class="add-btn" onclick="addTask('company')">Add</button>
-                    </div>
-                    <ul class="task-list" id="taskList-company"></ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        const WEBHOOK_URL = 'https://hiv-finished-yeah-national.trycloudflare.com/task';
+        const WEBHOOK_URL = 'https://hiv-fininished-yeah-national.trycloudflare.com/task';
         
         const columns = ['golias', 'mine', 'log', 'company'];
-        const companyNames = { cliniciq: 'Clinic IQ', wilde: 'Wilde Automations', sam: "Uncle Sam's", westwood: 'Westwood' };
+        const companyData = {
+            cliniciq: { name: 'Clinic IQ', icon: '🏥', team: [
+                {name: 'Frankie', role: 'Project Manager'},
+                {name: 'Gretel', role: 'UI/UX Designer'},
+                {name: 'JR', role: 'QA Engineer'}
+            ]},
+            wilde: { name: 'Wilde Automations', icon: '⚙️', team: [
+                {name: 'Wilson', role: 'Lead Developer'},
+                {name: 'Effy', role: 'Software Engineer'}
+            ]},
+            sam: { name: "Uncle Sam's Procurement", icon: '📄', team: [
+                {name: 'Stan', role: 'Research Coordinator'}
+            ]},
+            westwood: { name: 'The Westwood Network', icon: '🌐', team: [
+                {name: 'Bongo', role: 'Content Analyst'}
+            ]}
+        };
+        
+        let currentCompany = 'cliniciq';
         
         function getTasks(key) { return JSON.parse(localStorage.getItem('jsw-task-' + key) || '[]'); }
         function saveTasks(key, tasks) { localStorage.setItem('jsw-task-' + key, JSON.stringify(tasks)); }
@@ -368,6 +449,7 @@
             saveTasks(key, tasks);
             input.value = '';
             renderTasks(key);
+            if (key === 'company') renderCompanyStats();
             
             fetch(WEBHOOK_URL, {
                 method: 'POST',
@@ -381,6 +463,7 @@
             tasks[i].completed = !tasks[i].completed;
             saveTasks(key, tasks);
             renderTasks(key);
+            if (key === 'company') renderCompanyStats();
         }
         
         function deleteTask(key, i) {
@@ -388,6 +471,7 @@
             tasks.splice(i, 1);
             saveTasks(key, tasks);
             renderTasks(key);
+            if (key === 'company') renderCompanyStats();
         }
         
         function handleKeypress(e, key) { if (e.key === 'Enter') addTask(key); }
@@ -401,12 +485,46 @@
         }
         
         function openCompany(company) {
-            document.getElementById('modalTitle').textContent = companyNames[company];
-            document.getElementById('companyModal').classList.add('active');
+            currentCompany = company;
+            const data = companyData[company];
+            
+            document.getElementById('detailIcon').textContent = data.icon;
+            document.getElementById('detailTitle').textContent = data.name;
+            
+            // Render team
+            const teamHtml = data.team.map(t => `
+                <div class="team-card">
+                    <div class="team-avatar">${t.name[0]}</div>
+                    <div class="team-name">${t.name}</div>
+                    <div class="team-role">${t.role}</div>
+                </div>
+            `).join('');
+            document.getElementById('detailTeam').innerHTML = teamHtml;
+            
+            renderCompanyStats();
+            
+            document.getElementById('overview').classList.remove('active');
+            document.getElementById('companies').classList.remove('active');
+            document.getElementById('team').classList.remove('active');
+            document.getElementById('company-detail').classList.add('active');
+            
             renderTasks('company');
         }
         
-        function closeModal() { document.getElementById('companyModal').classList.remove('active'); }
+        function closeCompany() {
+            document.getElementById('company-detail').classList.remove('active');
+            document.getElementById('overview').classList.add('active');
+            document.querySelector('[onclick="showView(\'overview\')"]').classList.add('active');
+            columns.forEach(c => renderTasks(c));
+        }
+        
+        function renderCompanyStats() {
+            const tasks = getTasks('company');
+            const data = companyData[currentCompany];
+            document.getElementById('statTasks').textContent = tasks.filter(t => !t.completed).length;
+            document.getElementById('statTeam').textContent = data.team.length;
+            document.getElementById('statDone').textContent = tasks.filter(t => t.completed).length;
+        }
         
         columns.forEach(c => renderTasks(c));
     </script>
