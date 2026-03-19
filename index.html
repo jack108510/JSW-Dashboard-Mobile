@@ -832,7 +832,7 @@
             input.value = '';
             loadTodos();
             
-            // Send to Discord
+            // Send to webhook
             fetch('https://hiv-finished-yeah-national.trycloudflare.com/task', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
