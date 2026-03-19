@@ -426,7 +426,7 @@
         function handleEnter(e) { if (e.key === 'Enter') addCompanyTask(); }
         
         function showPage(page) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById('queue').classList.remove('active'); document.getElementById('companies').classList.remove('active'); document.getElementById('team').classList.remove('active');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(page).classList.add('active');
             document.querySelector('[onclick="showPage(\'' + page + '\')"]').classList.add('active');
@@ -448,13 +448,13 @@
             
             renderCompanyTasks();
             
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById('queue').classList.remove('active'); document.getElementById('companies').classList.remove('active'); document.getElementById('team').classList.remove('active');
             document.getElementById('company-detail').classList.add('active');
         }
         
         function closeCompany() {
             currentCompany = null;
-            document.getElementById('company-detail').classList.remove('active');
+            document.getElementById('company-detail').classList.remove('active'); document.getElementById('queue').classList.remove('active'); document.getElementById('companies').classList.remove('active'); document.getElementById('team').classList.remove('active');
             document.getElementById('queue').classList.add('active');
             document.querySelector('[onclick="showPage(\'queue\')"]').classList.add('active');
             renderQueue();
