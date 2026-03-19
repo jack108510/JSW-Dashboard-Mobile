@@ -145,7 +145,7 @@
                 </div>
                 <div class="current-task">
                     <div class="current-task-label">Task #1</div>
-                    <div class="current-task-text" id="currentTaskText">No tasks in queue</div>
+                    <div class="current-task-text" id="currentTaskText">Loading...</div>
                     <div class="current-task-company" id="currentTaskCompany"></div>
                     <div class="current-task-actions">
                         <button class="btn-complete" onclick="completeTask()">✓ Complete</button>
@@ -240,6 +240,9 @@
     </main>
 
     <script>
+        // Supabase config
+        const SUPABASE_URL = 'https://xacehhtgvubcqdoltazg.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhY2VoaHRndnViY3Fkb2x0YXpnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk0Mjg2NywiZXhwIjoyMDg5NTE4ODY3fQ.5sqLtRtRnWEEuytTsfGhh1hmrQkTilL4Bd_rMrqmQ9A';
         const WEBHOOK = 'https://practices-most-yang-litigation.trycloudflare.com/task';
         
         const companyInfo = {
@@ -251,16 +254,78 @@
         
         const companies = ['cliniciq', 'wilde', 'sam', 'westwood'];
         let currentCompany = null;
+        let allTasks = [];
         
-        function getQueue(company) { return JSON.parse(localStorage.getItem('jsw-q-' + company) || '[]'); }
-        function saveQueue(company, tasks) { localStorage.setItem('jsw-q-' + company, JSON.stringify(tasks)); }
+        // Supabase functions
+        async function fetchTasks() {
+            try {
+                const res = await fetch(SUPABASE_URL + '/rest/v1/tasks?status=eq.pending&order=created_at', {
+                    headers: { 
+                        'apikey': SUPABASE_KEY, 
+                        'Authorization': 'Bearer ' + SUPABASE_KEY 
+                    }
+                });
+                allTasks = await res.json();
+                return allTasks;
+            } catch (e) {
+                console.error('Error fetching tasks:', e);
+                return [];
+            }
+        }
         
+        async function addTask(text, company) {
+            try {
+                await fetch(SUPABASE_URL + '/rest/v1/tasks', {
+                    method: 'POST',
+                    headers: { 
+                        'apikey': SUPABASE_KEY, 
+                        'Authorization': 'Bearer ' + SUPABASE_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text, company, status: 'pending' })
+                });
+                await fetchTasks();
+                renderQueue();
+            } catch (e) {
+                console.error('Error adding task:', e);
+            }
+        }
+        
+        async function completeTaskById(id) {
+            try {
+                await fetch(SUPABASE_URL + '/rest/v1/tasks?id=eq.' + id, {
+                    method: 'PATCH',
+                    headers: { 
+                        'apikey': SUPABASE_KEY, 
+                        'Authorization': 'Bearer ' + SUPABASE_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status: 'completed' })
+                });
+                await fetchTasks();
+            } catch (e) {
+                console.error('Error completing task:', e);
+            }
+        }
+        
+        async function deleteTaskById(id) {
+            try {
+                await fetch(SUPABASE_URL + '/rest/v1/tasks?id=eq.' + id, {
+                    method: 'DELETE',
+                    headers: { 
+                        'apikey': SUPABASE_KEY, 
+                        'Authorization': 'Bearer ' + SUPABASE_KEY
+                    }
+                });
+                await fetchTasks();
+            } catch (e) {
+                console.error('Error deleting task:', e);
+            }
+        }
+        
+        // UI functions
         function getAllQueue() {
-            let all = [];
-            companies.forEach(c => {
-                getQueue(c).forEach(t => all.push({text: t, company: c}));
-            });
-            return all;
+            return allTasks.filter(t => t.status === 'pending');
         }
         
         function renderQueue() {
@@ -271,6 +336,7 @@
             
             if (all.length === 0) {
                 container.innerHTML = '<div style="color:#9CA3AF;text-align:center;padding:20px;">No tasks in queue</div>';
+                updateCurrentTask();
                 return;
             }
             
@@ -279,9 +345,9 @@
                     <div class="task-num">${i + 1}</div>
                     <div class="task-text">
                         ${t.text}
-                        <span class="task-company">${companyInfo[t.company].icon} ${companyInfo[t.company].name}</span>
+                        <span class="task-company">${companyInfo[t.company] ? companyInfo[t.company].icon : '📋'} ${companyInfo[t.company] ? companyInfo[t.company].name : t.company}</span>
                     </div>
-                    <button class="task-delete" onclick="removeFromQueue('${t.company}', ${i})">×</button>
+                    <button class="task-delete" onclick="removeFromQueue(${t.id}, ${i})">×</button>
                 </div>
             `).join('');
             
@@ -295,22 +361,21 @@
             
             if (all.length > 0) {
                 taskText.textContent = all[0].text;
-                taskCompany.textContent = companyInfo[all[0].company].icon + ' ' + companyInfo[all[0].company].name;
+                const c = companyInfo[all[0].company];
+                taskCompany.textContent = c ? c.icon + ' ' + c.name : all[0].company;
             } else {
                 taskText.textContent = 'No tasks in queue';
                 taskCompany.textContent = '';
             }
         }
         
-        function addCompanyTask() {
+        async function addCompanyTask() {
             if (!currentCompany) return;
             const input = document.getElementById('inputCompany');
             const text = input.value.trim();
             if (!text) return;
             
-            const queue = getQueue(currentCompany);
-            queue.push(text);
-            saveQueue(currentCompany, queue);
+            await addTask(text, currentCompany);
             input.value = '';
             
             renderCompanyTasks();
@@ -318,7 +383,7 @@
             
             // Auto-post if first
             const all = getAllQueue();
-            if (all[0].company === currentCompany && all[0].text === text) {
+            if (all.length > 0 && all[0].text === text) {
                 fetch(WEBHOOK, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
@@ -329,7 +394,7 @@
         
         function renderCompanyTasks() {
             if (!currentCompany) return;
-            const tasks = getQueue(currentCompany);
+            const tasks = allTasks.filter(t => t.company === currentCompany && t.status === 'pending');
             const list = document.getElementById('companyTaskList');
             const active = document.getElementById('statActive');
             const team = document.getElementById('statTeam');
@@ -344,43 +409,29 @@
             
             list.innerHTML = tasks.map((t, i) => `
                 <li class="task-list-item">
-                    <span>${i + 1}. ${t}</span>
-                    <button class="task-delete" onclick="deleteCompanyTask(${i})">×</button>
+                    <span>${i + 1}. ${t.text}</span>
+                    <button class="task-delete" onclick="deleteCompanyTask(${t.id})">×</button>
                 </li>
             `).join('');
         }
         
-        function deleteCompanyTask(i) {
-            const queue = getQueue(currentCompany);
-            queue.splice(i, 1);
-            saveQueue(currentCompany, queue);
+        async function deleteCompanyTask(id) {
+            await deleteTaskById(id);
             renderCompanyTasks();
             renderQueue();
         }
         
-        function removeFromQueue(company, idx) {
-            const queue = getQueue(company);
-            const all = getAllQueue();
-            const taskToRemove = all[idx].text;
-            
-            // Find and remove this specific task
-            const companyQueue = getQueue(company);
-            const taskIndex = companyQueue.indexOf(taskToRemove);
-            if (taskIndex > -1) {
-                companyQueue.splice(taskIndex, 1);
-                saveQueue(company, companyQueue);
-            }
+        async function removeFromQueue(id, idx) {
+            await deleteTaskById(id);
             renderQueue();
         }
         
-        function completeTask() {
+        async function completeTask() {
             const all = getAllQueue();
             if (all.length === 0) return;
             
             const current = all[0];
-            const queue = getQueue(current.company);
-            queue.shift();
-            saveQueue(current.company, queue);
+            await completeTaskById(current.id);
             
             renderQueue();
             
@@ -390,7 +441,7 @@
                 fetch(WEBHOOK, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({task: '🎯 UP NEXT [' + companyInfo[next[0].company].name + ']: ' + next[0].text})
+                    body: JSON.stringify({task: '🎯 UP NEXT [' + (companyInfo[next[0].company] ? companyInfo[next[0].company].name : next[0].company) + ']: ' + next[0].text})
                 }).catch(() => {});
             } else {
                 fetch(WEBHOOK, {
@@ -401,15 +452,14 @@
             }
         }
         
-        function skipTask() {
+        async function skipTask() {
             const all = getAllQueue();
             if (all.length === 0) return;
             
             const current = all[0];
-            const queue = getQueue(current.company);
-            queue.shift();
-            queue.push(current.text);
-            saveQueue(current.company, queue);
+            // Move to end
+            await completeTaskById(current.id);
+            await addTask(current.text, current.company);
             
             renderQueue();
             
@@ -418,7 +468,7 @@
                 fetch(WEBHOOK, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({task: '⏭️ Now: [' + companyInfo[next[0].company].name + '] ' + next[0].text})
+                    body: JSON.stringify({task: '⏭️ Now: [' + (companyInfo[next[0].company] ? companyInfo[next[0].company].name : next[0].company) + '] ' + next[0].text})
                 }).catch(() => {});
             }
         }
@@ -426,7 +476,7 @@
         function handleEnter(e) { if (e.key === 'Enter') addCompanyTask(); }
         
         function showPage(page) {
-            document.getElementById('queue').classList.remove('active'); document.getElementById('companies').classList.remove('active'); document.getElementById('team').classList.remove('active');
+            document.getElementById('queue').classList.remove('active'); document.getElementById('companies').classList.remove('active'); document.getElementById('team').classList.remove('active'); document.getElementById('company-detail').classList.remove('active');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(page).classList.add('active');
             document.querySelector('[onclick="showPage(\'' + page + '\')"]').classList.add('active');
@@ -460,7 +510,13 @@
             renderQueue();
         }
         
-        renderQueue();
+        // Initialize
+        fetchTasks().then(() => renderQueue());
+        
+        // Auto-refresh every 10 seconds
+        setInterval(() => {
+            fetchTasks().then(() => renderQueue());
+        }, 10000);
     </script>
 </body>
 </html>
