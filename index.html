@@ -138,6 +138,7 @@
             <button class="nav-btn active" onclick="showPage('queue')">Smart Queue</button>
             <button class="nav-btn" onclick="showPage('companies')">Companies</button>
             <button class="nav-btn" onclick="showPage('team')">Team</button>
+            <button class="nav-btn" onclick="showPage('goals')">Goals</button>
             <button class="nav-btn" onclick="showPage('audit')">Auditing</button>
         </nav>
     </header>
@@ -272,6 +273,38 @@
                         <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#3B82F6,#2563EB)">B</div><div class="org-name">Bongo</div><div class="org-role">Content</div></div>
                         <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#14B8A6,#0D9488)">F</div><div class="org-name">Frankie</div><div class="org-role">Sec</div></div>
                         <div class="org-person"><div class="org-avatar" style="background:linear-gradient(135deg,#F97316,#EA580C)">J</div><div class="org-name">Joon</div><div class="org-role">Social</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Goals Page -->
+        <div id="goals" class="view">
+            <h1 class="page-title">🎯 Goals</h1>
+            <div class="queue-section">
+                <div class="queue-header">
+                    <span class="queue-title">Company Goals</span>
+                </div>
+                <div class="detail-grid">
+                    <div class="detail-card">
+                        <div class="detail-card-title">🏢 JSW Enterprises</div>
+                        <textarea class="whiteboard" id="goals-jsw" placeholder="Enter goals..." oninput="saveGoals('jsw')"></textarea>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-card-title">🏥 Clinic IQ</div>
+                        <textarea class="whiteboard" id="goals-cliniciq" placeholder="Enter goals..." oninput="saveGoals('cliniciq')"></textarea>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-card-title">⚙️ Wilde Automations</div>
+                        <textarea class="whiteboard" id="goals-wilde" placeholder="Enter goals..." oninput="saveGoals('wilde')"></textarea>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-card-title">📄 Uncle Sam's Procurement</div>
+                        <textarea class="whiteboard" id="goals-sam" placeholder="Enter goals..." oninput="saveGoals('sam')"></textarea>
+                    </div>
+                    <div class="detail-card">
+                        <div class="detail-card-title">🌐 The Westwood Network</div>
+                        <textarea class="whiteboard" id="goals-westwood" placeholder="Enter goals..." oninput="saveGoals('westwood')"></textarea>
                     </div>
                 </div>
             </div>
@@ -604,12 +637,23 @@
         }
         
         function showPage(page) {
-            document.getElementById('queue').classList.remove('active'); document.getElementById('companies').classList.remove('active'); document.getElementById('team').classList.remove('active'); document.getElementById('company-detail').classList.remove('active'); document.getElementById('audit').classList.remove('active');
+            document.getElementById('queue').classList.remove('active'); document.getElementById('companies').classList.remove('active'); document.getElementById('team').classList.remove('active'); document.getElementById('company-detail').classList.remove('active'); document.getElementById('audit').classList.remove('active'); document.getElementById('goals').classList.remove('active');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(page).classList.add('active');
             document.querySelector('[onclick="showPage(\'' + page + '\')"]').classList.add('active');
             if (page === 'queue') renderQueue();
             if (page === 'audit') renderAudit();
+            if (page === 'goals') loadGoals();
+        }
+        
+        function loadGoals() {
+            companies.forEach(c => {
+                document.getElementById('goals-' + c).value = localStorage.getItem('jsw-goals-' + c) || '';
+            });
+        }
+        
+        function saveGoals(company) {
+            localStorage.setItem('jsw-goals-' + company, document.getElementById('goals-' + company).value);
         }
         
         function openCompany(company) {
