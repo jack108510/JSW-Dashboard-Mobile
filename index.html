@@ -835,6 +835,20 @@
         }
         
         async function loadTimeline() {
+            // Load company dropdown
+            const companySelect = document.getElementById('timelineCompany');
+            if (companySelect.options.length <= 1) {
+                companies.forEach(c => {
+                    const opt = document.createElement('option');
+                    opt.value = c;
+                    opt.textContent = companyInfo[c].icon + ' ' + companyInfo[c].name;
+                    companySelect.appendChild(opt);
+                });
+            }
+            
+            // Load goals for first company by default
+            loadCompanyGoals();
+            
             renderTimeline();
         }
         
