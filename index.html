@@ -509,6 +509,13 @@
             await addTask(text, currentCompany);
             input.value = '';
             
+            // Notify via task-server (Discord + Telegram)
+            fetch('http://localhost:3456/task', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({task: '[' + companyInfo[currentCompany].name + '] ' + text})
+            }).catch(() => {});
+            
             renderCompanyTasks();
             renderQueue();
             
