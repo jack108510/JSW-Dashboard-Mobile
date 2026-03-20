@@ -172,6 +172,16 @@
                 <div id="queueItems"></div>
             </div>
             
+            <!-- Upcoming Deadlines Widget -->
+            <div class="queue-section" style="margin-top:20px;">
+                <div class="queue-header">
+                    <span class="queue-title">⏰ Upcoming Deadlines</span>
+                </div>
+                <div id="deadlineWidget" style="padding:12px;background:var(--gray-50);border-radius:8px;color:var(--gray-500);">
+                    Loading...
+                </div>
+            </div>
+            
             <!-- Last Task Update -->
             <div class="queue-section" style="margin-top:20px;">
                 <div class="queue-header">
@@ -534,6 +544,39 @@
             }
         }
         
+        function renderDeadlines() {
+            const timeline = JSON.parse(localStorage.getItem('jsw-timeline') || '[]');
+            const container = document.getElementById('deadlineWidget');
+            
+            if (timeline.length === 0) {
+                container.innerHTML = '<div style="color:#9CA3AF;text-align:center;">No upcoming deadlines. Add goals to Timeline page.</div>';
+                return;
+            }
+            
+            // Sort by date and get next 5
+            timeline.sort((a, b) => new Date(a.date) - new Date(b.date));
+            const upcoming = timeline.slice(0, 5);
+            
+            const today = new Date().toISOString().split('T')[0];
+            
+            container.innerHTML = upcoming.map(t => {
+                const isOverdue = t.date < today;
+                const daysDiff = Math.ceil((new Date(t.date) - new Date(today)) / (1000 * 60 * 60 * 24));
+                let label = '';
+                if (isOverdue) label = '⚠️ OVERDUE';
+                else if (daysDiff === 0) label = '🔥 Today';
+                else if (daysDiff === 1) label = '� Tomorrow';
+                else label = daysDiff + ' days';
+                
+                return `
+                    <div style="padding:8px;margin-bottom:6px;background:white;border-radius:6px;border-left:3px solid ${isOverdue ? '#EF4444' : '#10B981'};">
+                        <div style="font-size:11px;color:${isOverdue ? '#EF4444' : '#10B981'};font-weight:600;">${label} - ${t.date}</div>
+                        <div style="font-size:13px;">${t.goal}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
         async function addCompanyTask() {
             if (!currentCompany) return;
             const input = document.getElementById('inputCompany');
@@ -682,7 +725,7 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(page).classList.add('active');
             document.querySelector('[onclick="showPage(\'' + page + '\')"]').classList.add('active');
-            if (page === 'queue') renderQueue();
+            if (page === 'queue') { renderQueue(); renderDeadlines(); }
             if (page === 'audit') renderAudit();
             if (page === 'goals') loadGoals();
             if (page === 'timeline') loadTimeline();
