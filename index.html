@@ -418,18 +418,6 @@
             updateCurrentTask();
         }
         
-        function saveLastUpdate(text, company, status, note) {
-            const update = {
-                text,
-                company,
-                status,
-                note: note || '',
-                time: new Date().toLocaleString()
-            };
-            localStorage.setItem('jsw-last-update', JSON.stringify(update));
-            renderLastUpdate();
-        }
-        
         function promptAndComplete() {
             const all = getAllQueue();
             if (all.length === 0) return;
@@ -439,26 +427,29 @@
         }
         
         function renderLastUpdate() {
-            const update = JSON.parse(localStorage.getItem('jsw-last-update') || 'null');
-            const container = document.getElementById('lastUpdate');
-            
-            if (!update) {
-                container.innerHTML = '<div style="color:#9CA3AF;">Waiting for task updates...</div>';
-                return;
-            }
-            
-            const statusColor = update.status === 'completed' ? '#10B981' : '#EF4444';
-            const statusIcon = update.status === 'completed' ? '✅' : '⚠️';
-            
-            container.innerHTML = `
-                <div style="margin-bottom:8px;">
-                    <span style="color:${statusColor};font-weight:600;">${statusIcon} ${update.status.toUpperCase()}</span>
-                    <span style="color:var(--gray-500);font-size:12px;"> - ${update.time}</span>
-                </div>
-                <div style="font-weight:500;">"${update.text}"</div>
-                <div style="color:var(--gray-500);font-size:12px;margin-top:4px;">${companyInfo[update.company] ? companyInfo[update.company].icon + ' ' + companyInfo[update.company].name : update.company}</div>
-                ${update.note ? '<div style="margin-top:8px;padding:8px;background:white;border-radius:6px;border-left:3px solid var(--primary);font-size:13px;">📝 ' + update.note + '</div>' : ''}
-            `;
+            fetchCompletedTasks().then(tasks => {
+                const container = document.getElementById('lastUpdate');
+                
+                if (!tasks || tasks.length === 0) {
+                    container.innerHTML = '<div style="color:#9CA3AF;">Waiting for task updates...</div>';
+                    return;
+                }
+                
+                const task = tasks[0];
+                const statusColor = '#10B981';
+                const statusIcon = '✅';
+                const date = task.completed_at ? new Date(task.completed_at).toLocaleString() : 'Recently';
+                
+                container.innerHTML = `
+                    <div style="margin-bottom:8px;">
+                        <span style="color:${statusColor};font-weight:600;">${statusIcon} COMPLETED</span>
+                        <span style="color:var(--gray-500);font-size:12px;"> - ${date}</span>
+                    </div>
+                    <div style="font-weight:500;">"${task.text}"</div>
+                    <div style="color:var(--gray-500);font-size:12px;margin-top:4px;">${companyInfo[task.company] ? companyInfo[task.company].icon + ' ' + companyInfo[task.company].name : task.company}</div>
+                    ${task.evidence ? '<div style="margin-top:8px;padding:8px;background:white;border-radius:6px;border-left:3px solid var(--primary);font-size:13px;">📝 ' + task.evidence + '</div>' : ''}
+                `;
+            });
         }
         
         function updateCurrentTask() {
@@ -733,6 +724,7 @@
         // Auto-refresh every 10 seconds
         setInterval(() => {
             fetchTasks().then(() => renderQueue());
+            renderLastUpdate();
         }, 10000);
     </script>
 </body>
