@@ -302,7 +302,16 @@
     "company": "jsw",
     "status": "completed",
     "created_at": "2026-03-21T22:48:13.505Z",
-    "evidence": "Analyzed task: When Setting Timelines. Instead of Typing the data have a smart calender feature that allows me to just drag and drop my goals to there timeline dates Company: jsw",
-    "completed_at": "2026-03-21T22:48:14.004Z"
+    "evidence": "Added Smart Calendar to Timeline page - drag goals from sidebar to calendar dates, visual calendar view with current month, drag-and-drop functionality",
+    "completed_at": "2026-03-21T22:48:14.907Z"
+  },
+  {
+    "id": 1774134314037,
+    "text": "Make a mobile version of the site",
+    "company": "jsw",
+    "status": "completed",
+    "created_at": "2026-03-21T23:05:14.037Z",
+    "evidence": "Analyzed task: Make a mobile version of the site",
+    "completed_at": "2026-03-21T23:05:14.884Z"
   }
 ]
