@@ -381,6 +381,16 @@
                     <ul class="task-list" id="companyTaskList"></ul>
                 </div>
             </div>
+            <!-- Links -->
+            <div class="detail-card" style="margin-top:12px;">
+                <div class="detail-card-title">🔗 Quick Links</div>
+                <div class="task-input-group">
+                    <input type="text" class="task-input" id="inputLinkTitle" placeholder="Title" style="flex:1;margin-right:6px;">
+                    <input type="text" class="task-input" id="inputLinkUrl" placeholder="URL" style="flex:2;margin-right:6px;">
+                    <button class="task-add-btn" onclick="addCompanyLink()">Add</button>
+                </div>
+                <ul class="task-list" id="companyLinksList"></ul>
+            </div>
             <!-- Notes/Ideas -->
             <div class="detail-card" style="margin-top:12px;">
                 <div class="detail-card-title">💡 Ideas & Notes</div>
@@ -616,12 +626,63 @@
         const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1484011426694697022/tzl0_nYIYCiPwxayAjxbzSl6hEvhty1DgcPjspnV9BKhoTNcnWKfwqQSEmlkxPLn2GPl';
         
         const companyInfo = {
-            jsw: { name: 'JSW Enterprises', icon: '🏢', team: [{n:'Jack',r:'Owner'},{n:'Golias',r:'Operations'}] },
-            cliniciq: { name: 'Clinic IQ', icon: '🏥', team: [{n:'Frankie',r:'PM'},{n:'Gretel',r:'Design'},{n:'JR',r:'QA'}] },
-            wilde: { name: 'Wilde Automations', icon: '⚙️', team: [{n:'Wilson',r:'Lead'},{n:'Effy',r:'Engineer'}] },
-            sam: { name: "Uncle Sam's Procurement", icon: '📄', team: [{n:'Stan',r:'Research'}] },
-            westwood: { name: 'The Westwood Network', icon: '🌐', team: [{n:'Bongo',r:'Content'}] }
+            jsw: { name: 'JSW Enterprises', icon: '🏢', team: [{n:'Jack',r:'Owner'},{n:'Golias',r:'Operations'}], links: [] },
+            cliniciq: { name: 'Clinic IQ', icon: '🏥', team: [{n:'Frankie',r:'PM'},{n:'Gretel',r:'Design'},{n:'JR',r:'QA'}], links: [] },
+            wilde: { name: 'Wilde Automations', icon: '⚙️', team: [{n:'Wilson',r:'Lead'},{n:'Effy',r:'Engineer'}], links: [] },
+            sam: { name: "Uncle Sam's Procurement", icon: '📄', team: [{n:'Stan',r:'Research'}], links: [] },
+            westwood: { name: 'The Westwood Network', icon: '🌐', team: [{n:'Bongo',r:'Content'}], links: [] }
         };
+
+        // Load links from localStorage
+        function getCompanyLinks(company) {
+            return JSON.parse(localStorage.getItem('jsw-links-' + company) || '[]');
+        }
+
+        function saveCompanyLinks(company, links) {
+            localStorage.setItem('jsw-links-' + company, JSON.stringify(links));
+        }
+
+        function renderCompanyLinks() {
+            if (!currentCompany) return;
+            const links = getCompanyLinks(currentCompany);
+            const list = document.getElementById('companyLinksList');
+            
+            if (links.length === 0) {
+                list.innerHTML = '<li style="color:#9CA3AF;text-align:center;padding:12px;">No links yet</li>';
+                return;
+            }
+            
+            list.innerHTML = links.map((l, i) => `
+                <li class="task-list-item">
+                    <a href="${l.url}" target="_blank" style="color:var(--primary);text-decoration:none;flex:1;">🔗 ${l.title}</a>
+                    <button class="task-delete" onclick="deleteCompanyLink(${i})">×</button>
+                </li>
+            `).join('');
+        }
+
+        function addCompanyLink() {
+            if (!currentCompany) return;
+            const titleInput = document.getElementById('inputLinkTitle');
+            const urlInput = document.getElementById('inputLinkUrl');
+            const title = titleInput.value.trim();
+            const url = urlInput.value.trim();
+            if (!title || !url) return;
+            
+            const links = getCompanyLinks(currentCompany);
+            links.push({ title, url });
+            saveCompanyLinks(currentCompany, links);
+            titleInput.value = '';
+            urlInput.value = '';
+            renderCompanyLinks();
+        }
+
+        function deleteCompanyLink(i) {
+            if (!currentCompany) return;
+            const links = getCompanyLinks(currentCompany);
+            links.splice(i, 1);
+            saveCompanyLinks(currentCompany, links);
+            renderCompanyLinks();
+        }
         
         const companies = ['jsw', 'cliniciq', 'wilde', 'sam', 'westwood'];
         let currentCompany = null;
@@ -1135,6 +1196,7 @@
             // Load whiteboard and notes
             document.getElementById('whiteboard').value = localStorage.getItem('jsw-whiteboard-' + company) || '';
             renderCompanyNotes();
+            renderCompanyLinks();
             
             renderCompanyTasks();
             
