@@ -257,6 +257,56 @@
             .company-grid { grid-template-columns: repeat(2, 1fr); }
             .detail-grid { grid-template-columns: 1fr; }
         }
+        
+        /* Analytics Page */
+        .analytics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .analytics-card { 
+            background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; 
+            transition: all 0.2s;
+        }
+        .analytics-card:hover { border-color: var(--primary-light); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .analytics-card-value { font-size: 32px; font-weight: 700; color: var(--gray-900); }
+        .analytics-card-label { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+        .analytics-card-change { font-size: 12px; font-weight: 600; margin-top: 8px; display: flex; align-items: center; gap: 4px; }
+        .change-up { color: #10B981; }
+        .change-down { color: #EF4444; }
+        
+        .analytics-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+        .analytics-section-title { font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        
+        .chart-row { display: flex; gap: 24px; margin-bottom: 20px; }
+        .chart-col { flex: 1; }
+        
+        .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 120px; padding-top: 20px; }
+        .bar { flex: 1; background: linear-gradient(180deg, #10B981, #059669); border-radius: 4px 4px 0 0; position: relative; transition: all 0.3s; cursor: pointer; }
+        .bar:hover { opacity: 0.8; transform: scaleY(1.02); }
+        .bar-label { position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--gray-500); }
+        .bar-value { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 600; color: var(--gray-700); }
+        
+        .donut-chart { width: 140px; height: 140px; border-radius: 50%; background: conic-gradient(#10B981 0deg 126deg, #6366F1 126deg 216deg, #F59E0B 216deg 288deg, #EC4899 288deg 360deg); margin: 0 auto 16px; position: relative; }
+        .donut-chart::after { content: ''; position: absolute; top: 30px; left: 30px; width: 80px; height: 80px; background: white; border-radius: 50%; }
+        .donut-legend { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+        .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+        
+        .metric-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .metric-item { text-align: center; padding: 16px; background: var(--gray-50); border-radius: 8px; }
+        .metric-value { font-size: 24px; font-weight: 700; color: var(--primary-light); }
+        .metric-label { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+        
+        .progress-bar { height: 8px; background: var(--gray-200); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #10B981, #059669); border-radius: 4px; transition: width 0.5s ease; }
+        
+        .mini-stats { display: flex; gap: 16px; flex-wrap: wrap; }
+        .mini-stat { flex: 1; min-width: 140px; padding: 12px; background: var(--gray-50); border-radius: 8px; text-align: center; }
+        .mini-stat-value { font-size: 20px; font-weight: 700; color: var(--gray-900); }
+        .mini-stat-label { font-size: 10px; color: var(--gray-500); text-transform: uppercase; margin-top: 2px; }
+        
+        @media (max-width: 900px) {
+            .analytics-grid { grid-template-columns: repeat(2, 1fr); }
+            .chart-row { flex-direction: column; }
+            .metric-row { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -272,6 +322,7 @@
             <button class="nav-btn" onclick="showPage('goals')">Goals</button>
             <button class="nav-btn" onclick="showPage('timeline')">Timeline</button>
             <button class="nav-btn" onclick="showPage('audit')">Auditing</button>
+            <button class="nav-btn" onclick="showPage('analytics')">Analytics</button>
         </nav>
     </header>
 
@@ -615,6 +666,120 @@
                     <input type="text" id="auditSearch" placeholder="Search..." style="padding:6px 10px;border:1px solid var(--gray-300);border-radius:6px;font-size:12px;" oninput="renderAudit()">
                 </div>
                 <div id="auditItems" style="max-height:500px;overflow-y:auto;"></div>
+            </div>
+        </div>
+
+        <!-- Analytics Page -->
+        <div id="analytics" class="view">
+            <h1 class="page-title">📊 Analytics</h1>
+            
+            <!-- Top Stats Row -->
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <div class="analytics-card-value">2,847</div>
+                    <div class="analytics-card-label">Daily Visitors</div>
+                    <div class="analytics-card-change change-up"><i class="fas fa-arrow-up"></i> +12.5% vs last week</div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-card-value">$14.2K</div>
+                    <div class="analytics-card-label">Weekly Revenue</div>
+                    <div class="analytics-card-change change-up"><i class="fas fa-arrow-up"></i> +8.3% vs last week</div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-card-value">94.2%</div>
+                    <div class="analytics-card-label">Task Completion Rate</div>
+                    <div class="analytics-card-change change-up"><i class="fas fa-arrow-up"></i> +2.1% vs last week</div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-card-value">4.8</div>
+                    <div class="analytics-card-label">Avg. Response Time (h)</div>
+                    <div class="analytics-card-change change-down"><i class="fas fa-arrow-down"></i> -0.3h vs last week</div>
+                </div>
+            </div>
+            
+            <!-- Charts Row -->
+            <div class="chart-row">
+                <!-- Traffic Chart -->
+                <div class="analytics-section" style="flex:2;">
+                    <div class="analytics-section-title"><i class="fas fa-chart-line"></i> Weekly Traffic</div>
+                    <div class="bar-chart">
+                        <div class="bar" style="height:45%;"><span class="bar-value">1.2K</span><span class="bar-label">Mon</span></div>
+                        <div class="bar" style="height:65%;"><span class="bar-value">1.8K</span><span class="bar-label">Tue</span></div>
+                        <div class="bar" style="height:55%;"><span class="bar-value">1.5K</span><span class="bar-label">Wed</span></div>
+                        <div class="bar" style="height:80%;"><span class="bar-value">2.3K</span><span class="bar-label">Thu</span></div>
+                        <div class="bar" style="height:90%;"><span class="bar-value">2.6K</span><span class="bar-label">Fri</span></div>
+                        <div class="bar" style="height:60%;"><span class="bar-value">1.7K</span><span class="bar-label">Sat</span></div>
+                        <div class="bar" style="height:40%;"><span class="bar-value">1.1K</span><span class="bar-label">Sun</span></div>
+                    </div>
+                </div>
+                
+                <!-- Revenue Distribution -->
+                <div class="analytics-section" style="flex:1;">
+                    <div class="analytics-section-title"><i class="fas fa-chart-pie"></i> Revenue by Company</div>
+                    <div class="donut-chart"></div>
+                    <div class="donut-legend">
+                        <div class="legend-item"><span class="legend-dot" style="background:#10B981;"></span> Clinic IQ (35%)</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:#6366F1;"></span> Wilde Auto (25%)</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:#F59E0B;"></span> Westwood (20%)</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:#EC4899;"></span> JSW (20%)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company Performance -->
+            <div class="analytics-section">
+                <div class="analytics-section-title"><i class="fas fa-building"></i> Company Performance</div>
+                <div class="metric-row">
+                    <div class="metric-item">
+                        <div class="metric-value">28</div>
+                        <div class="metric-label">Clinic IQ Tasks</div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:92%;"></div></div>
+                        <div style="font-size:10px;color:var(--gray-500);margin-top:4px;">92% complete</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">19</div>
+                        <div class="metric-label">Wilde Auto Tasks</div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:85%;"></div></div>
+                        <div style="font-size:10px;color:var(--gray-500);margin-top:4px;">85% complete</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">12</div>
+                        <div class="metric-label">Westwood Tasks</div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:78%;"></div></div>
+                        <div style="font-size:10px;color:var(--gray-500);margin-top:4px;">78% complete</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="analytics-section">
+                <div class="analytics-section-title"><i class="fas fa-bolt"></i> Quick Stats</div>
+                <div class="mini-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value">6/8</div>
+                        <div class="mini-stat-label">Team Online</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value">23</div>
+                        <div class="mini-stat-label">Active Projects</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value">156</div>
+                        <div class="mini-stat-label">Tasks This Month</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value">98%</div>
+                        <div class="mini-stat-label">Uptime</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value">4.9</div>
+                        <div class="mini-stat-label">Satisfaction</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value">$847</div>
+                        <div class="mini-stat-label">Avg. Deal Size</div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -1077,7 +1242,7 @@
         }
         
         function showPage(page) {
-            document.getElementById('queue').classList.remove('active'); document.getElementById('companies').classList.remove('active'); document.getElementById('team').classList.remove('active'); document.getElementById('company-detail').classList.remove('active'); document.getElementById('audit').classList.remove('active'); document.getElementById('goals').classList.remove('active'); document.getElementById('timeline').classList.remove('active');
+            document.getElementById('queue').classList.remove('active'); document.getElementById('companies').classList.remove('active'); document.getElementById('team').classList.remove('active'); document.getElementById('company-detail').classList.remove('active'); document.getElementById('audit').classList.remove('active'); document.getElementById('goals').classList.remove('active'); document.getElementById('timeline').classList.remove('active'); document.getElementById('analytics').classList.remove('active');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(page).classList.add('active');
             document.querySelector('[onclick="showPage(\'' + page + '\')"]').classList.add('active');
