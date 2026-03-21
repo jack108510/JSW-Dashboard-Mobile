@@ -123,6 +123,18 @@
         .whiteboard { width: 100%; min-height: 200px; padding: 12px; border: 1px solid var(--gray-300); border-radius: 8px; font-size: 13px; font-family: monospace; resize: vertical; line-height: 1.5; }
         .whiteboard:focus { outline: none; border-color: var(--primary-light); }
         
+        /* Scheduler */
+        .scheduler-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; margin-top: 12px; }
+        .scheduler-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .scheduler-title { font-size: 14px; font-weight: 600; }
+        .scheduler-add { background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+        .scheduler-add:hover { background: var(--primary-dark); }
+        .schedule-item { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--gray-50); border-radius: 8px; margin-bottom: 8px; }
+        .schedule-item-time { font-weight: 600; font-size: 13px; min-width: 80px; }
+        .schedule-item-cmd { flex: 1; font-size: 13px; }
+        .schedule-item-repeats { font-size: 11px; color: var(--gray-500); background: white; padding: 4px 8px; border-radius: 4px; }
+        .schedule-item-delete { color: #EF4444; cursor: pointer; font-size: 14px; }
+        
         /* Team Page */
         .org-chart { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 24px; }
         .org-title { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--gray-500); margin-bottom: 16px; text-align: center; }
@@ -485,6 +497,15 @@
             <div class="detail-card" style="margin-top:12px;">
                 <div class="detail-card-title">📝 Company Whiteboard</div>
                 <textarea class="whiteboard" id="whiteboard" placeholder="Paste company details, important info, notes..." oninput="saveWhiteboard()"></textarea>
+            </div>
+            
+            <!-- Scheduled Commands -->
+            <div class="scheduler-section">
+                <div class="scheduler-header">
+                    <span class="scheduler-title">⏰ Scheduled Commands</span>
+                    <button class="scheduler-add" onclick="addSchedule()">+ Add</button>
+                </div>
+                <div id="scheduleList"></div>
             </div>
             </div>
         </div>
@@ -1500,6 +1521,7 @@
             document.getElementById('whiteboard').value = localStorage.getItem('jsw-whiteboard-' + company) || '';
             renderCompanyNotes();
             renderCompanyLinks();
+            renderSchedules();
             
             renderCompanyTasks();
             
@@ -1510,6 +1532,58 @@
         function saveWhiteboard() {
             if (!currentCompany) return;
             localStorage.setItem('jsw-whiteboard-' + currentCompany, document.getElementById('whiteboard').value);
+        }
+        
+        // Scheduler functions
+        function getSchedules(company) {
+            return JSON.parse(localStorage.getItem('jsw-schedules-' + company) || '[]');
+        }
+        
+        function saveSchedules(company, schedules) {
+            localStorage.setItem('jsw-schedules-' + company, JSON.stringify(schedules));
+        }
+        
+        function addSchedule() {
+            if (!currentCompany) return;
+            const cmd = prompt('Enter command to schedule:');
+            if (!cmd) return;
+            
+            const time = prompt('Enter time (HH:MM format, e.g., 09:00):');
+            if (!time) return;
+            
+            const repeat = prompt('Repeat? (daily/weekly/monthly/none):', 'daily');
+            
+            const schedules = getSchedules(currentCompany);
+            schedules.push({ cmd, time, repeat: repeat || 'none', id: Date.now() });
+            saveSchedules(currentCompany, schedules);
+            renderSchedules();
+        }
+        
+        function deleteSchedule(id) {
+            if (!currentCompany) return;
+            const schedules = getSchedules(currentCompany).filter(s => s.id !== id);
+            saveSchedules(currentCompany, schedules);
+            renderSchedules();
+        }
+        
+        function renderSchedules() {
+            if (!currentCompany) return;
+            const schedules = getSchedules(currentCompany);
+            const list = document.getElementById('scheduleList');
+            
+            if (schedules.length === 0) {
+                list.innerHTML = '<div style="color:#9CA3AF;text-align:center;padding:20px;">No scheduled commands yet</div>';
+                return;
+            }
+            
+            list.innerHTML = schedules.map(s => `
+                <div class="schedule-item">
+                    <span class="schedule-item-time">${s.time}</span>
+                    <span class="schedule-item-cmd">${s.cmd}</span>
+                    <span class="schedule-item-repeats">${s.repeat}</span>
+                    <span class="schedule-item-delete" onclick="deleteSchedule(${s.id})">✕</span>
+                </div>
+            `).join('');
         }
         
         // Notes functions
