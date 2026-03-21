@@ -134,6 +134,123 @@
         .org-name { font-weight: 600; font-size: 13px; }
         .org-role { font-size: 11px; color: var(--gray-500); background: var(--gray-100); padding: 2px 8px; border-radius: 12px; display: inline-block; margin-top: 4px; }
         
+        /* Enhanced Team Section */
+        .team-section { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+        .team-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+        .team-section-title { font-size: 14px; font-weight: 600; text-transform: uppercase; color: var(--gray-700); display: flex; align-items: center; gap: 8px; }
+        
+        .leadership-grid { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+        .leader-card { 
+            text-align: center; 
+            padding: 28px 32px; 
+            background: linear-gradient(145deg, #ffffff, #f8fafc); 
+            border-radius: 16px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+            min-width: 180px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-100);
+        }
+        .leader-card:hover { transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+        .leader-avatar { 
+            width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            color: white; font-size: 28px; font-weight: bold; margin: 0 auto 16px; 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2); 
+            position: relative;
+        }
+        .leader-avatar .status-dot {
+            position: absolute; bottom: 4px; right: 4px; width: 16px; height: 16px; border-radius: 50%;
+            border: 3px solid white;
+        }
+        .status-online { background: #10B981; }
+        .status-away { background: #F59E0B; }
+        .status-offline { background: #EF4444; }
+        .status-in-meeting { background: #8B5CF6; }
+        .leader-name { font-weight: 700; font-size: 16px; color: var(--gray-900); margin-bottom: 4px; }
+        .leader-role { font-size: 13px; color: var(--gray-500); font-weight: 500; }
+        .leader-task { 
+            margin-top: 12px; padding: 10px 14px; background: linear-gradient(135deg, #ECFDF5, #D1FAE5); 
+            border-radius: 8px; font-size: 12px; color: #047857; 
+            border-left: 3px solid #10B981;
+        }
+        .leader-task-label { font-size: 10px; text-transform: uppercase; opacity: 0.7; margin-bottom: 4px; }
+        
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .team-member-card { 
+            text-align: center; padding: 20px 16px; 
+            background: linear-gradient(145deg, #ffffff, #f9fafb); 
+            border-radius: 12px; 
+            border: 1px solid var(--gray-100);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .team-member-card:hover { 
+            transform: translateY(-4px) scale(1.02); 
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12); 
+            border-color: var(--primary-light);
+        }
+        .team-member-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--primary-light), #10B981);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .team-member-card:hover::before { opacity: 1; }
+        .team-avatar { 
+            width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; 
+            color: white; font-weight: 700; margin: 0 auto 12px; font-size: 18px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            position: relative;
+        }
+        .team-avatar .status-dot {
+            position: absolute; bottom: 0; right: 0; width: 14px; height: 14px; border-radius: 50%;
+            border: 2px solid white;
+        }
+        .team-member-name { font-weight: 600; font-size: 14px; color: var(--gray-900); }
+        .team-member-role { font-size: 11px; color: var(--gray-500); margin-top: 2px; font-weight: 500; }
+        .team-member-task { 
+            margin-top: 10px; padding: 8px 10px; background: var(--gray-50); 
+            border-radius: 6px; font-size: 11px; color: var(--gray-600);
+            border-left: 2px solid var(--gray-300);
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .team-member-card.online .team-member-task { 
+            background: linear-gradient(135deg, #ECFDF5, #D1FAE5); 
+            border-left-color: #10B981;
+            color: #047857;
+        }
+        .team-member-card.away .team-member-task { 
+            background: linear-gradient(135deg, #FFFBEB, #FEF3C7); 
+            border-left-color: #F59E0B;
+            color: #B45309;
+        }
+        .team-member-card.offline .team-member-task { 
+            background: linear-gradient(135deg, #FEF2F2, #FEE2E2); 
+            border-left-color: #EF4444;
+            color: #B91C1C;
+        }
+        
+        .team-stats { display: flex; gap: 12px; justify-content: center; margin-top: 8px; }
+        .stat-pill { 
+            padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; 
+            display: flex; align-items: center; gap: 4px;
+        }
+        .stat-pill.online { background: #D1FAE5; color: #047857; }
+        .stat-pill.away { background: #FEF3C7; color: #B45309; }
+        .stat-pill.offline { background: #FEE2E2; color: #B91C1C; }
+        
+        @media (max-width: 900px) {
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 500px) {
+            .team-grid { grid-template-columns: 1fr; }
+            .leadership-grid { flex-direction: column; align-items: center; }
+            .leader-card { width: 100%; max-width: 280px; }
+        }
+        
         @media (max-width: 768px) {
             .company-grid { grid-template-columns: repeat(2, 1fr); }
             .detail-grid { grid-template-columns: 1fr; }
@@ -282,70 +399,115 @@
         <div id="team" class="view">
             <h1 class="page-title">Team</h1>
             
-            <!-- Leadership -->
-            <div class="queue-section">
-                <div class="queue-header">
-                    <span class="queue-title">👑 Leadership</span>
+            <!-- Team Status Summary -->
+            <div class="team-section" style="padding: 16px 24px;">
+                <div class="team-stats">
+                    <div class="stat-pill online"><span style="width:6px;height:6px;background:#10B981;border-radius:50%;"></span> 6 Online</div>
+                    <div class="stat-pill away"><span style="width:6px;height:6px;background:#F59E0B;border-radius:50%;"></span> 1 Away</div>
+                    <div class="stat-pill offline"><span style="width:6px;height:6px;background:#EF4444;border-radius:50%;"></span> 1 Offline</div>
                 </div>
-                <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-                    <div style="text-align:center;padding:20px;background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);min-width:140px;">
-                        <div style="width:64px;height:64px;background:linear-gradient(135deg,#374151,#111827);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:24px;font-weight:bold;margin:0 auto 12px;">👤</div>
-                        <div style="font-weight:600;">Jack</div>
-                        <div style="font-size:12px;color:var(--gray-500);">Owner</div>
+            </div>
+            
+            <!-- Leadership -->
+            <div class="team-section">
+                <div class="team-section-header">
+                    <span class="team-section-title">👑 Leadership</span>
+                </div>
+                <div class="leadership-grid">
+                    <div class="leader-card">
+                        <div class="leader-avatar" style="background: linear-gradient(135deg, #374151, #111827);">
+                            👤<span class="status-dot status-online"></span>
+                        </div>
+                        <div class="leader-name">Jack</div>
+                        <div class="leader-role">Owner</div>
+                        <div class="leader-task">
+                            <div class="leader-task-label">Working on</div>
+                            Reviewing Q1 financials
+                        </div>
                     </div>
-                    <div style="text-align:center;padding:20px;background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);min-width:140px;">
-                        <div style="width:64px;height:64px;background:linear-gradient(135deg,#059669,#047857);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:24px;font-weight:bold;margin:0 auto 12px;">🤖</div>
-                        <div style="font-weight:600;">Golias</div>
-                        <div style="font-size:12px;color:var(--gray-500);">Operations</div>
+                    <div class="leader-card">
+                        <div class="leader-avatar" style="background: linear-gradient(135deg, #059669, #047857);">
+                            🤖<span class="status-dot status-online"></span>
+                        </div>
+                        <div class="leader-name">Golias</div>
+                        <div class="leader-role">Operations</div>
+                        <div class="leader-task">
+                            <div class="leader-task-label">Working on</div>
+                            Managing agent network
+                        </div>
                     </div>
                 </div>
             </div>
             
             <!-- Team Members -->
-            <div class="queue-section">
-                <div class="queue-header">
-                    <span class="queue-title">💼 Team Members</span>
+            <div class="team-section">
+                <div class="team-section-header">
+                    <span class="team-section-title">💼 Team Members</span>
                 </div>
-                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
-                    <div style="text-align:center;padding:16px;background:white;border-radius:10px;border:1px solid var(--gray-200);">
-                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#10B981,#059669);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;margin:0 auto 8px;">E</div>
-                        <div style="font-weight:600;font-size:13px;">Effy</div>
-                        <div style="font-size:11px;color:var(--gray-500);">Engineer</div>
+                <div class="team-grid">
+                    <div class="team-member-card online">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #10B981, #059669);">
+                            E<span class="status-dot status-online"></span>
+                        </div>
+                        <div class="team-member-name">Effy</div>
+                        <div class="team-member-role">Engineer</div>
+                        <div class="team-member-task">Building API endpoints</div>
                     </div>
-                    <div style="text-align:center;padding:16px;background:white;border-radius:10px;border:1px solid var(--gray-200);">
-                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#6366F1,#4F46E5);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;margin:0 auto 8px;">J</div>
-                        <div style="font-weight:600;font-size:13px;">JR</div>
-                        <div style="font-size:11px;color:var(--gray-500);">QA</div>
+                    <div class="team-member-card online">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #6366F1, #4F46E5);">
+                            J<span class="status-dot status-online"></span>
+                        </div>
+                        <div class="team-member-name">JR</div>
+                        <div class="team-member-role">QA</div>
+                        <div class="team-member-task">Testing Clinic IQ v2</div>
                     </div>
-                    <div style="text-align:center;padding:16px;background:white;border-radius:10px;border:1px solid var(--gray-200);">
-                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#F59E0B,#D97706);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;margin:0 auto 8px;">W</div>
-                        <div style="font-weight:600;font-size:13px;">Wilson</div>
-                        <div style="font-size:11px;color:var(--gray-500);">Lead</div>
+                    <div class="team-member-card online">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
+                            W<span class="status-dot status-online"></span>
+                        </div>
+                        <div class="team-member-name">Wilson</div>
+                        <div class="team-member-role">Lead</div>
+                        <div class="team-member-task">Sprint planning</div>
                     </div>
-                    <div style="text-align:center;padding:16px;background:white;border-radius:10px;border:1px solid var(--gray-200);">
-                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#EC4899,#DB2777);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;margin:0 auto 8px;">G</div>
-                        <div style="font-weight:600;font-size:13px;">Gretel</div>
-                        <div style="font-size:11px;color:var(--gray-500);">Writer</div>
+                    <div class="team-member-card online">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
+                            G<span class="status-dot status-away"></span>
+                        </div>
+                        <div class="team-member-name">Gretel</div>
+                        <div class="team-member-role">Writer</div>
+                        <div class="team-member-task">Blog post draft</div>
                     </div>
-                    <div style="text-align:center;padding:16px;background:white;border-radius:10px;border:1px solid var(--gray-200);">
-                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#8B5CF6,#7C3AED);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;margin:0 auto 8px;">S</div>
-                        <div style="font-weight:600;font-size:13px;">Stan</div>
-                        <div style="font-size:11px;color:var(--gray-500);">Research</div>
+                    <div class="team-member-card online">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">
+                            S<span class="status-dot status-online"></span>
+                        </div>
+                        <div class="team-member-name">Stan</div>
+                        <div class="team-member-role">Research</div>
+                        <div class="team-member-task">Market analysis</div>
                     </div>
-                    <div style="text-align:center;padding:16px;background:white;border-radius:10px;border:1px solid var(--gray-200);">
-                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#3B82F6,#2563EB);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;margin:0 auto 8px;">B</div>
-                        <div style="font-weight:600;font-size:13px;">Bongo</div>
-                        <div style="font-size:11px;color:var(--gray-500);">Content</div>
+                    <div class="team-member-card online">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">
+                            B<span class="status-dot status-online"></span>
+                        </div>
+                        <div class="team-member-name">Bongo</div>
+                        <div class="team-member-role">Content</div>
+                        <div class="team-member-task">Editing videos</div>
                     </div>
-                    <div style="text-align:center;padding:16px;background:white;border-radius:10px;border:1px solid var(--gray-200);">
-                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#14B8A6,#0D9488);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;margin:0 auto 8px;">F</div>
-                        <div style="font-weight:600;font-size:13px;">Frankie</div>
-                        <div style="font-size:11px;color:var(--gray-500);">Secretary</div>
+                    <div class="team-member-card offline">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #14B8A6, #0D9488);">
+                            F<span class="status-dot status-offline"></span>
+                        </div>
+                        <div class="team-member-name">Frankie</div>
+                        <div class="team-member-role">Secretary</div>
+                        <div class="team-member-task">Last active 2h ago</div>
                     </div>
-                    <div style="text-align:center;padding:16px;background:white;border-radius:10px;border:1px solid var(--gray-200);">
-                        <div style="width:48px;height:48px;background:linear-gradient(135deg,#F97316,#EA580C);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;margin:0 auto 8px;">J</div>
-                        <div style="font-weight:600;font-size:13px;">Joon</div>
-                        <div style="font-size:11px;color:var(--gray-500);">Social</div>
+                    <div class="team-member-card online">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #F97316, #EA580C);">
+                            J<span class="status-dot status-in-meeting"></span>
+                        </div>
+                        <div class="team-member-name">Joon</div>
+                        <div class="team-member-role">Social</div>
+                        <div class="team-member-task">In meeting until 3pm</div>
                     </div>
                 </div>
             </div>
