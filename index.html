@@ -80,6 +80,8 @@
         .company-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
         .company-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 24px; text-align: center; cursor: pointer; transition: 0.15s; }
         .company-card:hover { border-color: var(--primary-light); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .company-link { margin-top: 8px; }
+        .company-link a { color: var(--primary); font-size: 12px; text-decoration: none; }
         .company-icon { font-size: 28px; margin-bottom: 8px; }
         .company-name { font-weight: 600; font-size: 13px; }
         
@@ -337,6 +339,7 @@
                 <div class="company-card" onclick="openCompany('wilde')">
                     <div class="company-icon">⚙️</div>
                     <div class="company-name">Wilde Automations</div>
+                    <div class="company-link"><a href="https://jack108510.github.io/wilde-automations/" target="_blank">🌐 Website</a></div>
                 </div>
                 <div class="company-card" onclick="openCompany('sam')">
                     <div class="company-icon">📄</div>
