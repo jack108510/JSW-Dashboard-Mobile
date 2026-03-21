@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSW Enterprises - Mission Control</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Password protection
         const correctPassword = 'Harlem1085';
@@ -309,6 +310,32 @@
             .analytics-grid { grid-template-columns: repeat(2, 1fr); }
             .chart-row { flex-direction: column; }
             .metric-row { grid-template-columns: 1fr; }
+        }
+        
+        /* Enhanced Analytics Styles */
+        .company-performance-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .company-performance-card { 
+            background: white; border: 1px solid var(--gray-200); border-radius: 16px; padding: 20px; 
+            transition: all 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .company-performance-card:hover { 
+            transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); border-color: var(--primary-light);
+        }
+        .company-performance-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .company-performance-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .company-performance-name { font-weight: 700; font-size: 15px; color: var(--gray-900); }
+        .company-performance-tasks { font-size: 12px; color: var(--gray-500); }
+        .company-performance-trend { 
+            margin-left: auto; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700;
+        }
+        .company-performance-trend.positive { background: #D1FAE5; color: #059669; }
+        .company-performance-trend.negative { background: #FEE2E2; color: #DC2626; }
+        .company-performance-stats { display: flex; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-100); }
+        .company-performance-stats .stat-num { display: block; font-size: 16px; font-weight: 700; color: var(--gray-900); }
+        .company-performance-stats .stat-label { font-size: 11px; color: var(--gray-500); }
+        
+        @media (max-width: 900px) {
+            .company-performance-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -674,113 +701,200 @@
 
         <!-- Analytics Page -->
         <div id="analytics" class="view">
-            <h1 class="page-title">📊 Analytics</h1>
+            <h1 class="page-title">📊 Analytics Dashboard</h1>
             
-            <!-- Top Stats Row -->
+            <!-- Top Stats Row - Enhanced -->
             <div class="analytics-grid">
                 <div class="analytics-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <div class="analytics-card-value">2,847</div>
+                    <div style="display:flex;justify-content:space-between;align-items:start;">
+                        <div class="analytics-card-value">2,847</div>
+                        <div style="background:rgba(255,255,255,0.2);padding:8px;border-radius:10px;"><i class="fas fa-users" style="font-size:20px;"></i></div>
+                    </div>
                     <div class="analytics-card-label">Daily Visitors</div>
-                    <div class="analytics-card-change change-up"><i class="fas fa-arrow-up"></i> +12.5%</div>
+                    <div class="analytics-card-change change-up"><i class="fas fa-arrow-up"></i> +12.5% vs last week</div>
                 </div>
                 <div class="analytics-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                    <div class="analytics-card-value">$14.2K</div>
+                    <div style="display:flex;justify-content:space-between;align-items:start;">
+                        <div class="analytics-card-value">$14.2K</div>
+                        <div style="background:rgba(255,255,255,0.2);padding:8px;border-radius:10px;"><i class="fas fa-dollar-sign" style="font-size:20px;"></i></div>
+                    </div>
                     <div class="analytics-card-label">Weekly Revenue</div>
-                    <div class="analytics-card-change change-up"><i class="fas fa-arrow-up"></i> +8.3%</div>
+                    <div class="analytics-card-change change-up"><i class="fas fa-arrow-up"></i> +8.3% vs last week</div>
                 </div>
                 <div class="analytics-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                    <div class="analytics-card-value">94.2%</div>
+                    <div style="display:flex;justify-content:space-between;align-items:start;">
+                        <div class="analytics-card-value">94.2%</div>
+                        <div style="background:rgba(255,255,255,0.2);padding:8px;border-radius:10px;"><i class="fas fa-check-circle" style="font-size:20px;"></i></div>
+                    </div>
                     <div class="analytics-card-label">Task Completion</div>
-                    <div class="analytics-card-change change-up"><i class="fas fa-check"></i> +2.1%</div>
+                    <div class="analytics-card-change change-up"><i class="fas fa-arrow-up"></i> +2.1% improvement</div>
                 </div>
                 <div class="analytics-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                    <div class="analytics-card-value">4.8h</div>
+                    <div style="display:flex;justify-content:space-between;align-items:start;">
+                        <div class="analytics-card-value">4.8h</div>
+                        <div style="background:rgba(255,255,255,0.2);padding:8px;border-radius:10px;"><i class="fas fa-clock" style="font-size:20px;"></i></div>
+                    </div>
                     <div class="analytics-card-label">Avg Response Time</div>
-                    <div class="analytics-card-change change-down"><i class="fas fa-arrow-down"></i> -0.3h</div>
+                    <div class="analytics-card-change change-up"><i class="fas fa-arrow-down"></i> 15% faster</div>
                 </div>
             </div>
             
             <!-- Charts Row -->
             <div class="chart-row">
-                <!-- Traffic Chart -->
+                <!-- Traffic Chart with Chart.js -->
                 <div class="analytics-section" style="flex:2;">
-                    <div class="analytics-section-title"><i class="fas fa-chart-line"></i> Weekly Traffic</div>
-                    <div class="bar-chart">
-                        <div class="bar" style="height:45%;"><span class="bar-value">1.2K</span><span class="bar-label">Mon</span></div>
-                        <div class="bar" style="height:65%;"><span class="bar-value">1.8K</span><span class="bar-label">Tue</span></div>
-                        <div class="bar" style="height:55%;"><span class="bar-value">1.5K</span><span class="bar-label">Wed</span></div>
-                        <div class="bar" style="height:80%;"><span class="bar-value">2.3K</span><span class="bar-label">Thu</span></div>
-                        <div class="bar" style="height:90%;"><span class="bar-value">2.6K</span><span class="bar-label">Fri</span></div>
-                        <div class="bar" style="height:60%;"><span class="bar-value">1.7K</span><span class="bar-label">Sat</span></div>
-                        <div class="bar" style="height:40%;"><span class="bar-value">1.1K</span><span class="bar-label">Sun</span></div>
-                    </div>
+                    <div class="analytics-section-title"><i class="fas fa-chart-area"></i> Traffic Overview</div>
+                    <canvas id="trafficChart" height="120"></canvas>
                 </div>
                 
                 <!-- Revenue Distribution -->
                 <div class="analytics-section" style="flex:1;">
-                    <div class="analytics-section-title"><i class="fas fa-chart-pie"></i> Revenue by Company</div>
-                    <div class="donut-chart"></div>
+                    <div class="analytics-section-title"><i class="fas fa-chart-pie"></i> Revenue Split</div>
+                    <canvas id="revenueChart" height="160"></canvas>
                     <div class="donut-legend">
-                        <div class="legend-item"><span class="legend-dot" style="background:#10B981;"></span> Clinic IQ (35%)</div>
-                        <div class="legend-item"><span class="legend-dot" style="background:#6366F1;"></span> Wilde Auto (25%)</div>
-                        <div class="legend-item"><span class="legend-dot" style="background:#F59E0B;"></span> Westwood (20%)</div>
-                        <div class="legend-item"><span class="legend-dot" style="background:#EC4899;"></span> JSW (20%)</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:#10B981;"></span> Clinic IQ ($4.97K)</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:#6366F1;"></span> Wilde Auto ($3.55K)</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:#F59E0B;"></span> Westwood ($2.84K)</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:#EC4899;"></span> JSW ($2.84K)</div>
                     </div>
                 </div>
             </div>
             
-            <!-- Company Performance -->
+            <!-- Additional Metrics Row -->
+            <div class="analytics-section">
+                <div class="analytics-section-title"><i class="fas fa-tachometer-alt"></i> Performance Metrics</div>
+                <div class="metric-row" style="grid-template-columns: repeat(4, 1fr);">
+                    <div class="metric-item" style="position:relative;overflow:hidden;">
+                        <div style="position:absolute;top:0;right:0;width:60px;height:60px;background:linear-gradient(135deg,#10B98120,#10B98140);border-radius:0 12px 0 50px;"></div>
+                        <div class="metric-value" style="color:#10B981;">67.3%</div>
+                        <div class="metric-label">Conversion Rate</div>
+                        <div style="font-size:11px;color:#10B981;margin-top:8px;font-weight:600;"><i class="fas fa-arrow-up"></i> +3.2%</div>
+                    </div>
+                    <div class="metric-item" style="position:relative;overflow:hidden;">
+                        <div style="position:absolute;top:0;right:0;width:60px;height:60px;background:linear-gradient(135deg,#F59E0B20,#F59E0B40);border-radius:0 12px 0 50px;"></div>
+                        <div class="metric-value" style="color:#F59E0B;">32.4%</div>
+                        <div class="metric-label">Bounce Rate</div>
+                        <div style="font-size:11px;color:#10B981;margin-top:8px;font-weight:600;"><i class="fas fa-arrow-down"></i> -2.1%</div>
+                    </div>
+                    <div class="metric-item" style="position:relative;overflow:hidden;">
+                        <div style="position:absolute;top:0;right:0;width:60px;height:60px;background:linear-gradient(135deg,#6366F120,#6366F140);border-radius:0 12px 0 50px;"></div>
+                        <div class="metric-value" style="color:#6366F1;">3m 42s</div>
+                        <div class="metric-label">Avg Session</div>
+                        <div style="font-size:11px;color:#10B981;margin-top:8px;font-weight:600;"><i class="fas fa-arrow-up"></i> +18s</div>
+                    </div>
+                    <div class="metric-item" style="position:relative;overflow:hidden;">
+                        <div style="position:absolute;top:0;right:0;width:60px;height:60px;background:linear-gradient(135deg,#EC489920,#EC489940);border-radius:0 12px 0 50px;"></div>
+                        <div class="metric-value" style="color:#EC4899;">2.4</div>
+                        <div class="metric-label">Pages/Session</div>
+                        <div style="font-size:11px;color:#10B981;margin-top:8px;font-weight:600;"><i class="fas fa-arrow-up"></i> +0.3</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Company Performance - Enhanced -->
             <div class="analytics-section">
                 <div class="analytics-section-title"><i class="fas fa-building"></i> Company Performance</div>
-                <div class="metric-row">
-                    <div class="metric-item">
-                        <div class="metric-value">28</div>
-                        <div class="metric-label">Clinic IQ Tasks</div>
-                        <div class="progress-bar"><div class="progress-fill" style="width:92%;"></div></div>
-                        <div style="font-size:10px;color:var(--gray-500);margin-top:4px;">92% complete</div>
+                <div class="company-performance-grid">
+                    <div class="company-performance-card">
+                        <div class="company-performance-header">
+                            <div class="company-performance-icon" style="background:linear-gradient(135deg,#10B981,#059669);">🏥</div>
+                            <div>
+                                <div class="company-performance-name">Clinic IQ</div>
+                                <div class="company-performance-tasks">28 tasks • 92% complete</div>
+                            </div>
+                            <div class="company-performance-trend positive">+15%</div>
+                        </div>
+                        <div class="progress-bar" style="height:12px;border-radius:6px;"><div class="progress-fill" style="width:92%;background:linear-gradient(90deg,#10B981,#34D399);"></div></div>
+                        <div class="company-performance-stats">
+                            <div><span class="stat-num">$4.97K</span><span class="stat-label">Revenue</span></div>
+                            <div><span class="stat-num">156</span><span class="stat-label">Visitors</span></div>
+                            <div><span class="stat-num">23</span><span class="stat-label">Conversions</span></div>
+                        </div>
                     </div>
-                    <div class="metric-item">
-                        <div class="metric-value">19</div>
-                        <div class="metric-label">Wilde Auto Tasks</div>
-                        <div class="progress-bar"><div class="progress-fill" style="width:85%;"></div></div>
-                        <div style="font-size:10px;color:var(--gray-500);margin-top:4px;">85% complete</div>
+                    <div class="company-performance-card">
+                        <div class="company-performance-header">
+                            <div class="company-performance-icon" style="background:linear-gradient(135deg,#6366F1,#4F46E5);">⚙️</div>
+                            <div>
+                                <div class="company-performance-name">Wilde Automations</div>
+                                <div class="company-performance-tasks">19 tasks • 85% complete</div>
+                            </div>
+                            <div class="company-performance-trend positive">+8%</div>
+                        </div>
+                        <div class="progress-bar" style="height:12px;border-radius:6px;"><div class="progress-fill" style="width:85%;background:linear-gradient(90deg,#6366F1,#818CF8);"></div></div>
+                        <div class="company-performance-stats">
+                            <div><span class="stat-num">$3.55K</span><span class="stat-label">Revenue</span></div>
+                            <div><span class="stat-num">89</span><span class="stat-label">Visitors</span></div>
+                            <div><span class="stat-num">12</span><span class="stat-label">Conversions</span></div>
+                        </div>
                     </div>
-                    <div class="metric-item">
-                        <div class="metric-value">12</div>
-                        <div class="metric-label">Westwood Tasks</div>
-                        <div class="progress-bar"><div class="progress-fill" style="width:78%;"></div></div>
-                        <div style="font-size:10px;color:var(--gray-500);margin-top:4px;">78% complete</div>
+                    <div class="company-performance-card">
+                        <div class="company-performance-header">
+                            <div class="company-performance-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706);">🌐</div>
+                            <div>
+                                <div class="company-performance-name">Westwood Network</div>
+                                <div class="company-performance-tasks">12 tasks • 78% complete</div>
+                            </div>
+                            <div class="company-performance-trend positive">+22%</div>
+                        </div>
+                        <div class="progress-bar" style="height:12px;border-radius:6px;"><div class="progress-fill" style="width:78%;background:linear-gradient(90deg,#F59E0B,#FBBF24);"></div></div>
+                        <div class="company-performance-stats">
+                            <div><span class="stat-num">$2.84K</span><span class="stat-label">Revenue</span></div>
+                            <div><span class="stat-num">67</span><span class="stat-label">Visitors</span></div>
+                            <div><span class="stat-num">8</span><span class="stat-label">Conversions</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Quick Stats -->
+            <!-- Quick Stats - Enhanced -->
             <div class="analytics-section">
                 <div class="analytics-section-title"><i class="fas fa-bolt"></i> Quick Stats</div>
                 <div class="mini-stats">
-                    <div class="mini-stat">
-                        <div class="mini-stat-value">6/8</div>
+                    <div class="mini-stat" style="background:linear-gradient(135deg,#ECFDF5,#D1FAE5);border-color:#10B981;">
+                        <div class="mini-stat-value" style="color:#10B981;">6/8</div>
                         <div class="mini-stat-label">Team Online</div>
                     </div>
-                    <div class="mini-stat">
-                        <div class="mini-stat-value">23</div>
+                    <div class="mini-stat" style="background:linear-gradient(135deg,#EEF2FF,#E0E7FF);border-color:#6366F1;">
+                        <div class="mini-stat-value" style="color:#6366F1;">23</div>
                         <div class="mini-stat-label">Active Projects</div>
                     </div>
-                    <div class="mini-stat">
-                        <div class="mini-stat-value">156</div>
+                    <div class="mini-stat" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A);border-color:#D97706;">
+                        <div class="mini-stat-value" style="color:#D97706;">156</div>
                         <div class="mini-stat-label">Tasks This Month</div>
                     </div>
-                    <div class="mini-stat">
-                        <div class="mini-stat-value">98%</div>
+                    <div class="mini-stat" style="background:linear-gradient(135deg,#ECFDF5,#A7F3D0);border-color:#059669;">
+                        <div class="mini-stat-value" style="color:#059669;">98%</div>
                         <div class="mini-stat-label">Uptime</div>
                     </div>
-                    <div class="mini-stat">
-                        <div class="mini-stat-value">4.9</div>
+                    <div class="mini-stat" style="background:linear-gradient(135deg,#FCE7F3,#FBCFE8);border-color:#DB2777;">
+                        <div class="mini-stat-value" style="color:#DB2777;">4.9</div>
                         <div class="mini-stat-label">Satisfaction</div>
                     </div>
-                    <div class="mini-stat">
-                        <div class="mini-stat-value">$847</div>
+                    <div class="mini-stat" style="background:linear-gradient(135deg,#FEF3C7,#FCD34D);border-color:#B45309;">
+                        <div class="mini-stat-value" style="color:#B45309;">$847</div>
                         <div class="mini-stat-label">Avg. Deal Size</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Trend Sparklines -->
+            <div class="analytics-section">
+                <div class="analytics-section-title"><i class="fas fa-chart-line"></i> Weekly Trends</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+                    <div style="padding:20px;background:var(--gray-50);border-radius:12px;border:1px solid var(--gray-200);">
+                        <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px;">Revenue Trend</div>
+                        <canvas id="sparkline1" height="50"></canvas>
+                        <div style="font-size:20px;font-weight:700;color:#10B981;margin-top:8px;">+12.4%</div>
+                    </div>
+                    <div style="padding:20px;background:var(--gray-50);border-radius:12px;border:1px solid var(--gray-200);">
+                        <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px;">Traffic Trend</div>
+                        <canvas id="sparkline2" height="50"></canvas>
+                        <div style="font-size:20px;font-weight:700;color:#6366F1;margin-top:8px;">+8.7%</div>
+                    </div>
+                    <div style="padding:20px;background:var(--gray-50);border-radius:12px;border:1px solid var(--gray-200);">
+                        <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px;">Task Completion</div>
+                        <canvas id="sparkline3" height="50"></canvas>
+                        <div style="font-size:20px;font-weight:700;color:#F59E0B;margin-top:8px;">+5.2%</div>
                     </div>
                 </div>
             </div>
@@ -1253,6 +1367,7 @@
             if (page === 'audit') renderAudit();
             if (page === 'goals') loadGoals();
             if (page === 'timeline') loadTimeline();
+            if (page === 'analytics') initAnalyticsCharts();
         }
         
         function loadGoals() {
@@ -1483,6 +1598,147 @@
         // Initialize
         fetchTasks().then(() => renderQueue());
         renderLastUpdate();
+        
+        // Initialize Charts when Analytics page is shown
+        function initAnalyticsCharts() {
+            // Traffic Area Chart
+            const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+            new Chart(trafficCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Visitors',
+                        data: [1200, 1800, 1500, 2300, 2600, 1700, 1100],
+                        fill: true,
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderColor: '#667eea',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        pointBackgroundColor: '#667eea',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 8
+                    }, {
+                        label: 'Last Week',
+                        data: [1000, 1400, 1300, 1800, 2000, 1500, 900],
+                        fill: true,
+                        backgroundColor: 'rgba(118, 75, 162, 0.05)',
+                        borderColor: '#764ba2',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        tension: 0.4,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top', labels: { usePointStyle: true, padding: 20 } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f3f4f6' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+            
+            // Revenue Doughnut Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(revenueCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Clinic IQ', 'Wilde Auto', 'Westwood', 'JSW'],
+                    datasets: [{
+                        data: [4970, 3550, 2840, 2840],
+                        backgroundColor: ['#10B981', '#6366F1', '#F59E0B', '#EC4899'],
+                        borderWidth: 0,
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+            
+            // Sparkline Charts
+            const sparklineData1 = [3.2, 3.8, 4.1, 3.9, 4.5, 4.8, 5.2, 5.6, 5.1, 5.8];
+            const sparklineData2 = [1.1, 1.3, 1.2, 1.5, 1.8, 1.6, 1.9, 2.1, 2.0, 2.3];
+            const sparklineData3 = [82, 84, 85, 87, 86, 89, 91, 90, 93, 94];
+            
+            const sparklineCtx1 = document.getElementById('sparkline1').getContext('2d');
+            new Chart(sparklineCtx1, {
+                type: 'line',
+                data: {
+                    labels: sparklineData1.map((_, i) => i),
+                    datasets: [{
+                        data: sparklineData1,
+                        borderColor: '#10B981',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { display: false }, y: { display: false } }
+                }
+            });
+            
+            const sparklineCtx2 = document.getElementById('sparkline2').getContext('2d');
+            new Chart(sparklineCtx2, {
+                type: 'line',
+                data: {
+                    labels: sparklineData2.map((_, i) => i),
+                    datasets: [{
+                        data: sparklineData2,
+                        borderColor: '#6366F1',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { display: false }, y: { display: false } }
+                }
+            });
+            
+            const sparklineCtx3 = document.getElementById('sparkline3').getContext('2d');
+            new Chart(sparklineCtx3, {
+                type: 'line',
+                data: {
+                    labels: sparklineData3.map((_, i) => i),
+                    datasets: [{
+                        data: sparklineData3,
+                        borderColor: '#F59E0B',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { display: false }, y: { display: false } }
+                }
+            });
+        }
         
         // Auto-refresh every 10 seconds
         setInterval(() => {
