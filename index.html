@@ -288,8 +288,37 @@
         
         /* Mobile Optimizations */
         @media (max-width: 480px) {
-            :root { --sidebar-width: 0px; }
-            body { padding: 8px; font-size: 14px; }
+            :root { --sidebar-width: 60px; }
+            
+            /* Side navigation */
+            nav { 
+                position: fixed !important; 
+                left: 0 !important; 
+                top: 0 !important; 
+                bottom: 0 !important;
+                width: 60px !important;
+                flex-direction: column !important;
+                background: var(--white);
+                border-right: 1px solid var(--gray-200);
+                padding: 60px 4px 12px 4px !important;
+                gap: 4px !important;
+                overflow-y: auto;
+                z-index: 99;
+            }
+            .nav-btn { 
+                writing-mode: vertical-rl !important;
+                text-orientation: mixed !important;
+                transform: rotate(180deg);
+                padding: 12px 6px !important; 
+                font-size: 10px !important; 
+                min-width: 50px;
+                white-space: nowrap;
+            }
+            
+            body { 
+                padding: 8px 8px 8px 68px !important; 
+                font-size: 14px; 
+            }
             
             /* Header */
             header { padding: 8px 12px !important; flex-wrap: wrap; gap: 8px; }
