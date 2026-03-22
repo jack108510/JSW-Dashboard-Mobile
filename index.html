@@ -289,101 +289,58 @@
         /* Mobile Optimizations */
         @media (max-width: 480px) {
             :root { --sidebar-width: 0px; }
-            body { padding: 8px; font-size: 14px; }
-            
-            /* Header */
-            header { padding: 8px 12px !important; flex-wrap: wrap; gap: 8px; }
-            header h1 { font-size: 16px !important; }
-            
-            /* Navigation - horizontal scroll */
-            nav { display: flex !important; overflow-x: auto; gap: 6px; padding-bottom: 8px; }
-            .nav-btn { 
-                padding: 10px 14px !important; 
-                font-size: 11px !important; 
-                white-space: nowrap;
-                min-width: fit-content;
-            }
-            
-            /* Page titles */
-            .page-title { font-size: 18px !important; margin-bottom: 12px !important; }
-            
-            /* Companies */
-            .company-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
-            .company-card { padding: 10px !important; }
+            body { padding: 10px; }
+            .page-title { font-size: 20px !important; }
+            .nav-btn { padding: 8px 12px !important; font-size: 12px !important; }
+            .company-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+            .company-card { padding: 12px !important; }
             .company-name { font-size: 11px !important; }
-            .company-icon { font-size: 24px !important; margin-bottom: 4px !important; }
-            .company-link { display: none; }
+            .company-icon { font-size: 20px !important; }
+            .company-link a { font-size: 10px !important; }
             
-            /* Queue */
-            .queue-section { padding: 12px !important; margin-bottom: 12px !important; }
-            .queue-item { 
-                padding: 10px !important; 
-                flex-direction: column !important; 
-                gap: 8px !important; 
-                align-items: flex-start !important; 
-            }
+            /* Queue mobile */
+            .queue-item { padding: 12px !important; flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
             .queue-item-text { font-size: 13px !important; }
             .queue-item-meta { font-size: 10px !important; }
-            .task-add-btn { width: 100%; padding: 12px !important; }
-            #taskInput { padding: 12px !important; font-size: 14px !important; }
+            .task-add-btn { width: 100%; }
             
-            /* Company detail */
-            .company-detail { padding: 12px !important; }
-            .detail-header { flex-direction: column !important; gap: 10px !important; }
-            .back-btn { width: 100%; text-align: center; padding: 12px !important; }
+            /* Company detail mobile */
+            .detail-header { flex-direction: column !important; gap: 12px !important; }
+            .back-btn { width: 100%; text-align: center; }
             
-            /* Timeline */
-            #timeline > div { padding: 12px !important; }
-            .timeline-form { grid-template-columns: 1fr !important; gap: 8px !important; }
-            #timelineDate, #timelineCompany, #timelineGoal { padding: 12px !important; font-size: 14px !important; }
+            /* Timeline mobile */
+            .timeline-form { grid-template-columns: 1fr !important; }
             
-            /* Calendar */
-            .calendar-grid { grid-template-columns: 1fr !important; gap: 6px !important; }
-            .calendar-day { min-height: 60px !important; padding: 6px !important; }
-            .calendar-day-number { font-size: 12px !important; }
-            .calendar-event { font-size: 9px !important; padding: 3px 5px !important; }
-            .goals-to-schedule { padding: 10px !important; }
-            .goal-drag-item { font-size: 11px !important; padding: 6px 10px !important; }
+            /* Calendar mobile */
+            .calendar-grid { grid-template-columns: 1fr !important; gap: 4px !important; }
+            .calendar-day { min-height: 50px !important; padding: 4px !important; }
+            .calendar-day-number { font-size: 11px !important; }
+            .calendar-event { font-size: 8px !important; padding: 2px 4px !important; }
             
-            /* Analytics */
-            .analytics-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
-            .analytics-card { padding: 10px !important; }
-            .analytics-card-value { font-size: 18px !important; }
+            /* Analytics mobile */
+            .analytics-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+            .analytics-card { padding: 12px !important; }
+            .analytics-card-value { font-size: 20px !important; }
             .analytics-card-label { font-size: 9px !important; }
-            .analytics-card-change { font-size: 9px !important; padding: 4px 8px !important; }
-            .analytics-section { padding: 10px !important; margin-bottom: 10px !important; }
-            .analytics-section-title { font-size: 12px !important; }
+            .analytics-section { padding: 12px !important; }
+            .chart-row { flex-direction: column !important; }
             
-            /* Team */
-            .team-section { padding: 12px !important; }
-            .team-stats { flex-wrap: wrap; gap: 6px !important; }
-            .stat-pill { font-size: 10px !important; padding: 4px 8px !important; }
+            /* Team mobile */
+            .team-stats { flex-wrap: wrap; gap: 8px !important; }
             
-            /* Scheduler */
-            .scheduler-section { padding: 10px !important; }
-            .schedule-item { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; padding: 10px !important; }
-            .schedule-item-time { font-size: 12px !important; }
-            .schedule-item-cmd { font-size: 12px !important; }
-            .schedule-item-repeats { font-size: 10px !important; }
+            /* Scheduler mobile */
+            .scheduler-section { padding: 12px !important; }
+            .schedule-item { flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
             
-            /* Whiteboard & Notes */
-            .whiteboard { min-height: 100px !important; font-size: 12px !important; padding: 10px !important; }
-            .detail-card { padding: 12px !important; }
-            .detail-card-title { font-size: 13px !important; }
+            /* Whiteboard mobile */
+            .whiteboard { min-height: 120px !important; font-size: 12px !important; }
             
-            /* Goals */
+            /* Goals mobile */
             .goals-grid { grid-template-columns: 1fr !important; }
-            textarea[id^="goals-"] { min-height: 80px !important; font-size: 12px !important; }
             
-            /* Quick Links */
-            .quick-links-list { gap: 6px !important; }
-            .quick-link { padding: 8px 12px !important; font-size: 12px !important; }
-        }
-        
-        @media (max-width: 360px) {
-            .company-grid { grid-template-columns: 1fr !important; }
-            .analytics-grid { grid-template-columns: 1fr !important; }
-            .nav-btn { padding: 8px 10px !important; font-size: 10px !important; }
+            /* Header */
+            header { padding: 10px !important; }
+            header h1 { font-size: 16px !important; }
         }
         
         @media (max-width: 900px) {
