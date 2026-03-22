@@ -102,16 +102,40 @@
                 <div id="scheduleOptions" style="display:none;">
                     <div class="form-group">
                         <label class="form-label">Time</label>
-                        <input type="time" class="form-input" id="scheduleTime">
+                        <div style="display:flex;gap:8px;">
+                            <select class="form-select" id="scheduleHour" style="flex:1;">
+                                <option value="01">1</option><option value="02">2</option><option value="03">3</option><option value="04">4</option><option value="05">5</option><option value="06">6</option><option value="07">7</option><option value="08">8</option><option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                            </select>
+                            <select class="form-select" id="scheduleMinute" style="flex:1;">
+                                <option value="00">00</option><option value="15">15</option><option value="30">30</option><option value="45">45</option>
+                            </select>
+                            <select class="form-select" id="scheduleAMPM" style="flex:1;">
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Repeat</label>
-                        <select class="form-select" id="scheduleRepeat">
+                        <select class="form-select" id="scheduleRepeat" onchange="toggleCustomDays()">
                             <option value="none">One time</option>
                             <option value="daily">Daily</option>
                             <option value="weekly">Weekly</option>
                             <option value="monthly">Monthly</option>
+                            <option value="custom">Custom</option>
                         </select>
+                    </div>
+                    <div id="customDays" style="display:none;" class="form-group">
+                        <label class="form-label">Select Days</label>
+                        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                            <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" value="0"> Sun</label>
+                            <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" value="1"> Mon</label>
+                            <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" value="2"> Tue</label>
+                            <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" value="3"> Wed</label>
+                            <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" value="4"> Thu</label>
+                            <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" value="5"> Fri</label>
+                            <label style="display:flex;align-items:center;gap:4px;font-size:13px;"><input type="checkbox" value="6"> Sat</label>
+                        </div>
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="saveTask()">Save Task</button>
@@ -212,11 +236,19 @@
             
             // Schedule if needed
             if (scheduleIt) {
-                const time = document.getElementById('scheduleTime').value;
+                const hour = document.getElementById('scheduleHour').value;
+                const minute = document.getElementById('scheduleMinute').value;
+                const ampm = document.getElementById('scheduleAMPM').value;
+                const time = hour + ':' + minute + ' ' + ampm;
                 const repeat = document.getElementById('scheduleRepeat').value;
+                let customDays = [];
+                if (repeat === 'custom') {
+                    const checkboxes = document.querySelectorAll('#customDays input:checked');
+                    checkboxes.forEach(cb => customDays.push(cb.value));
+                }
                 if (time) {
                     const schedules = JSON.parse(localStorage.getItem('jsw-schedules-' + company) || '[]');
-                    schedules.push({ cmd: text, time, repeat, id: Date.now() });
+                    schedules.push({ cmd: text, time, repeat, customDays, id: Date.now() });
                     localStorage.setItem('jsw-schedules-' + company, JSON.stringify(schedules));
                 }
             }
@@ -224,6 +256,11 @@
             closeModal();
             loadTasks();
             loadSchedules();
+        }
+        
+        function toggleCustomDays() {
+            const repeat = document.getElementById('scheduleRepeat').value;
+            document.getElementById('customDays').style.display = repeat === 'custom' ? 'block' : 'none';
         }
         
         function completeTask(id) {
