@@ -1134,10 +1134,7 @@
                         body: JSON.stringify({ text, company, status: 'pending' })
                     });
                 }
-                // Send to n8n webhook
-                try {
-                    await fetch(N8N_WEBHOOK + '?text=' + encodeURIComponent(text) + '&company=' + encodeURIComponent(company) + '&action=task_created');
-                } catch (e) { console.log('Webhook error:', e); }
+                // Webhook now called by local API to avoid CORS
                 await fetchTasks();
                 renderQueue();
             } catch (e) {
