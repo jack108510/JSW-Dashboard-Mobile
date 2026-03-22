@@ -145,6 +145,7 @@
     
     <script>
         const API_URL = 'http://localhost:3457';
+        const SCHEDULE_WEBHOOK = 'https://jackwilde.app.n8n.cloud/webhook/ea513425-fb54-4273-b1e2-fc763c835ea4';
         
         function loadTasks() {
             const tasks = JSON.parse(localStorage.getItem('jsw-tasks') || '[]');
@@ -250,6 +251,11 @@
                     const schedules = JSON.parse(localStorage.getItem('jsw-schedules-' + company) || '[]');
                     schedules.push({ cmd: text, time, repeat, customDays, id: Date.now() });
                     localStorage.setItem('jsw-schedules-' + company, JSON.stringify(schedules));
+                    
+                    // Send to webhook
+                    try {
+                        await fetch(SCHEDULE_WEBHOOK + '?company=' + encodeURIComponent(company) + '&task=' + encodeURIComponent(text) + '&time=' + encodeURIComponent(time) + '&repeat=' + encodeURIComponent(repeat));
+                    } catch(e) { console.log('Webhook error:', e); }
                 }
             }
             
