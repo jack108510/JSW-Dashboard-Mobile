@@ -41,26 +41,10 @@
         .header-left { display: flex; align-items: center; gap: 12px; }
         .logo { width: 32px; height: 32px; background: var(--primary-light); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; }
         .logo-text { font-weight: 600; font-size: 15px; }
-        .nav { display: flex; gap: 8px; background: var(--white); padding: 8px 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        .nav-btn { 
-            display: flex; align-items: center; gap: 8px;
-            padding: 10px 16px; 
-            background: transparent; 
-            border: none; 
-            border-radius: 8px; 
-            color: var(--gray-500); 
-            font-weight: 500; 
-            cursor: pointer; 
-            font-size: 13px;
-            transition: all 0.2s;
-        }
-        .nav-btn:hover { background: var(--gray-100); color: var(--gray-700); }
-        .nav-btn.active { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-            color: white; 
-            box-shadow: 0 4px 12px rgba(102,126,234,0.3);
-        }
-        .nav-btn i { font-size: 14px; }
+        .nav { display: flex; gap: 4px; }
+        .nav-btn { padding: 8px 16px; background: transparent; border: none; border-radius: 6px; color: var(--gray-500); font-weight: 500; cursor: pointer; font-size: 13px; }
+        .nav-btn:hover { background: var(--gray-100); }
+        .nav-btn.active { background: var(--primary-bg); color: var(--primary); }
         
         .main { padding: 80px 24px 40px; max-width: 1000px; margin: 0 auto; }
         .view { display: none; }
