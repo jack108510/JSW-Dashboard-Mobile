@@ -1136,11 +1136,7 @@
                 }
                 // Send to n8n webhook
                 try {
-                    await fetch(N8N_WEBHOOK, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ text, company, action: 'task_created' })
-                    });
+                    await fetch(N8N_WEBHOOK + '?text=' + encodeURIComponent(text) + '&company=' + encodeURIComponent(company) + '&action=task_created');
                 } catch (e) { console.log('Webhook error:', e); }
                 await fetchTasks();
                 renderQueue();
