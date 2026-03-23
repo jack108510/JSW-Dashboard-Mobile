@@ -101,6 +101,10 @@
                 </div>
                 <div id="scheduleOptions" style="display:none;">
                     <div class="form-group">
+                        <label class="form-label">Title (short name)</label>
+                        <input type="text" id="scheduleTitle" class="form-input" placeholder="e.g., Morning report">
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">Time</label>
                         <div style="display:flex;gap:8px;">
                             <select class="form-select" id="scheduleHour" style="flex:1;">
@@ -187,7 +191,7 @@
                 <div class="schedule-item">
                     <span class="schedule-time">${s.time}</span>
                     <div class="schedule-info">
-                        <div class="schedule-cmd">${s.cmd}</div>
+                        <div class="schedule-cmd">${s.title || s.cmd.substring(0,30)}</div>
                         <div class="schedule-repeat">${getCompanyName(s.company)} • ${s.repeat}</div>
                     </div>
                 </div>
@@ -247,14 +251,15 @@
                     const checkboxes = document.querySelectorAll('#customDays input:checked');
                     checkboxes.forEach(cb => customDays.push(cb.value));
                 }
+                const title = document.getElementById('scheduleTitle').value.trim();
                 if (time) {
                     const schedules = JSON.parse(localStorage.getItem('jsw-schedules-' + company) || '[]');
-                    schedules.push({ cmd: text, time, repeat, customDays, id: Date.now() });
+                    schedules.push({ cmd: text, title: title || text.substring(0,30), time, repeat, customDays, id: Date.now() });
                     localStorage.setItem('jsw-schedules-' + company, JSON.stringify(schedules));
                     
                     // Send to webhook
                     try {
-                        await fetch(SCHEDULE_WEBHOOK + '?company=' + encodeURIComponent(company) + '&task=' + encodeURIComponent(text) + '&time=' + encodeURIComponent(time) + '&repeat=' + encodeURIComponent(repeat));
+                        await fetch(SCHEDULE_WEBHOOK + '?company=' + encodeURIComponent(company) + '&title=' + encodeURIComponent(title) + '&task=' + encodeURIComponent(text) + '&time=' + encodeURIComponent(time) + '&repeat=' + encodeURIComponent(repeat));
                     } catch(e) { console.log('Webhook error:', e); }
                 }
             }
