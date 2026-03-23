@@ -9,65 +9,219 @@
     <link rel="apple-touch-icon" href="favicon.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #10B981; --primary-dark: #059669; --white: #fff; --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB; --gray-500: #6B7280; --gray-700: #374151; --gray-900: #111827; }
+        :root { 
+            --primary: #EF4444; 
+            --primary-dark: #DC2626; 
+            --primary-light: #FCA5A5;
+            --white: #fff; 
+            --gray-50: #F9FAFB; 
+            --gray-100: #F3F4F6; 
+            --gray-200: #E5E7EB; 
+            --gray-300: #D1D5DB;
+            --gray-500: #6B7280; 
+            --gray-700: #374151; 
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--gray-50); color: var(--gray-900); padding-bottom: 100px; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif; 
+            background: linear-gradient(180deg, #FEE2E2 0%, var(--gray-50) 100%); 
+            color: var(--gray-900); 
+            padding-bottom: 120px;
+            min-height: 100vh;
+        }
         
-        .header { background: linear-gradient(135deg, #10B981, #059669); color: white; padding: 16px; position: sticky; top: 0; z-index: 100; }
-        .header h1 { font-size: 18px; font-weight: 600; }
+        .header { 
+            background: linear-gradient(135deg, #EF4444, #DC2626); 
+            color: white; 
+            padding: 20px 16px 60px; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100;
+            border-radius: 0 0 24px 24px;
+            box-shadow: var(--shadow-lg);
+        }
+        .header h1 { font-size: 24px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .header-stats { display: flex; gap: 16px; margin-top: 16px; }
+        .header-stat { background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 20px; font-size: 13px; }
         
-        .fab { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; box-shadow: 0 4px 12px rgba(16,185,129,0.4); cursor: pointer; z-index: 99; }
+        .container { padding: 0 16px; margin-top: -40px; }
         
-        .section { background: white; margin: 16px; border-radius: 12px; padding: 16px; }
-        .section-title { font-size: 14px; font-weight: 600; color: var(--gray-500); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .section { 
+            background: white; 
+            margin-bottom: 16px; 
+            border-radius: 16px; 
+            padding: 16px; 
+            box-shadow: var(--shadow-md);
+        }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .section-title { font-size: 13px; font-weight: 600; color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.5px; }
+        .section-badge { background: var(--primary); color: white; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
         
-        .task-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-bottom: 1px solid var(--gray-100); }
-        .task-item:last-child { border-bottom: none; }
-        .task-company { font-size: 11px; background: var(--gray-100); padding: 2px 8px; border-radius: 4px; color: var(--gray-500); }
-        .task-text { flex: 1; font-size: 14px; }
+        .task-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding: 14px; 
+            background: var(--gray-50);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .task-item:active { transform: scale(0.98); }
+        .task-item:last-child { margin-bottom: 0; }
+        .task-company { 
+            font-size: 10px; 
+            background: linear-gradient(135deg, #EF4444, #DC2626); 
+            padding: 4px 10px; 
+            border-radius: 20px; 
+            color: white; 
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .task-text { flex: 1; font-size: 14px; font-weight: 500; }
+        .task-check { 
+            width: 28px; height: 28px; 
+            border: 2px solid var(--gray-300); 
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .task-check:hover { border-color: var(--primary); background: var(--primary-light); }
         
-        .schedule-item { display: flex; align-items: center; gap: 12px; padding: 10px; background: var(--gray-50); border-radius: 8px; margin-bottom: 8px; }
-        .schedule-time { font-weight: 600; color: var(--primary); font-size: 14px; }
+        .schedule-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding: 14px; 
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border-radius: 12px; 
+            margin-bottom: 8px;
+            border-left: 4px solid #F59E0B;
+        }
+        .schedule-time { 
+            font-weight: 700; 
+            color: #92400E; 
+            font-size: 15px; 
+            min-width: 70px;
+        }
         .schedule-info { flex: 1; }
-        .schedule-cmd { font-size: 13px; }
-        .schedule-repeat { font-size: 11px; color: var(--gray-500); }
+        .schedule-cmd { font-size: 14px; font-weight: 500; color: var(--gray-900); }
+        .schedule-repeat { 
+            font-size: 11px; 
+            background: rgba(255,255,255,0.7);
+            padding: 3px 8px; 
+            border-radius: 10px; 
+            color: #92400E;
+            font-weight: 600;
+        }
         
-        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 200; padding: 16px; }
-        .modal.open { display: flex; }
-        .modal-content { background: white; border-radius: 16px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; }
-        .modal-header { padding: 16px; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h2 { font-size: 18px; }
-        .modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--gray-500); }
-        .modal-body { padding: 16px; }
+        .fab { 
+            position: fixed; 
+            bottom: 32px; 
+            right: 24px; 
+            width: 60px; 
+            height: 60px; 
+            background: linear-gradient(135deg, #EF4444, #DC2626); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            font-size: 28px; 
+            box-shadow: 0 8px 20px rgba(239,68,68,0.4); 
+            cursor: pointer; 
+            z-index: 99;
+            transition: transform 0.2s;
+        }
+        .fab:active { transform: scale(0.95); }
         
-        .form-group { margin-bottom: 16px; }
-        .form-label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: var(--gray-700); }
-        .form-input, .form-select, .form-textarea { width: 100%; padding: 12px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 14px; }
+        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
+        .modal.open { display: flex; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .modal-content { 
+            background: white; 
+            border-radius: 24px 24px 0 0; 
+            width: 100%; 
+            max-width: 500px; 
+            max-height: 90vh; 
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+        .modal-header { padding: 20px 20px 16px; border-bottom: 1px solid var(--gray-100); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h2 { font-size: 20px; font-weight: 700; }
+        .modal-close { background: var(--gray-100); width: 32px; height: 32px; border: none; border-radius: 50%; font-size: 16px; cursor: pointer; color: var(--gray-700); }
+        .modal-body { padding: 20px; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--gray-700); }
+        .form-input, .form-select, .form-textarea { 
+            width: 100%; 
+            padding: 14px 16px; 
+            border: 2px solid var(--gray-200); 
+            border-radius: 12px; 
+            font-size: 15px; 
+            transition: border-color 0.2s;
+        }
         .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--primary); }
+        .form-textarea { min-height: 100px; resize: none; }
         
-        .btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-secondary { background: var(--gray-100); color: var(--gray-700); margin-top: 8px; }
+        .btn { width: 100%; padding: 16px; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform 0.2s; }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: linear-gradient(135deg, #EF4444, #DC2626); color: white; box-shadow: 0 4px 12px rgba(239,68,68,0.3); }
+        .btn-secondary { background: var(--gray-100); color: var(--gray-700); margin-top: 12px; }
         
-        .empty { text-align: center; color: var(--gray-500); padding: 24px; font-size: 14px; }
+        .empty { text-align: center; color: var(--gray-400); padding: 32px; font-size: 14px; }
+        
+        .time-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .time-select { padding: 12px; border: 2px solid var(--gray-200); border-radius: 10px; font-size: 15px; background: white; }
+        
+        .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
+        .checkbox-item { 
+            display: flex; align-items: center; gap: 6px;
+            padding: 8px 14px; 
+            background: var(--gray-100); 
+            border-radius: 20px; 
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .checkbox-item input { display: none; }
+        .checkbox-item.checked { background: var(--primary); color: white; }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>📋 JSW Task Manager</h1>
-    </div>
-    
-    <div class="section">
-        <div class="section-title">Active Tasks</div>
-        <div id="taskQueue">
-            <div class="empty">No tasks</div>
+        <h1>⚡ JSW Mobile</h1>
+        <div class="header-stats">
+            <div class="header-stat">📋 <span id="taskCount">0</span> Tasks</div>
+            <div class="header-stat">⏰ <span id="scheduleCount">0</span> Scheduled</div>
         </div>
     </div>
     
-    <div class="section">
-        <div class="section-title">Scheduled</div>
-        <div id="scheduledList">
-            <div class="empty">No scheduled tasks</div>
+    <div class="container">
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">Active Tasks</div>
+                <div class="section-badge" id="taskBadge">0</div>
+            </div>
+            <div id="taskQueue">
+                <div class="empty">No tasks yet</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">Scheduled</div>
+                <div class="section-badge" id="scheduleBadge" style="background:#F59E0B;">0</div>
+            </div>
+            <div id="scheduledList">
+                <div class="empty">No scheduled tasks</div>
+            </div>
         </div>
     </div>
     
@@ -151,9 +305,13 @@
             const tasks = JSON.parse(localStorage.getItem('jsw-tasks') || '[]');
             const pending = tasks.filter(t => t.status === 'pending');
             
+            // Update stats
+            document.getElementById('taskCount').textContent = pending.length;
+            document.getElementById('taskBadge').textContent = pending.length;
+            
             const container = document.getElementById('taskQueue');
             if (pending.length === 0) {
-                container.innerHTML = '<div class="empty">No tasks</div>';
+                container.innerHTML = '<div class="empty">No tasks yet</div>';
                 return;
             }
             
@@ -161,7 +319,7 @@
                 <div class="task-item">
                     <span class="task-company">${getCompanyName(t.company)}</span>
                     <span class="task-text">${t.text}</span>
-                    <button onclick="completeTask(${t.id})" style="background:#10B981;color:white;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;">✓</button>
+                    <div class="task-check" onclick="completeTask(${t.id})">✓</div>
                 </div>
             `).join('');
         }
@@ -174,6 +332,10 @@
                 const schedules = JSON.parse(localStorage.getItem('jsw-schedules-' + c) || '[]');
                 schedules.forEach(s => allSchedules.push({...s, company: c}));
             });
+            
+            // Update stats
+            document.getElementById('scheduleCount').textContent = allSchedules.length;
+            document.getElementById('scheduleBadge').textContent = allSchedules.length;
             
             allSchedules.sort((a, b) => a.time.localeCompare(b.time));
             
